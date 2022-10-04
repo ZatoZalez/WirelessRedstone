@@ -58,8 +58,6 @@ public class U_Environment {
                 if(powerBlock.getRelative(BlockFace.valueOf(side.toUpperCase()), 1).equals(block))
                     return true;
 
-        if(powerBlock.getRelative(BlockFace.DOWN, 1).equals(block))
-            return true;
-        return false;
+        return powerBlock.getRelative(BlockFace.DOWN, 1).equals(block);
     }
 }

@@ -13,6 +13,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.Objects;
+
 public class LN_BlockClick implements Listener {
 
     public LN_BlockClick(WirelessRedstone plugin) {
@@ -27,7 +29,7 @@ public class LN_BlockClick implements Listener {
         if (!action.equals(Action.RIGHT_CLICK_BLOCK) || player.isSneaking() || e.getHand() == EquipmentSlot.HAND)
             return;
 
-        Location location = e.getClickedBlock().getLocation();
+        Location location = Objects.requireNonNull(e.getClickedBlock()).getLocation();
         R_Device device = R_Devices.get(location);
 
         if(device == null)

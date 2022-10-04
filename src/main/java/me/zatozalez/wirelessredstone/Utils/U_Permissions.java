@@ -24,74 +24,50 @@ public class U_Permissions {
     }
 
     public static boolean wirelessRedstoneCommandsCancelLink(Player player){
-        if(player.hasPermission("wirelessredstone.commands.cancellink"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.commands.cancellink");
     }
 
     public static boolean wirelessRedstoneCommandsGiveDeviceRedstoneSender(Player player){
-        if(player.hasPermission("wirelessredstone.commands.givedevice.redstonesender"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.commands.givedevice.redstonesender");
     }
 
     public static boolean wirelessRedstoneCommandsGiveDeviceRedstoneReceiver(Player player){
-        if(player.hasPermission("wirelessredstone.commands.givedevice.redstonereceiver"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.commands.givedevice.redstonereceiver");
     }
 
     public static boolean wirelessRedstoneLinkCreate(Player player){
-        if(player.hasPermission("wirelessredstone.link.create"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.link.create");
     }
 
     public static boolean wirelessRedstoneLinkBreak(Player player){
-        if(player.hasPermission("wirelessredstone.link.break"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.link.break");
     }
 
     public static boolean wirelessRedstoneLinkNoLimit(Player player){
-        if(player.hasPermission("wirelessredstone.link.nolimit"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.link.nolimit");
     }
 
     public static boolean wirelessRedstoneLinkInfiniteDistance(Player player){
-        if(player.hasPermission("wirelessredstone.link.infinitedistance"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.link.infinitedistance");
     }
 
     public static boolean wirelessRedstoneLinkCrossWorld(Player player){
-        if(player.hasPermission("wirelessredstone.link.crossworld"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.link.crossworld");
     }
 
     public static boolean wirelessRedstoneDevicePlace(Player player){
-        if(player.hasPermission("wirelessredstone.device.place"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.device.place");
     }
 
     public static boolean wirelessRedstoneDeviceBreak(Player player){
-        if(player.hasPermission("wirelessredstone.device.break"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.device.break");
     }
 
     public static boolean wirelessRedstoneDeviceNoPlaceLimit(Player player){
-        if(player.hasPermission("wirelessredstone.device.noplacelimit"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.device.noplacelimit");
     }
 
     public static boolean wirelessRedstoneDeviceNoLinkLimit(Player player){
-        if(player.hasPermission("wirelessredstone.device.noplacelimit"))
-            return true;
-        return false;
+        return player.hasPermission("wirelessredstone.device.noplacelimit");
     }
 }

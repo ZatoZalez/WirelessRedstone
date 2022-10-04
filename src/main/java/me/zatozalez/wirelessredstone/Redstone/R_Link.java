@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class R_Link {
 
-    private String id;
+    private final String id;
     private UUID playerid;
     private R_Device sender;
     private R_Device receiver;
@@ -17,18 +17,6 @@ public class R_Link {
                 this.sender = device;
             else
                 this.receiver = device;
-    }
-
-    public R_Link(R_Device device1, R_Device device2){
-        this.id = UUID.randomUUID().toString();
-        if(device1.getDeviceType().equals(R_Device.DeviceType.RedstoneSender)){
-            sender = device1;
-            receiver = device2;
-        }
-        else {
-            sender = device2;
-            receiver = device1;
-        }
     }
 
     public R_Link(String id, R_Device sender, R_Device receiver){
@@ -47,19 +35,6 @@ public class R_Link {
         return sender;
     }
     public R_Device getReceiver(){
-        return receiver;
-    }
-    public R_Device.DeviceType getMissingDeviceType(){
-        if(isLinked())
-            return null;
-
-        if(sender == null)
-            return R_Device.DeviceType.RedstoneSender;
-        return R_Device.DeviceType.RedstoneReceiver;
-    }
-    public R_Device getDeviceByDeviceType(R_Device.DeviceType deviceType){
-        if(deviceType.equals(R_Device.DeviceType.RedstoneSender))
-            return sender;
         return receiver;
     }
     public R_Device getLoneDevice(){
@@ -126,15 +101,11 @@ public class R_Link {
     }
 
     public boolean isLinked(){
-        if(sender == null || receiver == null)
-            return false;
-        return true;
+        return sender != null && receiver != null;
     }
     public boolean exists(){
         if(sender == null || receiver == null)
             return false;
-        if(!sender.exists() || !receiver.exists())
-            return false;
-        return true;
+        return sender.exists() && receiver.exists();
     }
 }

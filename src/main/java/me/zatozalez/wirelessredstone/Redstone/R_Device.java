@@ -16,18 +16,15 @@ import org.bukkit.material.Directional;
 import org.bukkit.material.Lever;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class R_Device {
 
-    private String id;
+    private final String id;
     private UUID playerid;
     private Location location;
-    private DeviceType deviceType;
-    private List<String> links = new ArrayList<>();
+    private final DeviceType deviceType;
+    private final List<String> links = new ArrayList<>();
 
     private int signalPower;
 
@@ -93,7 +90,7 @@ public class R_Device {
         inlineMap.put("devicetype", deviceType.toString());
 
         if(location != null) {
-            inlineMap.put("world", location.getWorld().getUID().toString());
+            inlineMap.put("world", Objects.requireNonNull(location.getWorld()).getUID().toString());
             inlineMap.put("location", location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ());
         }
 
@@ -110,9 +107,7 @@ public class R_Device {
     }
 
     public boolean isLinked(){
-        if(links.size() > 0)
-            return true;
-        return false;
+        return links.size() > 0;
     }
     public boolean isLinkedWith(R_Device device){
         if(!isLinked() || !device.isLinked())
@@ -154,7 +149,6 @@ public class R_Device {
                 Powerable powerable = (Powerable) block.getBlockData();
                 powerable.setPowered((signalPower > 0));
                 block.setBlockData(powerable);
-                continue;
             }
         }
     }
@@ -202,8 +196,7 @@ public class R_Device {
             if(!block.getType().equals(R_Manager.RedstoneSenderMaterial))
                 return false;
         if(deviceType.equals(DeviceType.RedstoneReceiver))
-            if(!block.getType().equals(R_Manager.RedstoneReceiverMaterial))
-                return false;
+            return block.getType().equals(R_Manager.RedstoneReceiverMaterial);
         return true;
     }
 }

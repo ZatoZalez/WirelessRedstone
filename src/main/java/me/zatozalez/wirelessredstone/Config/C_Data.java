@@ -20,9 +20,7 @@ public class C_Data {
     public boolean isValid(){
         if(key == null || value == null)
             return false;
-        else if(key.length() > 0 && value.length() > 0)
-            return true;
-        return false;
+        else return key.length() > 0 && value.length() > 0;
     }
 
     public String getKey(){

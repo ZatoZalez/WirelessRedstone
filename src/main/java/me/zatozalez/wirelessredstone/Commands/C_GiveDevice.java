@@ -23,7 +23,7 @@ public class C_GiveDevice implements CommandExecutor {
 
         R_Device.DeviceType deviceType;
         ItemStack item;
-        int amount = 1;
+        int amount;
 
         if(!hasValidArguments(player, args))
             return true;
@@ -43,17 +43,18 @@ public class C_GiveDevice implements CommandExecutor {
         if(amount <= 0)
             return true;
 
-        if(!player.equals(target))
-            player.sendMessage("Giving "
-                    + target.getDisplayName() + " "
-                    + amount + " "
-                    + deviceType
-                    + ".");
+        if(player != null)
+            if(!player.equals(target))
+                player.sendMessage(ChatColor.GREEN + "Giving "
+                        + ChatColor.GOLD + target.getDisplayName() + " "
+                        + ChatColor.GOLD + amount + " "
+                        + ChatColor.GOLD + deviceType
+                        + ChatColor.GREEN+ ".");
 
-        target.sendMessage("You have received "
-                + amount + " "
-                + deviceType
-                + ".");
+        target.sendMessage(ChatColor.GREEN + "You have received "
+                        + ChatColor.GOLD + amount + " "
+                        + ChatColor.GOLD + deviceType
+                        + ChatColor.GREEN + ".");
 
         if(deviceType.equals(R_Device.DeviceType.RedstoneSender))
             item = R_Manager.RedstoneSender;
@@ -61,15 +62,15 @@ public class C_GiveDevice implements CommandExecutor {
             item = R_Manager.RedstoneReceiver;
 
         item.setAmount(amount);
-        PlayerInventory inv = player.getInventory();
+        PlayerInventory inv = target.getInventory();
         inv.addItem(item);
         return true;
     }
 
     private boolean hasValidArguments(Player player, String[] args){
         if(args.length < 2 || args.length > 3) {
-            player.sendMessage("Insufficient amount of arguments used. Please use");
-            player.sendMessage("/givedevice <player> <item> <amount>");
+            player.sendMessage(ChatColor.RED + "Invalid amount of arguments used. Please use");
+            player.sendMessage(ChatColor.RED + "/givedevice <player> <item> <amount>");
             return false;
         }
         return true;
@@ -78,10 +79,10 @@ public class C_GiveDevice implements CommandExecutor {
     private Player hasValidTarget(Player player, String[] args){
         Player target = Bukkit.getPlayer(args[0]);
         if(target == null) {
-            player.sendMessage("Could not find player "
-                    + args[0]
-                    + ".");
-            player.sendMessage("Please use a valid online player.");
+            player.sendMessage(ChatColor.RED + "Could not find "
+                    + ChatColor.DARK_RED + args[0]
+                    + ChatColor.RED + ".");
+            player.sendMessage(ChatColor.RED + "Please use a valid online player.");
             return null;
         }
         return target;
@@ -94,14 +95,14 @@ public class C_GiveDevice implements CommandExecutor {
         else if(args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneReceiver.toString().toLowerCase()))
             deviceType = R_Device.DeviceType.RedstoneReceiver;
         else {
-            player.sendMessage("Could not give a "
-                    + args[1]
-                    + ".");
-            player.sendMessage("Please use "
-                    + "RedstoneSender"
+            player.sendMessage(ChatColor.RED + "Could not find a "
+                    + ChatColor.DARK_RED + args[1]
+                    + ChatColor.RED + ".");
+            player.sendMessage(ChatColor.RED + "Please use "
+                    + ChatColor.DARK_RED + "RedstoneSender"
                     + " or "
-                    + "RedstoneReceiver"
-                    + ".");
+                    + ChatColor.DARK_RED + "RedstoneReceiver"
+                    + ChatColor.RED + ".");
             return null;
         }
         return deviceType;
@@ -127,9 +128,9 @@ public class C_GiveDevice implements CommandExecutor {
             int i = Integer.parseInt(args[2]);
             if(i > 0)
                 return i;
-        }catch (Exception e) { }
-        player.sendMessage("Invalid amount.");
-        player.sendMessage("Please use a valid amount above 0.");
+        }catch (Exception ignored) { }
+        player.sendMessage(ChatColor.RED + "Invalid amount of '" + ChatColor.DARK_RED + args[2] + "'.");
+        player.sendMessage(ChatColor.RED + "Please use a valid amount above 0.");
         return 0;
     }
 }

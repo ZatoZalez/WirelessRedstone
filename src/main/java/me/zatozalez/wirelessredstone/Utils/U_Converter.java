@@ -3,8 +3,7 @@ package me.zatozalez.wirelessredstone.Utils;
 public class U_Converter {
     public static int getIntFromString(String input){
         try {
-            int i = Integer.parseInt(input);
-            return i;
+            return Integer.parseInt(input);
         }
         catch (NumberFormatException e) {
             return 0;
@@ -13,8 +12,7 @@ public class U_Converter {
 
     public static double getDoubleFromString(String input){
         try {
-            double d = Double.parseDouble(input);
-            return d;
+            return Double.parseDouble(input);
         }
         catch (NumberFormatException e) {
             return 0;
@@ -27,8 +25,7 @@ public class U_Converter {
 
     public static boolean getBoolFromString(String input, boolean catchOutput){
         try {
-            boolean b = Boolean.parseBoolean(input);
-            return b;
+            return Boolean.parseBoolean(input);
         }
         catch (Exception e) {
             return catchOutput;

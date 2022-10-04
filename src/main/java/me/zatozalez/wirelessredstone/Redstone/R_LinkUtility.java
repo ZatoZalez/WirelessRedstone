@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class R_LinkUtility {
-    private static String filePath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath() + "/links/";
+    private static final String filePath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath() + "/links/";
 
     public static void initialize(){
         read();
@@ -31,7 +31,8 @@ public class R_LinkUtility {
 
         int count = 0;
         File directoryPath = new File(filePath);
-        File filesList[] = directoryPath.listFiles();
+        File[] filesList = directoryPath.listFiles();
+        assert filesList != null;
         for(File file : filesList) {
             if(file != null && file.exists() && file.getName().contains("."))
             {
@@ -67,7 +68,6 @@ public class R_LinkUtility {
             writer.close();
         }catch(Exception e) {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not save to " + file.getAbsolutePath() +  "\n" + e.getMessage()));
-            return;
         }
     }
     private static void removeLink(R_Link link){
@@ -76,7 +76,6 @@ public class R_LinkUtility {
             file.delete();
         }catch(Exception e) {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not delete " + file.getAbsolutePath() +  "\n" + e.getMessage()));
-            return;
         }
     }
 
@@ -84,12 +83,12 @@ public class R_LinkUtility {
         try {
             List<String> lines = new ArrayList<>();
             lines = Files.readAllLines(file.getAbsoluteFile().toPath(), StandardCharsets.UTF_8);
-            if (lines == null || lines.size() < 1)
+            if (lines.size() < 1)
                 return false;
 
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map = new HashMap<>();
             for (String s : lines) {
-                if (s.equals(null) || s.equals("") || s.length() < 3 || s.startsWith("#") || !s.contains(":"))
+                if (s == null || s.length() < 3 || s.startsWith("#") || !s.contains(":"))
                     continue;
 
                 String key = s.split(":")[0].trim().toLowerCase();

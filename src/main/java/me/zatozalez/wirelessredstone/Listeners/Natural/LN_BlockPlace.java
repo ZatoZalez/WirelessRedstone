@@ -18,6 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import java.util.Objects;
+
 public class LN_BlockPlace implements Listener {
     public LN_BlockPlace(WirelessRedstone plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -26,13 +28,11 @@ public class LN_BlockPlace implements Listener {
     @EventHandler
     public void onEvent(BlockPlaceEvent e) {
         if(e.getBlock().getType() != R_Manager.RedstoneSender.getType() && e.getBlock().getType() != R_Manager.RedstoneReceiver.getType()) return;
-        if(e.getItemInHand() == null || !e.getItemInHand().hasItemMeta()) return;
-        if(!e.getItemInHand().getItemMeta().equals(R_Manager.RedstoneSender.getItemMeta()) && !e.getItemInHand().getItemMeta().equals(R_Manager.RedstoneReceiver.getItemMeta())) return;
+        if(!e.getItemInHand().hasItemMeta()) return;
+        if(!Objects.equals(e.getItemInHand().getItemMeta(), R_Manager.RedstoneSender.getItemMeta()) && !Objects.equals(e.getItemInHand().getItemMeta(), R_Manager.RedstoneReceiver.getItemMeta())) return;
 
         R_Device.DeviceType deviceType = R_Device.DeviceType.RedstoneSender;
-        if(e.getItemInHand().getItemMeta().getDisplayName().toLowerCase().contains(R_Device.DeviceType.RedstoneSender.toString().toLowerCase()))
-            deviceType = R_Device.DeviceType.RedstoneSender;
-        else if(e.getItemInHand().getItemMeta().getDisplayName().toLowerCase().contains(R_Device.DeviceType.RedstoneReceiver.toString().toLowerCase()))
+        if(Objects.requireNonNull(e.getItemInHand().getItemMeta()).getDisplayName().toLowerCase().contains(R_Device.DeviceType.RedstoneReceiver.toString().toLowerCase()))
             deviceType = R_Device.DeviceType.RedstoneReceiver;
 
         if(C_Value.getMaxDevicesInServer() > 0)
@@ -66,7 +66,6 @@ public class LN_BlockPlace implements Listener {
             }
 
         Bukkit.getServer().getPluginManager().callEvent(new E_DevicePlace(deviceType, e.getPlayer(), e.getBlock().getLocation(), e));
-        return;
     }
 
     @EventHandler

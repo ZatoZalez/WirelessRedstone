@@ -25,7 +25,6 @@ public class LM_DevicePlace implements Listener {
 
         R_Devices.add(device);
         device.updateSignalPower();
-        return;
     }
 }
 

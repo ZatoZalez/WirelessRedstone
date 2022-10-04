@@ -7,6 +7,7 @@ import me.zatozalez.wirelessredstone.Config.C_Utility;
 import me.zatozalez.wirelessredstone.Listeners.Modified.*;
 import me.zatozalez.wirelessredstone.Listeners.Natural.*;
 import me.zatozalez.wirelessredstone.Redstone.*;
+import me.zatozalez.wirelessredstone.Tabs.T_GiveDevice;
 import me.zatozalez.wirelessredstone.Utils.U_Log;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,8 +53,16 @@ public final class WirelessRedstone extends JavaPlugin {
 
         getCommand("debug").setExecutor(new C_Debug());
         getCommand("givedevice").setExecutor(new C_GiveDevice());
+        getCommand("givedevice").setTabCompleter(new T_GiveDevice());
         getCommand("cancellink").setExecutor(new C_CancelLink());
+
+        //test at start up
+        for(R_Link link : R_Links.getList().values())
+            if(link.isLinked()){
+                link.getSender().updateSignalPower();
+            }
     }
+
     private void disablePlugin(){
         //C_Utility.save();
         R_DeviceUtility.save();

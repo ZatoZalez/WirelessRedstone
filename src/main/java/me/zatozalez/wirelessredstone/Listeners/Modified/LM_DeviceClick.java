@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LM_DeviceClick implements Listener {
     public LM_DeviceClick(WirelessRedstone plugin) {
@@ -47,20 +48,20 @@ public class LM_DeviceClick implements Listener {
                     }
 
                 if(C_Value.getMaxLinksPerPlayer() > 0)
-                if(R_Links.getList(e.getPlayer().getUniqueId()).size() >= C_Value.getMaxLinksPerPlayer()) {
-                    if(U_Permissions.wirelessRedstonePermissionsEnabled()) {
-                        if (!U_Permissions.wirelessRedstoneLinkNoLimit(e.getPlayer())) {
-                            e.getPlayer().sendMessage(ChatColor.RED + "You don't have permission to create more than " + ChatColor.DARK_RED + C_Value.getMaxLinksPerPlayer() + ChatColor.RED + " links.");
+                    if(R_Links.getList(e.getPlayer().getUniqueId()).size() >= C_Value.getMaxLinksPerPlayer()) {
+                        if(U_Permissions.wirelessRedstonePermissionsEnabled()) {
+                            if (!U_Permissions.wirelessRedstoneLinkNoLimit(e.getPlayer())) {
+                                e.getPlayer().sendMessage(ChatColor.RED + "You don't have permission to create more than " + ChatColor.DARK_RED + C_Value.getMaxLinksPerPlayer() + ChatColor.RED + " links.");
+                                R_Links.remove(link);
+                                return;
+                            }
+                        }
+                        else {
+                            e.getPlayer().sendMessage(ChatColor.RED + "You can't create more than " + ChatColor.DARK_RED + C_Value.getMaxLinksPerPlayer() + ChatColor.RED + " links.");
                             R_Links.remove(link);
                             return;
                         }
                     }
-                    else {
-                        e.getPlayer().sendMessage(ChatColor.RED + "You can't create more than " + ChatColor.DARK_RED + C_Value.getMaxLinksPerPlayer() + ChatColor.RED + " links.");
-                        R_Links.remove(link);
-                        return;
-                    }
-                }
 
                 if(device.equals(loneDevice)){
                     e.getPlayer().sendMessage(ChatColor.RED + "You can't link a device to itself." + ChatColor.RED + "\nUse " + ChatColor.DARK_RED + "/cancellink" + ChatColor.RED + " to cancel this link or try again.");
@@ -120,7 +121,7 @@ public class LM_DeviceClick implements Listener {
                 }
 
                 if(C_Value.getMaxLinkDistance() > 0){
-                    if(device.getLocation().getWorld().equals(loneDevice.getLocation().getWorld()) && device.getLocation().distanceSquared(loneDevice.getLocation()) > C_Value.getMaxLinkDistance()){
+                    if(Objects.equals(device.getLocation().getWorld(), loneDevice.getLocation().getWorld()) && device.getLocation().distanceSquared(loneDevice.getLocation()) > C_Value.getMaxLinkDistance()){
                         if(U_Permissions.wirelessRedstonePermissionsEnabled()) {
                             if (!U_Permissions.wirelessRedstoneLinkInfiniteDistance(e.getPlayer())) {
                                 e.getPlayer().sendMessage(ChatColor.RED + "You don't have permission to create a link over a distance of " + ChatColor.DARK_RED + C_Value.getMaxLinkDistance() + ChatColor.RED + " blocks.");
@@ -137,7 +138,7 @@ public class LM_DeviceClick implements Listener {
                 }
 
                 if(!C_Value.allowCrossWorldSignal()){
-                    if(!device.getLocation().getWorld().equals(loneDevice.getLocation().getWorld()))
+                    if(!Objects.equals(device.getLocation().getWorld(), loneDevice.getLocation().getWorld()))
                     {
                         if(U_Permissions.wirelessRedstonePermissionsEnabled()) {
                             if (!U_Permissions.wirelessRedstoneLinkCrossWorld(e.getPlayer())) {

@@ -16,8 +16,8 @@ import java.util.List;
 public class C_Utility {
 
     private static ArrayList<C_Data> configData = new ArrayList<>();
-    private static String configPath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath();
-    private static String configFile = "config.yml";
+    private static final String configPath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath();
+    private static final String configFile = "config.yml";
 
     public static void initialize() {
         try {
@@ -65,7 +65,7 @@ public class C_Utility {
                 return;
             }
             for (String s : fileLines) {
-                if (s.equals(null) || s.equals("") || s.length() < 3 || !s.contains(":") || s.startsWith("#"))
+                if (s == null || s.length() < 3 || !s.contains(":") || s.startsWith("#"))
                     continue;
 
                 String key = s.split(":")[0].trim();
@@ -108,7 +108,6 @@ public class C_Utility {
             writer.close();
         } catch (Exception e) {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not create " + configFile + ".\n" + e.getMessage()));
-            return;
         }
     }
 
@@ -149,6 +148,5 @@ public class C_Utility {
                 configData.remove(cd);
                 return;
             }
-        return;
     }
 }

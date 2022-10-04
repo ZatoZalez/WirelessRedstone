@@ -30,7 +30,7 @@ public class C_Debug implements CommandExecutor {
         if(device == null)
             return true;
 
-        player.sendMessage("POWER: " + device.getBlock().getBlockPower());
+        player.sendMessage("POWER: " + device.getSignalPower());
 
         if(true)
             return true;

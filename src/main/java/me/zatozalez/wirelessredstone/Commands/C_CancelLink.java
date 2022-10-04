@@ -19,24 +19,29 @@ public class C_CancelLink implements CommandExecutor {
         R_Link link = null;
         Player player = ((Player) sender).getPlayer();
 
-        if(U_Permissions.wirelessRedstonePermissionsEnabled())
-            if(!U_Permissions.wirelessRedstoneCommandsCancelLink(player)){
-                player.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
-                return true;
-            }
+        if(U_Permissions.wirelessRedstonePermissionsEnabled()) {
+            if(player != null)
+                if(!U_Permissions.wirelessRedstoneCommandsCancelLink(player)){
+                    player.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                    return true;
+                }
+        }
 
         for(R_Link l : R_Links.getList().values())
-            if(!l.isLinked())
-                if (l.getPlayerId().equals(player.getUniqueId()))
-                    link = l;
+            if(!l.isLinked()) {
+                if(player != null)
+                    if (l.getPlayerId().equals(player.getUniqueId()))
+                        link = l;
+            }
 
         if(link != null){
             R_Links.remove(link);
             player.sendMessage(ChatColor.GREEN + "You have cancelled this link.");
             return true;
         }
-        player.sendMessage(ChatColor.RED + "There is no link to cancel.");
 
+        if(player != null)
+            player.sendMessage(ChatColor.RED + "There is no link to cancel.");
         return true;
     }
 }

@@ -43,18 +43,16 @@ public class LN_BlockBreak implements Listener {
                 return;
             }
 
-        if(e.getPlayer() != null)
-            if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
-                ItemStack item = null;
-                if (device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender))
-                    item = R_Manager.RedstoneSender;
-                else
-                    item = R_Manager.RedstoneReceiver;
-                device.getWorld().dropItemNaturally(device.getLocation(), item);
-            }
+        if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+            ItemStack item;
+            if (device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender))
+                item = R_Manager.RedstoneSender;
+            else
+                item = R_Manager.RedstoneReceiver;
+            device.getWorld().dropItemNaturally(device.getLocation(), item);
+        }
 
         Bukkit.getServer().getPluginManager().callEvent(new E_DeviceBreak(device, e.getPlayer(), e));
-        return;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -67,7 +65,7 @@ public class LN_BlockBreak implements Listener {
             if(device == null)
                 continue;
 
-            ItemStack item = null;
+            ItemStack item;
             if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender))
                 item = R_Manager.RedstoneSender;
             else

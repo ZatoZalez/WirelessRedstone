@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class R_Links {
-    private static LinkedHashMap<String, R_Link> links = new LinkedHashMap<>();
-    private static LinkedHashMap<String, R_Link> broken_links = new LinkedHashMap<>();
+    private static final LinkedHashMap<String, R_Link> links = new LinkedHashMap<>();
+    private static final LinkedHashMap<String, R_Link> broken_links = new LinkedHashMap<>();
 
     public static LinkedHashMap<String, R_Link> getList(){
         return links;

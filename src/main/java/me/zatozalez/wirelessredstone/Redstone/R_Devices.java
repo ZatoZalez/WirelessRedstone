@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class R_Devices {
-    private static LinkedHashMap<String, R_Device> devices = new LinkedHashMap<>();
-    private static LinkedHashMap<String, R_Device> broken_devices = new LinkedHashMap<>();
+    private static final LinkedHashMap<String, R_Device> devices = new LinkedHashMap<>();
+    private static final LinkedHashMap<String, R_Device> broken_devices = new LinkedHashMap<>();
 
     public static LinkedHashMap<String, R_Device> getList(){
         return devices;
