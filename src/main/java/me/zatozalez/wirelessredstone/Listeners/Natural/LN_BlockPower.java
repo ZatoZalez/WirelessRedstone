@@ -8,11 +8,13 @@ import me.zatozalez.wirelessredstone.Utils.U_Environment;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.AnaloguePowerable;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
@@ -37,7 +39,24 @@ public class LN_BlockPower implements Listener {
     }
 
     @EventHandler
-    public void onEvent(BlockRedstoneEvent e){
+    public void onEvent2(BlockPhysicsEvent e){
+        Block block = e.getBlock();
+        for(Block b : U_Environment.GetSurroundingBlocks(block))
+        {
+            Location location = b.getLocation();
+            R_Device device = R_Devices.get(location);
+
+            if(device == null)
+                continue;
+
+            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender)) {
+                device.updateSignalPower();
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEvent3(BlockRedstoneEvent e){
         roulette(e.getBlock(), e);
     }
 

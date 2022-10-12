@@ -1,19 +1,11 @@
 package me.zatozalez.wirelessredstone.Redstone;
 
-import me.zatozalez.wirelessredstone.Utils.U_Environment;
+import me.zatozalez.wirelessredstone.Utils.U_Signal;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.AnaloguePowerable;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Powerable;
-import org.bukkit.block.data.type.Piston;
-import org.bukkit.material.Directional;
-import org.bukkit.material.Lever;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -126,31 +118,13 @@ public class R_Device {
         if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneReceiver))
             return;
 
-        for (R_Link link : getLinks())
-            if (link.isLinked()) {
-                link.getReceiver().emitSignal(signalPower);
-            }
+        U_Signal.send(this, signalPower);
     }
     public void emitSignal(int signalPower){
         if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneSender))
             return;
 
-        setSignalPower(signalPower);
-        for(Block block : U_Environment.GetSurroundingBlocks(getBlock())){
-            BlockData data = block.getBlockData();
-            if (data instanceof AnaloguePowerable) {
-                AnaloguePowerable analoguePowerable = (AnaloguePowerable) block.getBlockData();
-                analoguePowerable.setPower(signalPower);
-                block.setBlockData(analoguePowerable);
-                continue;
-            }
-
-            if (data instanceof Powerable) {
-                Powerable powerable = (Powerable) block.getBlockData();
-                powerable.setPowered((signalPower > 0));
-                block.setBlockData(powerable);
-            }
-        }
+        U_Signal.emit(this, signalPower);
     }
 
     public void destroyLinks(){
@@ -177,26 +151,19 @@ public class R_Device {
     }
     public void setSignalPower(int signalPower) { this.signalPower = signalPower; }
     public void updateSignalPower() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                int newCurrent = getBlock().getBlockPower();
-                setSignalPower(newCurrent);
-                sendSignal();
-            }
-        }.runTaskLater(WirelessRedstone.getPlugin(), 0);
+        U_Signal.update(this);
     }
 
     public boolean exists(){
         if(location == null)
             return false;
-
         Block block = location.getBlock();
         if(deviceType.equals(DeviceType.RedstoneSender))
             if(!block.getType().equals(R_Manager.RedstoneSenderMaterial))
                 return false;
         if(deviceType.equals(DeviceType.RedstoneReceiver))
-            return block.getType().equals(R_Manager.RedstoneReceiverMaterial);
+            if(!block.getType().equals(R_Manager.RedstoneReceiverMaterial))
+                return false;
         return true;
     }
 }

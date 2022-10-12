@@ -3,14 +3,20 @@ package me.zatozalez.wirelessredstone.Listeners.Natural;
 import me.zatozalez.wirelessredstone.Events.E_DeviceMove;
 import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
+import me.zatozalez.wirelessredstone.Utils.U_Environment;
+import me.zatozalez.wirelessredstone.Utils.U_Piston;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Piston;
+import org.bukkit.block.data.type.PistonHead;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 
@@ -29,7 +35,38 @@ public class LN_BlockMove implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent2(BlockPistonRetractEvent e) {
+        roulette(e.getBlock(), e);
         move(e.getBlocks(), e.getDirection());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onEvent3(BlockPhysicsEvent e){
+        Block pistonBlock = e.getBlock();
+        if(pistonBlock.getType().equals(Material.PISTON_HEAD)){
+            if(parentTouchesDevice(pistonBlock)){
+                e.setCancelled(true);
+            }
+            return;
+        }
+
+        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        {
+            Location location = block.getLocation();
+            R_Device device = R_Devices.get(location);
+
+            if(device == null)
+                continue;
+
+            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+                if(pistonBlock.getType().equals(Material.PISTON) || pistonBlock.getType().equals(Material.STICKY_PISTON)){
+                    Piston piston = (Piston) pistonBlock.getBlockData();
+                    if (!pistonBlock.isBlockIndirectlyPowered() && !piston.isExtended()){
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     private void move(List<Block> blocks, BlockFace face) {
@@ -74,5 +111,67 @@ public class LN_BlockMove implements Listener {
 
             Bukkit.getServer().getPluginManager().callEvent(new E_DeviceMove(device, oldLocation, newLocation));
         }
+    }
+
+    private void roulette(Block pistonBlock, BlockPistonRetractEvent e){
+        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        {
+            Location location = block.getLocation();
+            R_Device device = R_Devices.get(location);
+
+            if(device == null)
+                continue;
+
+            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver))
+                handlePermanentWire(device, e);
+        }
+    }
+
+    private void handlePermanentWire(R_Device device, BlockPistonRetractEvent e){
+        if(device.getSignalPower() != 0){
+            e.setCancelled(true);
+        }
+    }
+
+    private boolean parentTouchesDevice(Block headBlock){
+        Block pistonBlock = getParentPiston(headBlock);
+        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        {
+            Location location = block.getLocation();
+            R_Device device = R_Devices.get(location);
+
+            if(device == null)
+                continue;
+
+            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Block getParentPiston(Block headBlock){
+        if(!headBlock.getType().equals(Material.PISTON_HEAD))
+            return null;
+
+        PistonHead pistonHead = (PistonHead) headBlock.getBlockData();
+        return headBlock.getRelative(pistonHead.getFacing().getOppositeFace());
+    }
+
+    public static List<R_Device> getDevices(Block pistonBlock){
+        List<R_Device> devices = new ArrayList<>();
+        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        {
+            Location location = block.getLocation();
+            R_Device device = R_Devices.get(location);
+
+            if(device == null)
+                continue;
+
+            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+                devices.add(device);
+            }
+        }
+        return devices;
     }
 }

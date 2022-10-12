@@ -12,12 +12,12 @@ public class U_Environment {
     public static List<Block> GetSurroundingBlocks(Block powerBlock){
         Location loc = powerBlock.getLocation();
         List<Block> blocks = new ArrayList<>();
-        blocks.add( (new Location(loc.getWorld(), (loc.getX() + 1), loc.getY(), loc.getZ())).getBlock() );
-        blocks.add( (new Location(loc.getWorld(), (loc.getX() - 1), loc.getY(), loc.getZ())).getBlock() );
-        blocks.add( (new Location(loc.getWorld(), loc.getX(), loc.getY(), (loc.getZ() + 1))).getBlock() );
-        blocks.add( (new Location(loc.getWorld(), loc.getX(), loc.getY(), (loc.getZ() - 1))).getBlock() );
-        blocks.add( (new Location(loc.getWorld(), loc.getX(), (loc.getY() - 1), loc.getZ())).getBlock() );
-        blocks.add( (new Location(loc.getWorld(), loc.getX(), (loc.getY() - 1), loc.getZ())).getBlock() );
+        blocks.add(powerBlock.getRelative(BlockFace.UP));
+        blocks.add(powerBlock.getRelative(BlockFace.DOWN));
+        blocks.add(powerBlock.getRelative(BlockFace.NORTH));
+        blocks.add(powerBlock.getRelative(BlockFace.SOUTH));
+        blocks.add(powerBlock.getRelative(BlockFace.EAST));
+        blocks.add(powerBlock.getRelative(BlockFace.WEST));
         return blocks;
     }
     public static boolean IsFacing(Block block, Block powerBlock){

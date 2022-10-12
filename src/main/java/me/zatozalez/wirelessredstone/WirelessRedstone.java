@@ -9,6 +9,7 @@ import me.zatozalez.wirelessredstone.Listeners.Natural.*;
 import me.zatozalez.wirelessredstone.Redstone.*;
 import me.zatozalez.wirelessredstone.Tabs.T_GiveDevice;
 import me.zatozalez.wirelessredstone.Utils.U_Log;
+import me.zatozalez.wirelessredstone.Versions.V_Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,9 +33,18 @@ public final class WirelessRedstone extends JavaPlugin {
     private void initializePlugin() {
         plugin = this;
         Bukkit.getConsoleSender().sendMessage(getDescription().getFullName() + " by " + ChatColor.RED + getDescription().getAuthors().toString().replace("[", "").replace("]", ""));
+        if(V_Manager.isCompatible()){
+            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Unsupported version [" + V_Manager.getVersion() + "]. Disabling WirelessRedstone"));
+            Bukkit.getPluginManager().disablePlugin(WirelessRedstone.getPlugin());
+            return;
+        }
 
         C_Utility.initialize();
         R_Manager.initialize();
+
+        if(!this.isEnabled())
+            return;
+
         R_DeviceUtility.initialize();
         R_LinkUtility.initialize();
 
@@ -56,7 +66,6 @@ public final class WirelessRedstone extends JavaPlugin {
         getCommand("givedevice").setTabCompleter(new T_GiveDevice());
         getCommand("cancellink").setExecutor(new C_CancelLink());
 
-        //test at start up
         for(R_Link link : R_Links.getList().values())
             if(link.isLinked()){
                 link.getSender().updateSignalPower();
@@ -64,9 +73,10 @@ public final class WirelessRedstone extends JavaPlugin {
     }
 
     private void disablePlugin(){
-        //C_Utility.save();
-        R_DeviceUtility.save();
-        R_LinkUtility.save();
+        try {
+            R_DeviceUtility.save();
+            R_LinkUtility.save();
+        }catch (Exception ignored) {}
     }
 
     public static void Log(U_Log logMes){
@@ -82,4 +92,12 @@ public final class WirelessRedstone extends JavaPlugin {
     public static WirelessRedstone getPlugin(){
         return plugin;
     }
+
+                                           // piston.setPowered(true);
+                                       // b.setData(piston.getData());
+                                       // l.setType(Material.PISTON_EXTENSION);
+    //PistonExtensionMaterial pe = (PistonExtensionMaterial) l.getState().getData();
+                                       // l.setData(pe.getData());
+                                       // l.getState().update();
+                                       // b.getState().update();
 }

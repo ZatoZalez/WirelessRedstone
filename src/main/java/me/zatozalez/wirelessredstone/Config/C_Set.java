@@ -18,8 +18,8 @@ public class C_Set {
         fileLines.add(addData("Modify the block type of both devices. At invalid block type it will set the default type.").getInline());
         fileLines.add(addData("(Tip: use https://minecraftitemids.com/ for the correct item ids.)").getInline());
 
-        fileLines.add(addData("SenderBlockType", "green_concrete").getInline());
-        fileLines.add(addData("ReceiverBlockType", "red_concrete").getInline());
+        fileLines.add(addData("SenderBlockType", "null").getInline());
+        fileLines.add(addData("ReceiverBlockType", "null").getInline());
         fileLines.add(addData("").getInline());
 
         fileLines.add(addData("Set up a maximum amount of links between devices in the server (0 is infinite).").getInline());

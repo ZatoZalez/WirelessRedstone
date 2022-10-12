@@ -1,5 +1,7 @@
 package me.zatozalez.wirelessredstone.Config;
 
+import org.bukkit.Bukkit;
+
 public class C_Data {
     private String key;
     private String value;

@@ -11,6 +11,7 @@ import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.AnaloguePowerable;
 import org.bukkit.block.data.Powerable;
@@ -72,7 +73,6 @@ public class LN_BlockPlace implements Listener {
     public void onEvent2(BlockPlaceEvent e){
         Block block = e.getBlock();
         if(!(block.getBlockData() instanceof AnaloguePowerable) && !(block.getBlockData() instanceof Powerable)) return;
-
         for(Block b : U_Environment.GetSurroundingBlocks(block))
         {
             Location location = b.getLocation();
@@ -82,6 +82,7 @@ public class LN_BlockPlace implements Listener {
                 continue;
 
             if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+                device.updateSignalPower();
                 device.emitSignal(device.getSignalPower());
             }
         }

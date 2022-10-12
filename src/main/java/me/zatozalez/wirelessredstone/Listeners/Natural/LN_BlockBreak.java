@@ -5,14 +5,18 @@ import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Redstone.R_Links;
 import me.zatozalez.wirelessredstone.Redstone.R_Manager;
+import me.zatozalez.wirelessredstone.Utils.U_Environment;
 import me.zatozalez.wirelessredstone.Utils.U_Permissions;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.AnaloguePowerable;
+import org.bukkit.block.data.Powerable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -56,7 +60,7 @@ public class LN_BlockBreak implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent2(EntityExplodeEvent e) {
+    public void onEvent3(EntityExplodeEvent e) {
         for(Block block : e.blockList())
         {
             Location location = block.getLocation();

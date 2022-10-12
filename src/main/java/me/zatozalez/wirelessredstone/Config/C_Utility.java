@@ -65,7 +65,18 @@ public class C_Utility {
                 return;
             }
             for (String s : fileLines) {
-                if (s == null || s.length() < 3 || !s.contains(":") || s.startsWith("#"))
+                if (s == null)
+                    continue;
+
+                if(s.startsWith("#") || s.equals("")){
+                    if(s.startsWith("#"))
+                        tempData.add(new C_Data(s.split("#")[1].trim()));
+                    else
+                        tempData.add(new C_Data(""));
+                    continue;
+                }
+
+                if (s.length() < 3 || !s.contains(":"))
                     continue;
 
                 String key = s.split(":")[0].trim();
@@ -86,6 +97,7 @@ public class C_Utility {
         configData = tempData;
         create();
     }
+
     public static void save() {
         File file = new File(configPath + "/" + configFile);
         if (!file.exists()) {
@@ -95,12 +107,12 @@ public class C_Utility {
 
         try {
             String data = "";
-            ArrayList<String> fileLines = new ArrayList<>();
-            for (C_Data cd : configData)
+            for (C_Data cd : configData) {
                 if (data.equalsIgnoreCase(""))
                     data += cd.getInline();
                 else
                     data += "\n" + cd.getInline();
+            }
             file.createNewFile();
             Writer writer = new FileWriter(file, false);
             writer.write(data);
@@ -118,7 +130,6 @@ public class C_Utility {
         for (C_Data cd : configData)
             if (cd.isValid() && cd.getKey().equalsIgnoreCase(key))
                 return cd;
-
         C_Data data = new C_Data(key, value.toString());
         if (comment != null)
             data.setComment(comment);
@@ -128,7 +139,7 @@ public class C_Utility {
     }
     public static C_Data addData(String description) {
         for (C_Data cd : configData)
-            if (cd.isDescription() && cd.getDescription().equalsIgnoreCase(description))
+            if (cd.isDescription() && cd.getDescription().equalsIgnoreCase(description) && !cd.getDescription().equals(""))
                 return cd;
         C_Data data = new C_Data(description);
         configData.add(data);

@@ -90,9 +90,9 @@ public class C_GiveDevice implements CommandExecutor {
 
     private R_Device.DeviceType hasValidDevice(Player player, String[] args) {
         R_Device.DeviceType deviceType;
-        if(args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneSender.toString().toLowerCase()))
+        if(args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneSender.toString().toLowerCase()) || args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneSender.toString().substring(8)))
             deviceType = R_Device.DeviceType.RedstoneSender;
-        else if(args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneReceiver.toString().toLowerCase()))
+        else if(args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneReceiver.toString().toLowerCase()) || args[1].equalsIgnoreCase(R_Device.DeviceType.RedstoneReceiver.toString().substring(8)))
             deviceType = R_Device.DeviceType.RedstoneReceiver;
         else {
             player.sendMessage(ChatColor.RED + "Could not find a "
