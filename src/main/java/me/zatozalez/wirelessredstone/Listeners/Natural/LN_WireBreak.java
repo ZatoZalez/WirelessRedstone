@@ -37,7 +37,7 @@ public class LN_WireBreak implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver))
+            if(device.isReceiver())
                 continue;
 
             if (U_Environment.IsFacing(block, powerBlock))

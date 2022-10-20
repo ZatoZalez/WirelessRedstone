@@ -1,5 +1,6 @@
 package me.zatozalez.wirelessredstone.Listeners.Modified;
 
+import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Events.E_DeviceBreak;
 import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
@@ -26,6 +27,7 @@ public class LM_DeviceBreak implements Listener {
         device.destroyLinks();
         R_Devices.remove(device);
 
+        if(C_Value.allowMessages())
         if(e.getPlayer() != null){
             if(!device.getPlayerId().equals(e.getPlayer().getUniqueId())){
                 e.getPlayer().sendMessage(ChatColor.RED + "You have destroyed a " + message);

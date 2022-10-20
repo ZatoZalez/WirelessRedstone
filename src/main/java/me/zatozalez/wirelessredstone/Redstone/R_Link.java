@@ -1,5 +1,15 @@
 package me.zatozalez.wirelessredstone.Redstone;
 
+import me.zatozalez.wirelessredstone.Config.C_Value;
+import me.zatozalez.wirelessredstone.Utils.U_Environment;
+import me.zatozalez.wirelessredstone.WirelessRedstone;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
@@ -9,11 +19,41 @@ public class R_Link {
     private UUID playerid;
     private R_Device sender;
     private R_Device receiver;
+    private int overload = 0;
+
+    public void onSignal(){
+        if(!C_Value.overloadEnabled() || getSender().isOverloaded() || getReceiver().isOverloaded())
+            return;
+
+        overload++;
+        if(overload >= C_Value.getOverloadTrigger()){
+            getSender().overload();
+            overload = 0;
+
+            Player player = Bukkit.getPlayer(getSender().getPlayerId());
+            if(player != null && C_Value.allowMessages()) {
+                player.sendMessage(ChatColor.GOLD + "Two of your devices are overloading.");
+                if (!getSender().getPlayerId().equals(getReceiver().getPlayerId())) {
+                    player = Bukkit.getPlayer(getReceiver().getPlayerId());
+                    if (player != null)
+                        player.sendMessage(ChatColor.GOLD + "Two of your devices are overloading.");
+                }
+            }
+            return;
+        }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                overload = 0;
+            }
+        }.runTaskLater(WirelessRedstone.getPlugin(), 20);
+    }
 
     public R_Link(R_Device device){
         this.id = UUID.randomUUID().toString();
         if(device != null)
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender))
+            if(device.isSender())
                 this.sender = device;
             else
                 this.receiver = device;

@@ -57,9 +57,14 @@ public class LN_BlockMove implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+            if(device.isReceiver()) {
                 if(pistonBlock.getType().equals(Material.PISTON) || pistonBlock.getType().equals(Material.STICKY_PISTON)){
                     Piston piston = (Piston) pistonBlock.getBlockData();
+                    if(!e.getSourceBlock().equals(pistonBlock))
+                    {
+                        e.setCancelled(true);
+                        return;
+                    }
                     if (!pistonBlock.isBlockIndirectlyPowered() && !piston.isExtended()){
                         e.setCancelled(true);
                         return;
@@ -122,7 +127,7 @@ public class LN_BlockMove implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver))
+            if(device.isReceiver())
                 handlePermanentWire(device, e);
         }
     }
@@ -143,7 +148,7 @@ public class LN_BlockMove implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+            if(device.isReceiver()) {
                 return true;
             }
         }
@@ -156,22 +161,5 @@ public class LN_BlockMove implements Listener {
 
         PistonHead pistonHead = (PistonHead) headBlock.getBlockData();
         return headBlock.getRelative(pistonHead.getFacing().getOppositeFace());
-    }
-
-    public static List<R_Device> getDevices(Block pistonBlock){
-        List<R_Device> devices = new ArrayList<>();
-        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
-        {
-            Location location = block.getLocation();
-            R_Device device = R_Devices.get(location);
-
-            if(device == null)
-                continue;
-
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
-                devices.add(device);
-            }
-        }
-        return devices;
     }
 }

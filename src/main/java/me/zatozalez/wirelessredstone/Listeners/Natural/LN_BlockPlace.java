@@ -81,7 +81,7 @@ public class LN_BlockPlace implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver)) {
+            if(device.isReceiver()) {
                 device.updateSignalPower();
                 device.emitSignal(device.getSignalPower());
             }

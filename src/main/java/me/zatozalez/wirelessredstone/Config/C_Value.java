@@ -40,13 +40,19 @@ public class C_Value {
     }
 
     public static boolean allowCrossWorldSignal(){
-        C_Data data = C_Utility.getData("AllowCrossWorldSignal");
+        C_Data data = C_Utility.getData("CrossWorldSignal");
         if(data != null) return data.getBoolean();
         return false;
     }
 
-    public static boolean permissionsEnabled(){
-        C_Data data = C_Utility.getData("PermissionsEnabled");
+    public static boolean allowPermissions(){
+        C_Data data = C_Utility.getData("Permissions");
+        if(data != null) return data.getBoolean();
+        return false;
+    }
+
+    public static boolean allowMessages(){
+        C_Data data = C_Utility.getData("Messages");
         if(data != null) return data.getBoolean();
         return false;
     }
@@ -61,5 +67,35 @@ public class C_Value {
         C_Data data = C_Utility.getData("ReceiverBlockType");
         if(data != null) return data.getString();
         return null;
+    }
+
+    public static boolean overloadEnabled(){
+        C_Data data = C_Utility.getData("Overload");
+        if(data != null) return data.getBoolean();
+        return true;
+    }
+
+    public static int getOverloadTrigger(){
+        C_Data data = C_Utility.getData("OverloadTrigger");
+        if(data != null) return data.getInt();
+        return 8;
+    }
+
+    public static int getOverloadCooldown(){
+        C_Data data = C_Utility.getData("OverloadCooldown");
+        if(data != null) return data.getInt();
+        return 10;
+    }
+
+    public static int getSignalDelay(){
+        C_Data data = C_Utility.getData("SignalDelay");
+        if(data != null) return data.getInt();
+        return 0;
+    }
+
+    public static boolean allowContactSignals(){
+        C_Data data = C_Utility.getData("ContactSignals");
+        if(data != null) return data.getBoolean();
+        return true;
     }
 }

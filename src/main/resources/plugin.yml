@@ -4,12 +4,9 @@ main: me.zatozalez.wirelessredstone.WirelessRedstone
 api-version: 1.14
 authors: [ ZatoZalez ]
 commands:
-  debug:
-    usage: "/debug"
-    description: "DEBUG: Get devices."
   givedevice:
     usage: "/givedevice"
-    description: "Give devices to players."
+    description: "Give devices to yourself or others."
   cancellink:
     usage: "/cancellink"
-    description: "Cancel any ongoing link."
+    description: "Cancel any on-going linking."

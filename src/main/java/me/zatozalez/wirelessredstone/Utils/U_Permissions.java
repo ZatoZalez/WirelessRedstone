@@ -20,7 +20,7 @@ public class U_Permissions {
     //wirelessredstone.device.nolinklimit
 
     public static boolean wirelessRedstonePermissionsEnabled(){
-        return C_Value.permissionsEnabled();
+        return C_Value.allowPermissions();
     }
 
     public static boolean wirelessRedstoneCommandsCancelLink(Player player){

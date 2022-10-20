@@ -1,11 +1,11 @@
 package me.zatozalez.wirelessredstone.Redstone;
 
+import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Utils.U_Signal;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -17,6 +17,8 @@ public class R_Device {
     private Location location;
     private final DeviceType deviceType;
     private final List<String> links = new ArrayList<>();
+
+    private boolean isOverloaded;
 
     private int signalPower;
 
@@ -110,6 +112,9 @@ public class R_Device {
                 return true;
         return false;
     }
+    public boolean isOverloaded() { return isOverloaded; }
+    public boolean isSender() { return (DeviceType.RedstoneSender.equals(deviceType)); }
+    public boolean isReceiver() { return (DeviceType.RedstoneReceiver.equals(deviceType)); }
 
     public void sendSignal(){
         sendSignal(signalPower);
@@ -124,8 +129,51 @@ public class R_Device {
         if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneSender))
             return;
 
+        for(R_Link link : getLinks()){
+            if(signalPower < link.getSender().getSignalPower())
+                return;
+        }
+
         U_Signal.emit(this, signalPower);
     }
+    public void overload(){
+        if(isOverloaded)
+            return;
+
+        isOverloaded = true;
+        if(DeviceType.RedstoneSender.equals(deviceType))
+            for(R_Link link : getLinks())
+                link.getReceiver().overload();
+
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.playSound(getLocation(), Sound.BLOCK_REDSTONE_TORCH_BURNOUT, 0.5f, 1f);
+
+        spawnOverloadParticle(Color.fromRGB(10, 10, 10));
+        spawnOverloadParticle(Color.fromRGB(50 , 50, 50));
+        spawnOverloadParticle(Color.fromRGB(100, 100, 100));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                isOverloaded = false;
+            }
+        }.runTaskLater(WirelessRedstone.getPlugin(), C_Value.getOverloadCooldown() * 20);
+    }
+    private void spawnOverloadParticle(Color color){
+        Particle particle = Particle.REDSTONE;
+        Particle.DustOptions dustOptions = new Particle.DustOptions(color, 1.0F);
+
+        Random rd = new Random();
+        for(int i = 0; i < 2; i++) {
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + rd.nextFloat(), getLocation().getBlockY() + 1.1, getLocation().getBlockZ() + rd.nextFloat()), 1, dustOptions);
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + rd.nextFloat(), getLocation().getBlockY() + 1.1, getLocation().getBlockZ() + rd.nextFloat()), 1, dustOptions);
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + rd.nextFloat(), getLocation().getBlockY() + 1.1, getLocation().getBlockZ() + rd.nextFloat()), 1, dustOptions);
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + rd.nextFloat(), getLocation().getBlockY() + rd.nextFloat(), getLocation().getBlockZ() + 0), 1, dustOptions);
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + 0, getLocation().getBlockY() + rd.nextFloat(), getLocation().getBlockZ() + 0), 1, dustOptions);
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + 0, getLocation().getBlockY() + rd.nextFloat(), getLocation().getBlockZ() + rd.nextFloat()), 1, dustOptions);
+            getWorld().spawnParticle(particle, new Location(getWorld(), getLocation().getBlockX() + rd.nextFloat(), getLocation().getBlockY() + rd.nextFloat(), getLocation().getBlockZ() + rd.nextFloat()), 1, dustOptions);
+        }
+    }
+
 
     public void destroyLinks(){
         for(R_Link l : getLinks())

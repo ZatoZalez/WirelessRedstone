@@ -21,7 +21,7 @@ public class LM_DeviceMove implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender)){
+                if(device.isSender()){
                     device.setSignalPower(device.getBlock().getBlockPower());
                     device.sendSignal();
                 }

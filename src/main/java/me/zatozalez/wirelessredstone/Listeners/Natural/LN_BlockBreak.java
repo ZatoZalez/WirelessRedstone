@@ -49,7 +49,7 @@ public class LN_BlockBreak implements Listener {
 
         if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
             ItemStack item;
-            if (device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender))
+            if (device.isSender())
                 item = R_Manager.RedstoneSender;
             else
                 item = R_Manager.RedstoneReceiver;
@@ -70,7 +70,7 @@ public class LN_BlockBreak implements Listener {
                 continue;
 
             ItemStack item;
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender))
+            if(device.isSender())
                 item = R_Manager.RedstoneSender;
             else
                 item = R_Manager.RedstoneReceiver;

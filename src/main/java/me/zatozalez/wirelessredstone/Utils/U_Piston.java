@@ -71,6 +71,11 @@ public class U_Piston {
             if(block.getType().equals(Material.AIR))
                 break;
 
+            //for (Material m : unmovableBlocks)
+            //    if (block.getType().equals(m)) {
+            //        return false;
+            //    }
+
             blockList.put(block, block.getRelative(blockFace).getLocation());
             if(i == maxPush)
                 return false;

@@ -61,7 +61,7 @@ public final class WirelessRedstone extends JavaPlugin {
         new LM_DeviceMove(this);
         new LM_DevicePower(this);
 
-        getCommand("debug").setExecutor(new C_Debug());
+        //getCommand("debug").setExecutor(new C_Debug());
         getCommand("givedevice").setExecutor(new C_GiveDevice());
         getCommand("givedevice").setTabCompleter(new T_GiveDevice());
         getCommand("cancellink").setExecutor(new C_CancelLink());
@@ -92,12 +92,4 @@ public final class WirelessRedstone extends JavaPlugin {
     public static WirelessRedstone getPlugin(){
         return plugin;
     }
-
-                                           // piston.setPowered(true);
-                                       // b.setData(piston.getData());
-                                       // l.setType(Material.PISTON_EXTENSION);
-    //PistonExtensionMaterial pe = (PistonExtensionMaterial) l.getState().getData();
-                                       // l.setData(pe.getData());
-                                       // l.getState().update();
-                                       // b.getState().update();
 }

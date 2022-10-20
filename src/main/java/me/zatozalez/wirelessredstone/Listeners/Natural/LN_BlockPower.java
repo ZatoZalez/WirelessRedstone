@@ -49,7 +49,7 @@ public class LN_BlockPower implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneSender)) {
+            if(device.isSender()) {
                 device.updateSignalPower();
             }
         }
@@ -69,7 +69,7 @@ public class LN_BlockPower implements Listener {
             if(device == null)
                 continue;
 
-            if(device.getDeviceType().equals(R_Device.DeviceType.RedstoneReceiver))
+            if(device.isReceiver())
                 handlePermanentWire(device, e);
         }
     }

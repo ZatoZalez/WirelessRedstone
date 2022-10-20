@@ -107,7 +107,7 @@ public class LM_DeviceClick implements Listener {
                     }
                     if(d != null) {
                         if (U_Permissions.wirelessRedstonePermissionsEnabled()) {
-                            if (!U_Permissions.wirelessRedstoneLinkInfiniteDistance(e.getPlayer())) {
+                            if (!U_Permissions.wirelessRedstoneDeviceNoLinkLimit(e.getPlayer())) {
                                 e.getPlayer().sendMessage(ChatColor.RED + "You don't have permission to have more than " + ChatColor.DARK_RED + C_Value.getMaxLinksPerDevice() + ChatColor.RED + " links for this " + ChatColor.DARK_RED + d.getDeviceType() + ChatColor.RED + ".");
                                 R_Links.remove(link);
                                 return;

@@ -82,7 +82,7 @@ public final class R_Manager {
             key += " (" + data + ")";
         C_Utility.getData("SenderBlockType").setValue(key);
         C_Utility.save();
-        //if(!value.equals("null"))
+        if(!value.equals("null"))
             WirelessRedstone.Log(new U_Log(U_Log.LogType.WARNING, "Invalid configuration for SenderBlockType. '" + value + "' is not a solid block. Block type has been set to '" + key + "'."));
     }
     private static void setRedstoneReceiver(){
@@ -109,7 +109,7 @@ public final class R_Manager {
         C_Utility.getData("ReceiverBlockType").setValue(key);
         C_Utility.save();
 
-        //if(!value.equals("null"))
+        if(!value.equals("null"))
             WirelessRedstone.Log(new U_Log(U_Log.LogType.WARNING, "Invalid configuration for ReceiverBlockType. '" + value + "' is not a solid block. Block type has been set to '" + key + "'."));
     }
 
