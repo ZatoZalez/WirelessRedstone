@@ -5,7 +5,7 @@ api-version: 1.14
 authors: [ ZatoZalez ]
 commands:
   givedevice:
-    usage: "/givedevice"
+    usage: "/givedevice <player> <devicetype> <amount>"
     description: "Give devices to yourself or others."
   cancellink:
     usage: "/cancellink"
