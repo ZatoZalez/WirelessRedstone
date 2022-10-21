@@ -1,13 +1,17 @@
 # <span style="color: #ff4d4d"><b><span style="font-size: 26px">WirelessRedstone </span></b><span style="font-size: 15px">v0.3</span></span><br>
 A simple redstone plugin that allows for wireless redstone signals to be sent over infinite distances and through worlds. This plugin is almost out of early development, any support, suggestions and help is appreciated. Join my discord at <a href="https://discord.gg/TsRTa7BUWm" target="_blank" class="externalLink" rel="nofollow">https://discord.gg/TsRTa7BUWm</a><br>
-<br>
-<br>
-
-<b>Click to Watch</b><br>
-[![Click to Watch](https://img.youtube.com/vi/testtttt/0.jpg)](https://www.youtube.com/watch?v=testtttt)
 
 <br>
 <br>
+<br>
+<i>Example of Plugin</i>
+
+![image](https://www.spigotmc.org/attachments/untitled-png.733200/)
+
+<br>
+<br>
+<br>
+
 <b><span style="font-size: 22px"><span style="color: #ff4d4d">Installation</span></span></b><br>
 <ul>
 <li>Drag &amp; drop the downloaded .jar file in your plugins folder and restart/reload your server.</li>
@@ -41,62 +45,80 @@ Without any delay, the <span style="color: #ff4d4d"><b>RedstoneReceiver</b></spa
 A <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span> can also power another <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, allowing for more compact redstone machines.
 <br>
 <br>
-<br>
-<br>
 
-![image](image)
-
+<b><span style="font-size: 18px"><span style="color: #ff4d4d">Permissions</span></span></b><br>
+Permissions are by default <b>disabled</b> in the configuration. Once enabled, those with the correct permissions can overwrite certain configuration settings.<br>
 <br>
-<br>
-<br>
-<br>
-to be edited...<br>
-<s><b><span style="font-size: 18px"><span style="color: #ff4d4d">Permissions</span></span></b><br>
-Permissions are by default <b>disabled</b>. Please read the configuration of the plugin in order to enable them. The following permissions can be used.<br>
-<br>
-Permission to use said commands:<br>
-<div style="padding-left: 30px"><i> wirelessredstone.commands.cancellink<br>
+Permission for using commands:<br>
+<div style="padding-left: 30px"><i> 
+wirelessredstone.commands.cancellink<br>
 wirelessredstone.commands.givedevice.redstonesender<br>
 wirelessredstone.commands.givedevice.redstonereceiver</i>&ZeroWidthSpace;</div><br>
 <br>
-Permission to place devices:<br>
-<div style="padding-left: 30px"><i> wirelessredstone.place.redstonesender<br>
-wirelessredstone.place.redstonereceiver</i>&ZeroWidthSpace;</div><br>
+Permission for using devices:<br>
+<div style="padding-left: 30px"><i>
+wirelessredstone.device.place<br>
+wirelessredstone.device.break<br>
+wirelessredstone.device.noplacelimit<br>
+wirelessredstone.device.nolinklimit<br>
+</i>&ZeroWidthSpace;</div><br>
 <br>
-Permission to break devices or linked devices:<br>
-<div style="padding-left: 30px"><i> wirelessredstone.break.redstonesender<br>
-wirelessredstone.break.redstonereceiver<br>
-wirelessredstone.break.link</i>&ZeroWidthSpace;</div><br>
-<br>
-Permission to link devices, crossworld or with no distance limit:<br>
-<div style="padding-left: 30px"><i> wirelessredstone.redstonedevice.link<br>
-wirelessredstone.redstonedevice.crossworld<br>
-wirelessredstone.redstonedevice.infinitedistance</i>&ZeroWidthSpace;</div><br>
+Permission for linking devices:<br>
+<div style="padding-left: 30px"><i> 
+wirelessredstone.link.create<br>
+wirelessredstone.link.break<br>
+wirelessredstone.link.nolimit<br>
+wirelessredstone.link.infinitedistance<br>
+wirelessredstone.link.crossworld<br>
+</i>&ZeroWidthSpace;</div><br>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Configuration</span></span></b><br>
-A simple configuration to modify limits, gameplay and other. When a value is set to 0, then this will remove the limit and function as unlimited.<br>
+Modify your experience by changing the configurations to your need. You can find a more elaborated list of config settings in the config.yml file of the plugin.<br>
+A value of 0 represents infinity.<br>
 <br>
-<div style="padding-left: 30px"><i>MaxLinksInServer: 0<br>
-MaxRedstoneDevicesInServer: 0<br>
-EnablePermissions: false<br>
+<div style="padding-left: 30px"><i>
+
+SenderBlockType: red_terracotta<br>
+ReceiverBlockType: green_terracotta<br>
+Permissions: true<br>
+Messages: true<br>
+MaxDeviceInServer: 0<br>
+MaxDevicesPerPlayer: 0<br>
+MaxLinksInServer: 0<br>
 MaxLinksPerPlayer: 0<br>
+MaxLinksPerDevice: 0<br>
 MaxLinkDistance: 0<br>
-AllowCrossWorldSignal: true</i>&ZeroWidthSpace;</div><br>
+CrossWorldSignals: true<br>
+ContactSignals: true<br>
+SignalDelay: 0<br>
+Overload: true<br>
+OverloadTrigger: 8<br>
+OverloadCooldown: 10<br>
+</i>&ZeroWidthSpace;</div><br>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">API Support</span></span></b><br>
-Although small and simple at the moment. This plugin supports a small number of API functions for other plugin developers to integrate and control WirelessRedstone.<br>
+The API can be accessed by anyone in anyway. This plugin supports a small number of API functions for other plugin developers to integrate and control WirelessRedstone.<br>
 <br>
-Import the plugin:<br>
-<div style="padding-left: 30px"><i>import me.zato.wirelessredstone.api;</i>&ZeroWidthSpace;</div><br>
-and access the api like such (example):<br>
-<div style="padding-left: 30px"><i>api.getRedstoneSender();</i>&ZeroWidthSpace;</div><br>
+Access the API:<br>
+<div style="padding-left: 30px"><i>
+U_Api api = new U_Api();
+</i>&ZeroWidthSpace;</div>
 <br>
 <br>
+<br>
+<i>Example of API usage</i>
+
+![image](https://www.spigotmc.org/attachments/api-png.733199/)
+
+<br>
+<br>
+<br>
+
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Community Support</span></span></b><br>
 If you have any further questions don't forget to contact me through discord or github.<br>
 Satisfied? Please leave a review!<br>
 <br>
-Check out my Discord for suggestions, tips, questions and other support.<br>
+Check out my Discord for suggestions, tips, questions and support.<br>
 <a href="https://discord.gg/TsRTa7BUWm" target="_blank" class="externalLink" rel="nofollow">https://discord.gg/TsRTa7BUWm</a>
 </blockquote></s>
 
