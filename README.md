@@ -56,7 +56,8 @@ Permission for using commands:<br>
 <div style="padding-left: 30px"><i> 
 wirelessredstone.commands.cancellink<br>
 wirelessredstone.commands.givedevice.redstonesender<br>
-wirelessredstone.commands.givedevice.redstonereceiver</i>&ZeroWidthSpace;</div><br>
+wirelessredstone.commands.givedevice.redstonereceiver
+</i>&ZeroWidthSpace;</div>
 <br>
 Permission for using devices:<br>
 <div style="padding-left: 30px"><i>
@@ -64,7 +65,7 @@ wirelessredstone.device.place<br>
 wirelessredstone.device.break<br>
 wirelessredstone.device.noplacelimit<br>
 wirelessredstone.device.nolinklimit<br>
-</i>&ZeroWidthSpace;</div><br>
+</i>&ZeroWidthSpace;</div>
 <br>
 Permission for linking devices:<br>
 <div style="padding-left: 30px"><i> 
@@ -72,7 +73,7 @@ wirelessredstone.link.create<br>
 wirelessredstone.link.break<br>
 wirelessredstone.link.nolimit<br>
 wirelessredstone.link.infinitedistance<br>
-wirelessredstone.link.crossworld<br>
+wirelessredstone.link.crossworld
 </i>&ZeroWidthSpace;</div><br>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Configuration</span></span></b><br>
