@@ -31,7 +31,7 @@ Use <b>/givedevice &lt;player&gt; &lt;devicetype&gt; &lt;amount&gt;</b> to give 
 <br>
 Upon placing down the devices anywhere in the world, you can <b>right </b>click either one to start the linking process. If you have clicked on a <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, you will be asked to click any <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span> to establish a link between these two devices.
 <br>
-You can cancel a linking progress by using <b>/cancellink</b>. A link will break if either devices break or get removed. You can have up to <b>infinitive</b> links per device.
+You can cancel a linking progress by using <b>/cancellink</b>. A link will break if either devices break or get removed. You can have up to <b>infinite</b> links per device.
 
 <br>
 <br>
