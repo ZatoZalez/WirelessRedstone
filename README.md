@@ -10,14 +10,15 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 
 <br>
 <br>
-<br>
 
 <b><span style="font-size: 22px"><span style="color: #ff4d4d">Installation</span></span></b><br>
 <ul>
 <li>Drag &amp; drop the downloaded .jar file in your plugins folder and restart/reload your server.</li>
 <li>Edit the configuration file to fit your demands.</li>
 <li>Leave the database file untouched to avoid losing redstone devices when restarting/reloading the plugin.</li>
-</ul><br>
+</ul>
+<br>
+<br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">
 How to use WirelessRedstone</span></span></b><br>
 
@@ -34,6 +35,8 @@ You can cancel a linking progress by using <b>/cancellink</b>. A link will break
 
 <br>
 <br>
+<br>
+
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">How do Redstone Devices work</span></span></b><br>
 As the name suggests, the <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, sends a redstone power signal towards any linked <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span>. The initial power signal is the highest redstone power the <span style="color: #ff4d4d"><b>RedstoneSender</b></span> is powered with.
 <br>
@@ -45,7 +48,7 @@ Without any delay, the <span style="color: #ff4d4d"><b>RedstoneReceiver</b></spa
 A <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span> can also power another <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, allowing for more compact redstone machines.
 <br>
 <br>
-
+<br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Permissions</span></span></b><br>
 Permissions are by default <b>disabled</b> in the configuration. Once enabled, those with the correct permissions can overwrite certain configuration settings.<br>
 <br>
@@ -105,12 +108,10 @@ U_Api api = new U_Api();
 </i>&ZeroWidthSpace;</div>
 <br>
 <br>
-<br>
 <i>Example of API usage</i>
 
 ![image](https://www.spigotmc.org/attachments/api-png.733199/)
 
-<br>
 <br>
 <br>
 
