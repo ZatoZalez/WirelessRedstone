@@ -3,8 +3,8 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 
 <br>
 <br>
-<br>
-<i>Example of Plugin</i>
+
+<i>Example of Plugin</i><br>
 
 ![image](https://www.spigotmc.org/attachments/untitled-png.733200/)
 
@@ -17,7 +17,6 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 <li>Edit the configuration file to fit your demands.</li>
 <li>Leave the database file untouched to avoid losing redstone devices when restarting/reloading the plugin.</li>
 </ul>
-<br>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">
 How to use WirelessRedstone</span></span></b><br>
@@ -98,7 +97,7 @@ SignalDelay: 0<br>
 Overload: true<br>
 OverloadTrigger: 8<br>
 OverloadCooldown: 10<br>
-</i>&ZeroWidthSpace;</div><br>
+</i>&ZeroWidthSpace;</div>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">API Support</span></span></b><br>
 The API can be accessed by anyone in anyway. This plugin supports a small number of API functions for other plugin developers to integrate and control WirelessRedstone.<br>
@@ -109,7 +108,7 @@ U_Api api = new U_Api();
 </i>&ZeroWidthSpace;</div>
 <br>
 <br>
-<i>Example of API usage</i>
+<i>Example of API usage</i><br>
 
 ![image](https://www.spigotmc.org/attachments/api-png.733199/)
 
@@ -122,5 +121,5 @@ Satisfied? Please leave a review!<br>
 <br>
 Check out my Discord for suggestions, tips, questions and support.<br>
 <a href="https://discord.gg/TsRTa7BUWm" target="_blank" class="externalLink" rel="nofollow">https://discord.gg/TsRTa7BUWm</a>
-</blockquote></s>
+</blockquote>
 
