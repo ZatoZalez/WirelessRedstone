@@ -7,7 +7,7 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class V_Manager {
-    public static String version = "0.0";
+    public static String version = "0.0.0";
     public static String getVersion(){
         String v = Bukkit.getVersion();
         v = v.substring(v.indexOf("(") + 1);
@@ -19,6 +19,7 @@ public class V_Manager {
 
     public static boolean isCompatible(){
         switch(getVersion()) {
+            case "1.17":
             case "1.18":
             case "1.19":
                 return true;
@@ -29,6 +30,8 @@ public class V_Manager {
 
     public static ItemStack[] getItemStack(){
         switch(version) {
+            case "1.17":
+                return V_1_17.getItemStack();
             case "1.18":
                 return V_1_18.getItemStack();
             case "1.19":
@@ -39,6 +42,8 @@ public class V_Manager {
 
     public static boolean cancelPistonEvent(BlockPhysicsEvent e, Block pistonBlock, Piston piston){
         switch(version) {
+            case "1.17":
+                return V_1_17.cancelPistonEvent(e, pistonBlock, piston);
             case "1.18":
                 return V_1_18.cancelPistonEvent(e, pistonBlock, piston);
             case "1.19":

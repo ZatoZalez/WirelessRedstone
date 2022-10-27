@@ -1,7 +1,7 @@
 name: WirelessRedstone
 version: '${project.version}'
 main: me.zatozalez.wirelessredstone.WirelessRedstone
-api-version: 1.18
+api-version: 1.17
 authors: [ ZatoZalez ]
 commands:
   givedevice:

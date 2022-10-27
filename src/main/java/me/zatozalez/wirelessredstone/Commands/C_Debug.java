@@ -33,6 +33,8 @@ public class C_Debug implements CommandExecutor {
         R_Device device = R_Devices.get(block.getLocation());
         if(device != null)
             Bukkit.broadcastMessage("power: " + device.getSignalPower());
+
+        Bukkit.broadcastMessage("block: " + block.getType().toString());
         return true;
     }
 }
