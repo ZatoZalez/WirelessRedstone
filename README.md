@@ -32,7 +32,9 @@ Upon placing down the devices anywhere in the world, you can <b>right </b>click 
 You can cancel a linking progress by using <b>/cancellink</b>. A link will break if either devices break or get removed. You can have up to <b>infinite</b> links per device.
 <br>
 <br>
+
 [![Tutorial](https://img.youtube.com/vi/O5CvW6SY454/0.jpg)](https://www.youtube.com/watch?v=O5CvW6SY454)
+
 <br>
 <br>
 
