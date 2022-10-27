@@ -23,7 +23,7 @@ public final class R_Manager {
 
     public static void initialize() {
         if(V_Manager.getItemStack() == null){
-            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Invalid materials for RedstoneSender and/or RedstoneReceiver. Disabling WirelessRedstone"));
+            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Invalid materials for RedstoneSender and/or RedstoneReceiver. Disabling WirelessRedstone."));
             Bukkit.getPluginManager().disablePlugin(WirelessRedstone.getPlugin());
             return;
         }

@@ -33,8 +33,8 @@ public final class WirelessRedstone extends JavaPlugin {
     private void initializePlugin() {
         plugin = this;
         Bukkit.getConsoleSender().sendMessage(getDescription().getFullName() + " by " + ChatColor.RED + getDescription().getAuthors().toString().replace("[", "").replace("]", ""));
-        if(V_Manager.isCompatible()){
-            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Unsupported version [" + V_Manager.getVersion() + "]. Disabling WirelessRedstone"));
+        if(!V_Manager.isCompatible()){
+            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Unsupported version [" + V_Manager.version + "]. Disabling WirelessRedstone."));
             Bukkit.getPluginManager().disablePlugin(WirelessRedstone.getPlugin());
             return;
         }
@@ -61,7 +61,7 @@ public final class WirelessRedstone extends JavaPlugin {
         new LM_DeviceMove(this);
         new LM_DevicePower(this);
 
-        //getCommand("debug").setExecutor(new C_Debug());
+        getCommand("debug").setExecutor(new C_Debug());
         getCommand("givedevice").setExecutor(new C_GiveDevice());
         getCommand("givedevice").setTabCompleter(new T_GiveDevice());
         getCommand("cancellink").setExecutor(new C_CancelLink());

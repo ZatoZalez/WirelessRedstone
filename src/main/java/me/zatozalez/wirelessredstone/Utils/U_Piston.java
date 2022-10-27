@@ -21,8 +21,26 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class U_Piston {
-    public static Material[] unmovableBlocks = { Material.OBSIDIAN, Material.BEDROCK, Material.NOTE_BLOCK, Material.CHEST, Material.FURNACE, Material.DISPENSER, Material.DROPPER, Material.SPAWNER};
-    public static Material[] breakingBlocks = { Material.PUMPKIN, Material.COBWEB, Material.DRAGON_EGG, Material.JACK_O_LANTERN };
+    public static Material[] unmovableBlocks =
+            {
+                    Material.OBSIDIAN,
+                    Material.BEDROCK,
+                    Material.NOTE_BLOCK,
+                    Material.CHEST,
+                    Material.FURNACE,
+                    Material.DISPENSER,
+                    Material.DROPPER,
+                    Material.SPAWNER
+            };
+    public static Material[] breakableBlocks =
+            {
+                    Material.PUMPKIN,
+                    Material.COBWEB,
+                    Material.DRAGON_EGG,
+                    Material.JACK_O_LANTERN,
+                    Material.GRASS,
+                    Material.TALL_GRASS
+            };
     public static boolean extend(Block pistonBlock){
         BlockData pistonData = pistonBlock.getBlockData();
         if (!(pistonData instanceof Directional) || !(pistonData instanceof Piston))
@@ -71,10 +89,13 @@ public class U_Piston {
             if(block.getType().equals(Material.AIR))
                 break;
 
-            //for (Material m : unmovableBlocks)
-            //    if (block.getType().equals(m)) {
-            //        return false;
-            //    }
+            if(unMoveable(block))
+                return false;
+
+            if(isBreakable(block)){
+                blockList.put(block, block.getRelative(blockFace).getLocation());
+                break;
+            }
 
             blockList.put(block, block.getRelative(blockFace).getLocation());
             if(i == maxPush)
@@ -87,8 +108,14 @@ public class U_Piston {
         int i = 0;
         for (Block block : reverseBlockList) {
             i++;
-            blockList.get(block).getBlock().setType(block.getType());
-            blockList.get(block).getBlock().setBlockData(block.getBlockData());
+
+            if(isBreakable(block)){
+                block.breakNaturally();
+            }
+            else {
+                blockList.get(block).getBlock().setType(block.getType());
+                blockList.get(block).getBlock().setBlockData(block.getBlockData());
+            }
             R_Device device = R_Devices.get(block.getLocation());
             if(device != null)
                 Bukkit.getServer().getPluginManager().callEvent(new E_DeviceMove(device, block.getLocation(), blockList.get(block)));
@@ -117,6 +144,10 @@ public class U_Piston {
         if(pistonBlock.getType().equals(Material.STICKY_PISTON))
         {
             Block block = pistonHead.getRelative(blockFace);
+            if(unMoveable(block) || isBreakable(block)){
+                pistonHead.setType(Material.AIR);
+                return false;
+            }
             pistonHead.setType(block.getType());
             pistonHead.setBlockData(block.getBlockData());
 
@@ -139,5 +170,19 @@ public class U_Piston {
         if(pistonBlock.getRelative(piston.getFacing()).equals(device.getBlock()))
             return false;
         return true;
+    }
+
+    private static boolean unMoveable(Block block){
+        for(Material mat : unmovableBlocks)
+            if(mat.equals(block.getType()))
+                return true;
+        return false;
+    }
+
+    private static boolean isBreakable(Block block){
+        for(Material mat : breakableBlocks)
+            if(mat.equals(block.getType()))
+                return true;
+        return false;
     }
 }

@@ -4,7 +4,7 @@ import me.zatozalez.wirelessredstone.Events.E_DeviceMove;
 import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Utils.U_Environment;
-import me.zatozalez.wirelessredstone.Utils.U_Piston;
+import me.zatozalez.wirelessredstone.Versions.V_Manager;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -60,15 +60,7 @@ public class LN_BlockMove implements Listener {
             if(device.isReceiver()) {
                 if(pistonBlock.getType().equals(Material.PISTON) || pistonBlock.getType().equals(Material.STICKY_PISTON)){
                     Piston piston = (Piston) pistonBlock.getBlockData();
-                    if(!e.getSourceBlock().equals(pistonBlock))
-                    {
-                        e.setCancelled(true);
-                        return;
-                    }
-                    if (!pistonBlock.isBlockIndirectlyPowered() && !piston.isExtended()){
-                        e.setCancelled(true);
-                        return;
-                    }
+                    V_Manager.cancelPistonEvent(e, pistonBlock, piston);
                 }
             }
         }

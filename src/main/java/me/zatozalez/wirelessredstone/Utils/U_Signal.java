@@ -46,7 +46,6 @@ public class U_Signal {
                 {
                     if(U_Piston.canBePowered(device, block)){
                         U_Piston.extend(block);
-
                     }
                 }
             }

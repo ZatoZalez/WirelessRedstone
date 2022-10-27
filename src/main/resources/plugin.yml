@@ -1,7 +1,7 @@
 name: WirelessRedstone
 version: '${project.version}'
 main: me.zatozalez.wirelessredstone.WirelessRedstone
-api-version: 1.14
+api-version: 1.18
 authors: [ ZatoZalez ]
 commands:
   givedevice:
@@ -10,3 +10,5 @@ commands:
   cancellink:
     usage: "/cancellink"
     description: "Cancel any on-going linking."
+  debug:
+    description: "Debugger"

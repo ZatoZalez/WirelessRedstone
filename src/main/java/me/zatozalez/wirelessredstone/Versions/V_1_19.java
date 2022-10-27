@@ -1,12 +1,10 @@
 package me.zatozalez.wirelessredstone.Versions;
 
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Piston;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class V_1_18 {
+public class V_1_19 {
     public static ItemStack[] getItemStack(){
         return new ItemStack[] {
                 new ItemStack(Material.valueOf("lime_terracotta".toUpperCase())),
@@ -14,12 +12,8 @@ public class V_1_18 {
         };
     }
 
-    public static boolean cancelPistonEvent(BlockPhysicsEvent e, Block pistonBlock, Piston piston){
-        if(!e.getSourceBlock().equals(pistonBlock) || (!pistonBlock.isBlockIndirectlyPowered() && !piston.isExtended()))
-        {
-            e.setCancelled(true);
-            return true;
-        }
-        return false;
+    public static boolean cancelPistonEvent(BlockPhysicsEvent e){
+        e.setCancelled(true);
+        return true;
     }
 }
