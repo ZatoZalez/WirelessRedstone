@@ -110,7 +110,7 @@ U_Api api = new U_Api();
 <br>
 <i>Example of API usage</i><br>
 
-![image]([https://www.spigotmc.org/attachments/api-png.733199/)
+![image](https://github.com/ZatoZalez/WirelessRedstone0.3/blob/master/api.png?raw=true)
 
 <br>
 <br>
