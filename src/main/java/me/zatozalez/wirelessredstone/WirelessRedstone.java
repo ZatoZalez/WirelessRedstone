@@ -61,7 +61,7 @@ public final class WirelessRedstone extends JavaPlugin {
         new LM_DeviceMove(this);
         new LM_DevicePower(this);
 
-        getCommand("debug").setExecutor(new C_Debug());
+        //getCommand("debug").setExecutor(new C_Debug());
         getCommand("givedevice").setExecutor(new C_GiveDevice());
         getCommand("givedevice").setTabCompleter(new T_GiveDevice());
         getCommand("cancellink").setExecutor(new C_CancelLink());

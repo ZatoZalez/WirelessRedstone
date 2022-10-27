@@ -10,5 +10,3 @@ commands:
   cancellink:
     usage: "/cancellink"
     description: "Cancel any on-going linking."
-  debug:
-    description: "Debugger"
