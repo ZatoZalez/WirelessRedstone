@@ -4,9 +4,8 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 <br>
 <br>
 
-<i>Example of Plugin</i><br>
-
-![image](https://www.spigotmc.org/attachments/untitled-png.733200/)
+<b><span style="font-size: 22px"><span style="color: #ff4d4d">Showcase</span></span></b><br>
+[![Showcase](https://img.youtube.com/vi/I6f77D2jJmU/0.jpg)](https://www.youtube.com/watch?v=I6f77D2jJmU)
 
 <br>
 <br>
@@ -32,7 +31,7 @@ Upon placing down the devices anywhere in the world, you can <b>right </b>click 
 <br>
 You can cancel a linking progress by using <b>/cancellink</b>. A link will break if either devices break or get removed. You can have up to <b>infinite</b> links per device.
 
-<br>
+[![Tutorial](https://img.youtube.com/vi/O5CvW6SY454/0.jpg)](https://www.youtube.com/watch?v=O5CvW6SY454)
 <br>
 <br>
 
