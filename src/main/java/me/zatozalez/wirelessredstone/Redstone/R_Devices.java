@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
+//REWORKED
 public class R_Devices {
     private static final LinkedHashMap<String, R_Device> devices = new LinkedHashMap<>();
     private static final LinkedHashMap<String, R_Device> broken_devices = new LinkedHashMap<>();
@@ -60,14 +61,12 @@ public class R_Devices {
         return null;
     }
 
-    public static void remove(String deviceid){
-        remove(get(deviceid));
-    }
-
     public static void remove(R_Device device){
         if(device == null)
             return;
         devices.remove(device.getId());
         broken_devices.put(device.getId(), device);
     }
+
+
 }

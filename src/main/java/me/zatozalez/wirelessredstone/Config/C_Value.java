@@ -1,7 +1,6 @@
 package me.zatozalez.wirelessredstone.Config;
 
-import org.bukkit.Bukkit;
-
+//REWORKED
 public class C_Value {
     public static int getMaxLinksInServer(){
         C_Data data = C_Utility.getData("MaxLinksInServer");
@@ -97,5 +96,29 @@ public class C_Value {
         C_Data data = C_Utility.getData("ContactSignals");
         if(data != null) return data.getBoolean();
         return true;
+    }
+
+    public static String getSenderItemName(){
+        C_Data data = C_Utility.getData("SenderItemName");
+        if(data != null) return data.getString();
+        return null;
+    }
+
+    public static String getSenderItemLore(){
+        C_Data data = C_Utility.getData("SenderItemLore");
+        if(data != null) return data.getString();
+        return null;
+    }
+
+    public static String getReceiverItemName(){
+        C_Data data = C_Utility.getData("ReceiverItemName");
+        if(data != null) return data.getString();
+        return null;
+    }
+
+    public static String getReceiverItemLore(){
+        C_Data data = C_Utility.getData("ReceiverItemLore");
+        if(data != null) return data.getString();
+        return null;
     }
 }

@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class U_Piston {
-    public static Material[] unmovableBlocks =
+    public static Material[] staticBlocks =
             {
                     Material.OBSIDIAN,
                     Material.BEDROCK,
@@ -30,16 +30,23 @@ public class U_Piston {
                     Material.FURNACE,
                     Material.DISPENSER,
                     Material.DROPPER,
-                    Material.SPAWNER
+                    Material.SPAWNER,
+                    Material.BEACON
             };
-    public static Material[] breakableBlocks =
+    public static Material[] fragileBlocks =
             {
                     Material.PUMPKIN,
                     Material.COBWEB,
                     Material.DRAGON_EGG,
                     Material.JACK_O_LANTERN,
                     Material.GRASS,
-                    Material.TALL_GRASS
+                    Material.TALL_GRASS,
+                    Material.LEVER,
+                    Material.REPEATER,
+                    Material.COMPARATOR,
+                    Material.REDSTONE_WIRE,
+                    Material.TORCH,
+                    Material.REDSTONE_TORCH
             };
     public static boolean extend(Block pistonBlock){
         BlockData pistonData = pistonBlock.getBlockData();
@@ -89,10 +96,10 @@ public class U_Piston {
             if(block.getType().equals(Material.AIR))
                 break;
 
-            if(unMoveable(block))
+            if(isStaticBlock(block))
                 return false;
 
-            if(isBreakable(block)){
+            if(isFragileBlock(block)){
                 blockList.put(block, block.getRelative(blockFace).getLocation());
                 break;
             }
@@ -109,7 +116,7 @@ public class U_Piston {
         for (Block block : reverseBlockList) {
             i++;
 
-            if(isBreakable(block)){
+            if(isFragileBlock(block)){
                 block.breakNaturally();
             }
             else {
@@ -142,26 +149,28 @@ public class U_Piston {
     private static boolean pull(Block pistonBlock, BlockFace blockFace){
         Block pistonHead = pistonBlock.getRelative(blockFace);
         if(pistonBlock.getType().equals(Material.STICKY_PISTON))
-        {
-            Block block = pistonHead.getRelative(blockFace);
-            if(unMoveable(block) || isBreakable(block)){
-                pistonHead.setType(Material.AIR);
-                return false;
-            }
-            pistonHead.setType(block.getType());
-            pistonHead.setBlockData(block.getBlockData());
-
-            R_Device device = R_Devices.get(block.getLocation());
-            if(device != null)
-                Bukkit.getServer().getPluginManager().callEvent(new E_DeviceMove(device, block.getLocation(), pistonHead.getLocation()));
-
-            block.setType(Material.AIR);
-            return true;
-        }
-        else
-            pistonHead.setType(Material.AIR);
+            return stickyPull(pistonHead, blockFace);
+        pistonHead.setType(Material.AIR);
         return false;
     }
+
+    private static boolean stickyPull(Block pistonHead, BlockFace blockFace){
+        Block block = pistonHead.getRelative(blockFace);
+        if(isStaticBlock(block) || isFragileBlock(block)){
+            pistonHead.setType(Material.AIR);
+            return false;
+        }
+        pistonHead.setType(block.getType());
+        pistonHead.setBlockData(block.getBlockData());
+
+        R_Device device = R_Devices.get(block.getLocation());
+        if(device != null)
+            Bukkit.getServer().getPluginManager().callEvent(new E_DeviceMove(device, block.getLocation(), pistonHead.getLocation()));
+
+        block.setType(Material.AIR);
+        return true;
+    }
+
 
     public static boolean canBePowered(R_Device device, Block pistonBlock){
         if(!(pistonBlock.getBlockData() instanceof Piston))
@@ -172,17 +181,17 @@ public class U_Piston {
         return true;
     }
 
-    private static boolean unMoveable(Block block){
-        for(Material mat : unmovableBlocks)
+    private static boolean isStaticBlock(Block block){
+        for(Material mat : staticBlocks)
             if(mat.equals(block.getType()))
                 return true;
         return false;
     }
 
-    private static boolean isBreakable(Block block){
-        for(Material mat : breakableBlocks)
+    private static boolean isFragileBlock(Block block){
+        for(Material mat : fragileBlocks)
             if(mat.equals(block.getType()))
                 return true;
-        return false;
+        return block.isPassable();
     }
 }

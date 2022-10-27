@@ -3,10 +3,16 @@ version: '${project.version}'
 main: me.zatozalez.wirelessredstone.WirelessRedstone
 api-version: 1.17
 authors: [ ZatoZalez ]
+description: Plugin for Wireless Redstone.
+website: https://discord.gg/TsRTa7BUWm
+
 commands:
-  givedevice:
-    usage: "/givedevice <player> <devicetype> <amount>"
-    description: "Give devices to yourself or others."
-  cancellink:
-    usage: "/cancellink"
-    description: "Cancel any on-going linking."
+  device:
+    usage: "/device <info/give/link>"
+    description: "View, give or manage Redstone Devices."
+  wirelessredstone:
+    aliases: "wr"
+    usage: "/wirelessredstone <reload/disable>"
+    description: "Manage the WirelessRedstone plugin."
+  debug:
+    usage: "debug"

@@ -1,12 +1,9 @@
 package me.zatozalez.wirelessredstone.Redstone;
 
 import me.zatozalez.wirelessredstone.Config.C_Value;
-import me.zatozalez.wirelessredstone.Utils.U_Environment;
+import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -32,11 +29,11 @@ public class R_Link {
 
             Player player = Bukkit.getPlayer(getSender().getPlayerId());
             if(player != null && C_Value.allowMessages()) {
-                player.sendMessage(ChatColor.GOLD + "Two of your devices are overloading.");
+                player.sendMessage(M_Utility.getMessage("device_overload"));
                 if (!getSender().getPlayerId().equals(getReceiver().getPlayerId())) {
                     player = Bukkit.getPlayer(getReceiver().getPlayerId());
                     if (player != null)
-                        player.sendMessage(ChatColor.GOLD + "Two of your devices are overloading.");
+                        player.sendMessage(M_Utility.getMessage("device_overload"));
                 }
             }
             return;
@@ -68,15 +65,19 @@ public class R_Link {
     public String getId() {
         return id;
     }
+
     public UUID getPlayerId() {
         return playerid;
     }
+
     public R_Device getSender(){
         return sender;
     }
+
     public R_Device getReceiver(){
         return receiver;
     }
+
     public R_Device getLoneDevice(){
         if(isLinked())
             return null;
@@ -85,6 +86,7 @@ public class R_Link {
             return receiver;
         return sender;
     }
+
     public String getInline() {
         LinkedHashMap<String, String> inlineMap = new LinkedHashMap<>();
         if(playerid != null)
@@ -105,6 +107,7 @@ public class R_Link {
         if(playerid != null)
             this.playerid = playerid;
     }
+
     public void setPlayerId(String playerid){
         if(playerid != null)
             this.playerid = UUID.fromString(playerid);
@@ -114,7 +117,7 @@ public class R_Link {
         if(device1 == null || device2 == null || device1.getDeviceType().equals(device2.getDeviceType()))
             return;
 
-        if(device1.getDeviceType().equals(R_Device.DeviceType.RedstoneSender)){
+        if(device1.getDeviceType().equals(DeviceType.RedstoneSender)){
             sender = device1;
             receiver = device2;
         }
@@ -130,6 +133,7 @@ public class R_Link {
             receiver.emitSignal(sender.getSignalPower());
         }
     }
+
     public void destroy(){
         if(!isLinked())
             return;
@@ -143,6 +147,7 @@ public class R_Link {
     public boolean isLinked(){
         return sender != null && receiver != null;
     }
+
     public boolean exists(){
         if(sender == null || receiver == null)
             return false;

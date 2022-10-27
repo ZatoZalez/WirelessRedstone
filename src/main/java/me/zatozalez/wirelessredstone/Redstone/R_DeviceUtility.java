@@ -15,12 +15,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+//REWORKED
 public class R_DeviceUtility {
     private static final String filePath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath() + "/devices/";
 
     public static void initialize(){
         read();
     }
+
     private static void create() {
         try {
             if(!Files.isDirectory(Paths.get(filePath)))
@@ -29,6 +31,7 @@ public class R_DeviceUtility {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not create directory " + filePath +  "\n" + e.getMessage()));
         }
     }
+
     private static void read(){
         create();
 
@@ -47,6 +50,7 @@ public class R_DeviceUtility {
         if(count > 0)
             WirelessRedstone.Log(new U_Log(U_Log.LogType.INFORMATION, ChatColor.RED + "" + count + ChatColor.GRAY + " Device(s) have been loaded."));
     }
+
     public static void save(){
         if(R_Devices.getList() == null)
             return;
@@ -77,6 +81,7 @@ public class R_DeviceUtility {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not save to " + file.getAbsolutePath() +  "\n" + e.getMessage()));
         }
     }
+
     private static void removeDevice(R_Device device){
         File file = new File(filePath + device.getId() + ".json");
         try {
@@ -85,6 +90,7 @@ public class R_DeviceUtility {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not delete " + file.getAbsolutePath() +  "\n" + e.getMessage()));
         }
     }
+
     private static boolean readFile(File file){
         try {
             List<String> lines = new ArrayList<>();
@@ -104,7 +110,7 @@ public class R_DeviceUtility {
 
             String id = file.getName().split("[.]")[0];
             Location location;
-            R_Device.DeviceType deviceType;
+            DeviceType deviceType;
 
             if (id == null || !map.containsKey("devicetype") || !map.containsKey("location"))
                 return false;
@@ -112,7 +118,7 @@ public class R_DeviceUtility {
             String[] coords = map.get("location").split(",");
             if(coords.length != 3) return false;
             location = new Location(Bukkit.getServer().getWorld(UUID.fromString(map.get("world"))), U_Converter.getDoubleFromString(coords[0]), U_Converter.getDoubleFromString(coords[1]), U_Converter.getDoubleFromString(coords[2]));
-            deviceType = R_Device.DeviceType.valueOf(map.get("devicetype"));
+            deviceType = DeviceType.valueOf(map.get("devicetype"));
 
             R_Device device = new R_Device(file.getName().split("[.]")[0], deviceType, location);
 

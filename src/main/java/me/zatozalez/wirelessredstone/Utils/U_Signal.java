@@ -23,45 +23,23 @@ public class U_Signal {
         for(Block block : U_Environment.GetSurroundingBlocks(device.getBlock())){
             BlockData data = block.getBlockData();
             if (data instanceof AnaloguePowerable) {
-                AnaloguePowerable analoguePowerable = (AnaloguePowerable) block.getBlockData();
-                analoguePowerable.setPower(signalPower);
-                block.setBlockData(analoguePowerable);
+                powerAnaloguePowerable(block, signalPower);
                 continue;
             }
-
             if (data instanceof Powerable) {
-                Powerable powerable = (Powerable) block.getBlockData();
-                powerable.setPowered((signalPower > 0));
-                block.setBlockData(powerable);
+                powerPowerable(block, signalPower);
                 continue;
             }
-
             if(data instanceof Piston){
-                if(device.getSignalPower() == 0){
-                    if(U_Piston.canBePowered(device, block)){
-                        U_Piston.retract(block);
-                    }
-                }
-                else
-                {
-                    if(U_Piston.canBePowered(device, block)){
-                        U_Piston.extend(block);
-                    }
-                }
+                powerPiston(device, block);
+                continue;
             }
-
-            if(C_Value.allowContactSignals()) {
-                R_Device sender = R_Devices.get(block.getLocation());
-                if (sender != null && sender.isSender()) {
-                    if (!sender.isLinkedWith(device))
-                        sender.updateSignalPower();
-                }
-            }
-
             if(data instanceof Lightable){
-                Lightable lightable = (Lightable) block.getBlockData();
-                lightable.setLit((signalPower > 0));
-                block.setBlockData(lightable);
+                powerLightable(block, signalPower);
+                continue;
+            }
+            if(C_Value.allowContactSignals()) {
+                powerDevices(device, block);
             }
         }
     }
@@ -118,5 +96,41 @@ public class U_Signal {
                 device.sendSignal();
             }
         }.runTaskLater(WirelessRedstone.getPlugin(), 0);
+    }
+
+    private static void powerAnaloguePowerable(Block block, int signalPower){
+        AnaloguePowerable analoguePowerable = (AnaloguePowerable) block.getBlockData();
+        analoguePowerable.setPower(signalPower);
+        block.setBlockData(analoguePowerable);
+    }
+
+    private static void powerPowerable(Block block, int signalPower){
+        Powerable powerable = (Powerable) block.getBlockData();
+        powerable.setPowered((signalPower > 0));
+        block.setBlockData(powerable);
+    }
+
+    private static void powerPiston(R_Device device, Block block){
+        if(!U_Piston.canBePowered(device, block))
+            return;
+
+        if(device.getSignalPower() == 0)
+            U_Piston.retract(block);
+        else
+            U_Piston.extend(block);
+    }
+
+    private static void powerLightable(Block block, int signalPower){
+        Lightable lightable = (Lightable) block.getBlockData();
+        lightable.setLit((signalPower > 0));
+        block.setBlockData(lightable);
+    }
+
+    private static void powerDevices(R_Device device, Block block){
+        R_Device sender = R_Devices.get(block.getLocation());
+        if (sender != null && sender.isSender()) {
+            if (!sender.isLinkedWith(device))
+                sender.updateSignalPower();
+        }
     }
 }

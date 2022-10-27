@@ -12,6 +12,7 @@ public class R_Links {
     public static LinkedHashMap<String, R_Link> getList(){
         return links;
     }
+
     public static List<R_Link> getList(UUID playerId){
         List<R_Link> list = new ArrayList<>();
         for(R_Link link : links.values())
@@ -19,6 +20,7 @@ public class R_Links {
                 list.add(link);
         return list;
     }
+
     public static LinkedHashMap<String, R_Link> getBrokenList(){
         return broken_links;
     }
@@ -27,6 +29,7 @@ public class R_Links {
         add(false, link);
         return link;
     }
+
     public static R_Link add(boolean override, R_Link link){
         R_Link placeHolderLink = null;
         for(R_Link l : links.values())
@@ -43,12 +46,11 @@ public class R_Links {
         links.put(link.getId(), link);
         return link;
     }
+
     public static R_Link get(String linkid){
         return links.get(linkid);
     }
-    public static void remove(String deviceid){
-        remove(get(deviceid));
-    }
+
     public static void remove(R_Link link){
         if(link == null)
             return;

@@ -13,19 +13,21 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+//REWORKED
 public class C_Utility {
 
     private static ArrayList<C_Data> configData = new ArrayList<>();
     private static final String configPath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath();
     private static final String configFile = "config.yml";
 
-    public static void initialize() {
+    public static void initialize(boolean reload) {
         try {
-            read();
+            read(reload);
         } catch (Exception e) {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not create " + configFile + ".\n" + e.getMessage()));
         }
     }
+
     private static void create() {
         try {
             String data = "";
@@ -49,7 +51,7 @@ public class C_Utility {
         }
     }
 
-    public static void read() {
+    public static void read(boolean reload) {
         File file = new File(configPath + "/" + configFile);
         if (!file.exists()) {
             create();
@@ -95,16 +97,19 @@ public class C_Utility {
         if (tempData.size() < 1)
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "The " + configFile + " could not be read. Creating new config..."));
         configData = tempData;
-        create();
+
+        if(!reload)
+            create();
     }
 
     public static void save() {
         File file = new File(configPath + "/" + configFile);
+        Bukkit.broadcastMessage("name5.1: " + C_Value.getSenderItemName());
         if (!file.exists()) {
             create();
             return;
         }
-
+        Bukkit.broadcastMessage("name5.2: " + C_Value.getSenderItemName());
         try {
             String data = "";
             for (C_Data cd : configData) {
@@ -121,11 +126,13 @@ public class C_Utility {
         } catch (Exception e) {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not create " + configFile + ".\n" + e.getMessage()));
         }
+        Bukkit.broadcastMessage("name5.3: " + C_Value.getSenderItemName());
     }
 
     public static C_Data addData(String key, Object value) {
         return addData(key, value, null);
     }
+
     public static C_Data addData(String key, Object value, String comment) {
         for (C_Data cd : configData)
             if (cd.isValid() && cd.getKey().equalsIgnoreCase(key))
@@ -137,6 +144,7 @@ public class C_Utility {
         configData.add(data);
         return data;
     }
+
     public static C_Data addData(String description) {
         for (C_Data cd : configData)
             if (cd.isDescription() && cd.getDescription().equalsIgnoreCase(description) && !cd.getDescription().equals(""))
@@ -145,11 +153,19 @@ public class C_Utility {
         configData.add(data);
         return data;
     }
+
     public static C_Data getData(String key) {
         for (C_Data data : configData)
             if (data.isValid() && data.getKey().equalsIgnoreCase(key))
                 return data;
         return null;
+    }
+
+    public static boolean hasData(String key){
+        for (C_Data data : configData)
+            if(data.isValid() && data.getKey().equals(key))
+                return true;
+        return false;
     }
 
     @Deprecated

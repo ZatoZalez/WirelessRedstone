@@ -1,7 +1,6 @@
 package me.zatozalez.wirelessredstone.Config;
 
-import org.bukkit.Bukkit;
-
+//REWORKED
 public class C_Data {
     private String key;
     private String value;
@@ -14,6 +13,7 @@ public class C_Data {
         this.key = key;
         this.value = value;
     }
+
     public C_Data(String description){
         isdescription = true;
         this.description = description;
@@ -28,30 +28,38 @@ public class C_Data {
     public String getKey(){
         return key;
     }
+
     public String getValue(){
         String v = value;
         if(v.startsWith("\"") && v.endsWith("\""))
             v = value.substring(1, v.length() - 1);
         return v;
     }
+
     public String getComment(){
         return comment;
     }
+
     public String getString(){
         return value;
     }
+
     public boolean getBoolean(){
         return Boolean.parseBoolean(value);
     }
+
     public int getInt(){
         return Integer.parseInt(value);
     }
+
     public double getDouble(){
         return Double.parseDouble(value);
     }
+
     public String getDescription(){
         return description;
     }
+
     public String getInline(){
         if(!isDescription())
             if(hasComment())
@@ -66,6 +74,7 @@ public class C_Data {
     public void setValue(Object value){
         this.value = value.toString();
     }
+
     public void setComment(String comment){
         this.comment = comment;
     }
@@ -73,6 +82,7 @@ public class C_Data {
     public boolean isDescription(){
         return isdescription;
     }
+
     public boolean hasComment(){
         return (comment != null);
     }

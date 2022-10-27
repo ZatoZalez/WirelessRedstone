@@ -22,11 +22,6 @@ public class R_Device {
 
     private int signalPower;
 
-    public enum DeviceType {
-        RedstoneSender,
-        RedstoneReceiver
-    }
-
     public R_Device(DeviceType deviceType, Block block){
         this.id = UUID.randomUUID().toString();
         this.deviceType = deviceType;
@@ -42,41 +37,51 @@ public class R_Device {
     public String getId() {
         return id;
     }
+
     public UUID getPlayerId() {
         return playerid;
     }
+
     public DeviceType getDeviceType() {
         return deviceType;
     }
+
     public int getSignalPower() { return signalPower; }
+
     public DeviceType getOppositeDeviceType() {
         if(deviceType.equals(DeviceType.RedstoneSender))
             return DeviceType.RedstoneReceiver;
         else
             return DeviceType.RedstoneSender;
     }
+
     public List<R_Link> getLinks(){
         List<R_Link> list = new ArrayList<>();
         for(String linkid : links)
             list.add(R_Links.get(linkid));
         return list;
     }
+
     public Location getLocation() {
         return location;
     }
+
     public World getWorld(){
         if(getLocation() == null)
             return null;
         return location.getWorld();
     }
+
     public Block getBlock(){
         if(getWorld() == null || getLocation() == null)
             return null;
         return getWorld().getBlockAt(getLocation());
     }
+
     public int getLinkCount(){
         return links.size();
     }
+
     public String getInline() {
         LinkedHashMap<String, String> inlineMap = new LinkedHashMap<>();
         if(playerid != null)
@@ -103,6 +108,7 @@ public class R_Device {
     public boolean isLinked(){
         return links.size() > 0;
     }
+
     public boolean isLinkedWith(R_Device device){
         if(!isLinked() || !device.isLinked())
             return false;
@@ -112,19 +118,24 @@ public class R_Device {
                 return true;
         return false;
     }
+
     public boolean isOverloaded() { return isOverloaded; }
+
     public boolean isSender() { return (DeviceType.RedstoneSender.equals(deviceType)); }
+
     public boolean isReceiver() { return (DeviceType.RedstoneReceiver.equals(deviceType)); }
 
     public void sendSignal(){
         sendSignal(signalPower);
     }
+
     public void sendSignal(int signalPower) {
         if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneReceiver))
             return;
 
         U_Signal.send(this, signalPower);
     }
+
     public void emitSignal(int signalPower){
         if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneSender))
             return;
@@ -136,6 +147,7 @@ public class R_Device {
 
         U_Signal.emit(this, signalPower);
     }
+
     public void overload(){
         if(isOverloaded)
             return;
@@ -158,6 +170,7 @@ public class R_Device {
             }
         }.runTaskLater(WirelessRedstone.getPlugin(), C_Value.getOverloadCooldown() * 20);
     }
+
     private void spawnOverloadParticle(Color color){
         Particle particle = Particle.REDSTONE;
         Particle.DustOptions dustOptions = new Particle.DustOptions(color, 1.0F);
@@ -174,14 +187,15 @@ public class R_Device {
         }
     }
 
-
     public void destroyLinks(){
         for(R_Link l : getLinks())
             l.destroy();
     }
+
     public void addLink(String link){
         links.add(link);
     }
+
     public void removeLink(String link){
         links.remove(link);
     }
@@ -190,14 +204,18 @@ public class R_Device {
         if(playerid != null)
             this.playerid = playerid;
     }
+
     public void setPlayerId(String playerid){
         if(playerid != null)
             this.playerid = UUID.fromString(playerid);
     }
+
     public void setLocation(Location location){
         this.location = location;
     }
+
     public void setSignalPower(int signalPower) { this.signalPower = signalPower; }
+
     public void updateSignalPower() {
         U_Signal.update(this);
     }
@@ -207,10 +225,10 @@ public class R_Device {
             return false;
         Block block = location.getBlock();
         if(deviceType.equals(DeviceType.RedstoneSender))
-            if(!block.getType().equals(R_Manager.RedstoneSenderMaterial))
+            if(!block.getType().equals(R_Items.RedstoneSender.material))
                 return false;
         if(deviceType.equals(DeviceType.RedstoneReceiver))
-            if(!block.getType().equals(R_Manager.RedstoneReceiverMaterial))
+            if(!block.getType().equals(R_Items.RedstoneReceiver.material))
                 return false;
         return true;
     }

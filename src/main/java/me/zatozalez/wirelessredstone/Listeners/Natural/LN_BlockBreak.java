@@ -1,22 +1,19 @@
 package me.zatozalez.wirelessredstone.Listeners.Natural;
 
 import me.zatozalez.wirelessredstone.Events.E_DeviceBreak;
+import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
-import me.zatozalez.wirelessredstone.Redstone.R_Links;
-import me.zatozalez.wirelessredstone.Redstone.R_Manager;
-import me.zatozalez.wirelessredstone.Utils.U_Environment;
+import me.zatozalez.wirelessredstone.Redstone.R_Items;
 import me.zatozalez.wirelessredstone.Utils.U_Permissions;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.AnaloguePowerable;
-import org.bukkit.block.data.Powerable;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,20 +26,20 @@ public class LN_BlockBreak implements Listener {
     public void onEvent(BlockBreakEvent e) {
         Location location = e.getBlock().getLocation();
         R_Device device = R_Devices.get(location);
-
+        Player player = e.getPlayer();
         if(device == null)
             return;
 
-        if(U_Permissions.wirelessRedstonePermissionsEnabled())
-            if(!U_Permissions.wirelessRedstoneDeviceBreak(e.getPlayer())){
-                e.getPlayer().sendMessage(ChatColor.RED + "You don't have permission to destroy devices.");
+        if(U_Permissions.isEnabled())
+            if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_BREAK)){
+                player.sendMessage(M_Utility.getMessage("device_no_permission_break"));
                 e.setCancelled(true);
                 return;
             }
 
-        if(U_Permissions.wirelessRedstonePermissionsEnabled())
-            if(!U_Permissions.wirelessRedstoneLinkBreak(e.getPlayer()) && device.isLinked()){
-                e.getPlayer().sendMessage(ChatColor.RED + "You don't have permission to destroy linked devices.");
+        if(U_Permissions.isEnabled())
+            if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_BREAK) && device.isLinked()){
+                player.sendMessage(M_Utility.getMessage("device_no_permission_break_link"));
                 e.setCancelled(true);
                 return;
             }
@@ -50,9 +47,9 @@ public class LN_BlockBreak implements Listener {
         if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
             ItemStack item;
             if (device.isSender())
-                item = R_Manager.RedstoneSender;
+                item = R_Items.RedstoneSender.itemStack;
             else
-                item = R_Manager.RedstoneReceiver;
+                item = R_Items.RedstoneReceiver.itemStack;
             device.getWorld().dropItemNaturally(device.getLocation(), item);
         }
 
@@ -60,7 +57,7 @@ public class LN_BlockBreak implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent3(EntityExplodeEvent e) {
+    public void onEvent2(EntityExplodeEvent e) {
         for(Block block : e.blockList())
         {
             Location location = block.getLocation();
@@ -71,12 +68,11 @@ public class LN_BlockBreak implements Listener {
 
             ItemStack item;
             if(device.isSender())
-                item = R_Manager.RedstoneSender;
+                item = R_Items.RedstoneSender.itemStack;
             else
-                item = R_Manager.RedstoneReceiver;
+                item = R_Items.RedstoneReceiver.itemStack;
             block.setType(Material.AIR);
             block.getWorld().dropItemNaturally(block.getLocation(), item);
-
             Bukkit.getServer().getPluginManager().callEvent(new E_DeviceBreak(device, e));
         }
     }

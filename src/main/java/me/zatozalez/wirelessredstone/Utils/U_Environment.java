@@ -1,6 +1,5 @@
 package me.zatozalez.wirelessredstone.Utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -21,6 +20,7 @@ public class U_Environment {
         blocks.add(powerBlock.getRelative(BlockFace.WEST));
         return blocks;
     }
+
     public static boolean IsFacing(Block block, Block powerBlock){
         if(powerBlock == null)
             return false;

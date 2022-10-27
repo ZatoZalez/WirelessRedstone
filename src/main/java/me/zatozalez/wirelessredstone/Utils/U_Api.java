@@ -10,9 +10,9 @@ import java.util.UUID;
 public class U_Api {
     public U_Api(){ }
 
-    public ItemStack getRedstoneSender(){ return R_Manager.RedstoneSender; }
+    public ItemStack getRedstoneSender(){ return R_Items.RedstoneSender.itemStack; }
 
-    public ItemStack getRedstoneReceiver(){ return R_Manager.RedstoneSender; }
+    public ItemStack getRedstoneReceiver(){ return R_Items.RedstoneReceiver.itemStack; }
 
     public List<R_Device> getAllRedstoneDevices(){ return new ArrayList<>(R_Devices.getList().values()); }
 
