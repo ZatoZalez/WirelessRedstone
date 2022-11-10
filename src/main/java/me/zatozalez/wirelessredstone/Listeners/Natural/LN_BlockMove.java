@@ -49,11 +49,8 @@ public class LN_BlockMove implements Listener {
             return;
         }
 
-        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        for(R_Device device : U_Environment.getSurroundingDevices(pistonBlock))
         {
-            Location location = block.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 
@@ -111,11 +108,8 @@ public class LN_BlockMove implements Listener {
     }
 
     private void roulette(Block pistonBlock, BlockPistonRetractEvent e){
-        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        for(R_Device device : U_Environment.getSurroundingDevices(pistonBlock))
         {
-            Location location = block.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 
@@ -132,11 +126,8 @@ public class LN_BlockMove implements Listener {
 
     private boolean parentTouchesDevice(Block headBlock){
         Block pistonBlock = getParentPiston(headBlock);
-        for(Block block : U_Environment.GetSurroundingBlocks(pistonBlock))
+        for(R_Device device : U_Environment.getSurroundingDevices(pistonBlock))
         {
-            Location location = block.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 

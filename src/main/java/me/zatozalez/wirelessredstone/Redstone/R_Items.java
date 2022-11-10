@@ -11,11 +11,14 @@ public class R_Items {
 
     public static void initialize(){
         RedstoneSender = new R_Item(DeviceType.RedstoneSender);
-        RedstoneReceiver = new R_Item(DeviceType.RedstoneReceiver);
+        if(RedstoneSender.valid)
+            RedstoneReceiver = new R_Item(DeviceType.RedstoneReceiver);
     }
 
     public static void unload(){
+        if(RedstoneSender != null)
         RedstoneSender.removeRecipe();
+        if(RedstoneReceiver != null)
         RedstoneReceiver.removeRecipe();
     }
 

@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -20,8 +21,9 @@ public class R_LinkUtility {
     }
     private static void create() {
         try {
-            if(!Files.isDirectory(Paths.get(filePath)))
-                Files.createDirectories(Paths.get(filePath));
+            Path path = Paths.get(filePath);
+            if(!Files.isDirectory(path))
+                Files.createDirectories(path);
         } catch(Exception e) {
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not create directory " + filePath +  "\n" + e.getMessage()));
         }

@@ -26,7 +26,7 @@ public class C_Set {
 
         addDescription("IMPORTANT: Changing block types will disable all placed redstone devices of other materials.");
         addDescription("Modify the block type of both devices. At invalid block type it will set the default type.");
-        addDescription("TIP: use https://minecraftitemids.com/ for the correct item ids.");
+        addDescription("TIP: Use https://minecraftitemids.com/ for the correct item ids.");
 
         addKeyAndValue("SenderBlockType", "null");
         addKeyAndValue("ReceiverBlockType", "null");

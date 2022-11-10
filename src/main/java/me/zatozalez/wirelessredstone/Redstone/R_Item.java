@@ -26,6 +26,7 @@ public class R_Item {
     public DeviceType itemType;
     public ShapedRecipe recipe;
     public String secretCode;
+    public boolean valid = false;
 
     public R_Item(DeviceType itemType){
         this.itemType = itemType;
@@ -48,6 +49,7 @@ public class R_Item {
         set();
         createItemStack();
         createRecipe();
+        valid = true;
     }
 
     private void set(){

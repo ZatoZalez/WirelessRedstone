@@ -32,19 +32,23 @@ public class LN_BlockBreak implements Listener {
 
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_BREAK)){
-                player.sendMessage(M_Utility.getMessage("device_no_permission_break"));
                 e.setCancelled(true);
+                player.sendMessage(M_Utility.getMessage("device_no_permission_break"));
                 return;
             }
 
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_BREAK) && device.isLinked()){
-                player.sendMessage(M_Utility.getMessage("device_no_permission_break_link"));
                 e.setCancelled(true);
+                player.sendMessage(M_Utility.getMessage("device_no_permission_break_link"));
                 return;
             }
 
+
         if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+            e.getBlock().setType(Material.AIR);
+
+            e.setCancelled(true);
             ItemStack item;
             if (device.isSender())
                 item = R_Items.RedstoneSender.itemStack;

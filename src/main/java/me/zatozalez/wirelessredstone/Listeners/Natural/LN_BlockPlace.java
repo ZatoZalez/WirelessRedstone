@@ -79,11 +79,8 @@ public class LN_BlockPlace implements Listener {
     public void onEvent2(BlockPlaceEvent e){
         Block block = e.getBlock();
         if(!(block.getBlockData() instanceof AnaloguePowerable) && !(block.getBlockData() instanceof Powerable)) return;
-        for(Block b : U_Environment.GetSurroundingBlocks(block))
+        for(R_Device device : U_Environment.getSurroundingDevices(block))
         {
-            Location location = b.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 

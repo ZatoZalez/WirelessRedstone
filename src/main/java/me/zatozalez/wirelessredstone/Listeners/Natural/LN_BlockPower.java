@@ -13,6 +13,7 @@ import org.bukkit.block.data.AnaloguePowerable;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
@@ -39,11 +40,8 @@ public class LN_BlockPower implements Listener {
     @EventHandler
     public void onEvent2(BlockPhysicsEvent e){
         Block block = e.getBlock();
-        for(Block b : U_Environment.GetSurroundingBlocks(block))
+        for(R_Device device : U_Environment.getSurroundingDevices(block))
         {
-            Location location = b.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 
@@ -59,11 +57,8 @@ public class LN_BlockPower implements Listener {
     }
 
     private void roulette(Block powerBlock, BlockRedstoneEvent e){
-        for(Block block : U_Environment.GetSurroundingBlocks(powerBlock))
+        for(R_Device device : U_Environment.getSurroundingDevices(powerBlock))
         {
-            Location location = block.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 

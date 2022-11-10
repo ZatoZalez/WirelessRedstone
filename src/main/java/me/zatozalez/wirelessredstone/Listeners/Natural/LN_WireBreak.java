@@ -29,18 +29,15 @@ public class LN_WireBreak implements Listener {
     }
 
     private void Roulette(Block powerBlock){
-        for(Block block : U_Environment.GetSurroundingBlocks(powerBlock))
+        for(R_Device device : U_Environment.getSurroundingDevices(powerBlock))
         {
-            Location location = block.getLocation();
-            R_Device device = R_Devices.get(location);
-
             if(device == null)
                 continue;
 
             if(device.isReceiver())
                 continue;
 
-            if (U_Environment.IsFacing(block, powerBlock))
+            if (U_Environment.isFacing(device.getBlock(), powerBlock))
                 Bukkit.getServer().getPluginManager().callEvent(new E_DevicePower(device));
         }
     }

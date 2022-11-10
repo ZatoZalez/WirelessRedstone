@@ -31,6 +31,7 @@ public final class WirelessRedstone extends JavaPlugin {
 
     private void initializePlugin(boolean reload) {
         plugin = this;
+        V_Manager.setVersion();
         Bukkit.getConsoleSender().sendMessage(getDescription().getFullName() + " by " + ChatColor.RED + getDescription().getAuthors().toString().replace("[", "").replace("]", ""));
         if(!V_Manager.isCompatible()){
             WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Unsupported version [" + V_Manager.version + "]. Disabling WirelessRedstone."));
@@ -52,6 +53,7 @@ public final class WirelessRedstone extends JavaPlugin {
         if(!reload)
             for(R_Link link : R_Links.getList().values())
                 if(link.isLinked()){
+                    link.getReceiver().setUpdating(true);
                     link.getSender().updateSignalPower();
                 }
 
@@ -68,6 +70,8 @@ public final class WirelessRedstone extends JavaPlugin {
         new LN_WireBreak(this);
         new LN_RecipeUnlock(this);
         new LN_PlayerJoin(this);
+        new LN_TorchPower(this);
+        new LN_HopperPower(this);
 
         new LM_DevicePlace(this);
         new LM_DeviceBreak(this);

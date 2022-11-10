@@ -17,9 +17,8 @@ public class R_Device {
     private Location location;
     private final DeviceType deviceType;
     private final List<String> links = new ArrayList<>();
-
     private boolean isOverloaded;
-
+    private boolean updating;
     private int signalPower;
 
     public R_Device(DeviceType deviceType, Block block){
@@ -121,6 +120,10 @@ public class R_Device {
 
     public boolean isOverloaded() { return isOverloaded; }
 
+    public boolean isUpdating(){
+        return updating;
+    }
+
     public boolean isSender() { return (DeviceType.RedstoneSender.equals(deviceType)); }
 
     public boolean isReceiver() { return (DeviceType.RedstoneReceiver.equals(deviceType)); }
@@ -130,14 +133,14 @@ public class R_Device {
     }
 
     public void sendSignal(int signalPower) {
-        if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneReceiver))
+        if (!isLinked() || isReceiver())
             return;
 
         U_Signal.send(this, signalPower);
     }
 
     public void emitSignal(int signalPower){
-        if (!isLinked() || getDeviceType().equals(DeviceType.RedstoneSender))
+        if (!isLinked() || isSender())
             return;
 
         for(R_Link link : getLinks()){
@@ -153,7 +156,7 @@ public class R_Device {
             return;
 
         isOverloaded = true;
-        if(DeviceType.RedstoneSender.equals(deviceType))
+        if(isSender())
             for(R_Link link : getLinks())
                 link.getReceiver().overload();
 
@@ -216,6 +219,10 @@ public class R_Device {
 
     public void setSignalPower(int signalPower) { this.signalPower = signalPower; }
 
+    public void setUpdating(boolean updating){
+        this.updating = updating;
+    }
+
     public void updateSignalPower() {
         U_Signal.update(this);
     }
@@ -224,10 +231,10 @@ public class R_Device {
         if(location == null)
             return false;
         Block block = location.getBlock();
-        if(deviceType.equals(DeviceType.RedstoneSender))
+        if(isSender())
             if(!block.getType().equals(R_Items.RedstoneSender.material))
                 return false;
-        if(deviceType.equals(DeviceType.RedstoneReceiver))
+        if(isReceiver())
             if(!block.getType().equals(R_Items.RedstoneReceiver.material))
                 return false;
         return true;

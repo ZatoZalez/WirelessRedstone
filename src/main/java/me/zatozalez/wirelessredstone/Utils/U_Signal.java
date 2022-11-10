@@ -6,24 +6,34 @@ import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Redstone.R_Link;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.AnaloguePowerable;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Lightable;
-import org.bukkit.block.data.Powerable;
+import org.bukkit.block.*;
+import org.bukkit.block.Hopper;
+import org.bukkit.block.data.*;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Piston;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
+
+import static me.zatozalez.wirelessredstone.Utils.U_Environment.*;
+
 public class U_Signal {
+
     public static void emit(R_Device device, int signalPower){
+        boolean isUpdating = device.isUpdating();
+        device.setUpdating(false);
         if(device.isOverloaded())
             return;
 
         device.setSignalPower(signalPower);
-        for(Block block : U_Environment.GetSurroundingBlocks(device.getBlock())){
+        for(Block block : U_Environment.getSurroundingBlocks(device.getBlock())){
             BlockData data = block.getBlockData();
             if (data instanceof AnaloguePowerable) {
                 powerAnaloguePowerable(block, signalPower);
+                continue;
+            }
+            if(data instanceof Openable){
+                powerOpenable(device, block);
                 continue;
             }
             if (data instanceof Powerable) {
@@ -34,8 +44,22 @@ public class U_Signal {
                 powerPiston(device, block);
                 continue;
             }
+            if(block.getState() instanceof Dispenser){
+                if(!isUpdating)
+                    powerDispenser(device, block);
+                continue;
+            }
+            if(block.getState() instanceof Dropper){
+                if(!isUpdating)
+                    powerDropper(device, block);
+                continue;
+            }
+            if(block.getState() instanceof Hopper){
+                powerHopper(device, block);
+                continue;
+            }
             if(data instanceof Lightable){
-                powerLightable(block, signalPower);
+                powerLightable(device, block, signalPower);
                 continue;
             }
             if(C_Value.allowContactSignals()) {
@@ -74,7 +98,7 @@ public class U_Signal {
             @Override
             public void run() {
                 int newCurrent = device.getBlock().getBlockPower();
-                for(Block block : U_Environment.GetSurroundingBlocks(device.getBlock())){
+                for(Block block : U_Environment.getSurroundingBlocks(device.getBlock())){
                     if(block.getType().equals(Material.REDSTONE_BLOCK)){
                         newCurrent = 15;
                         break;
@@ -98,18 +122,23 @@ public class U_Signal {
         }.runTaskLater(WirelessRedstone.getPlugin(), 0);
     }
 
+    //Redstone Wire
     private static void powerAnaloguePowerable(Block block, int signalPower){
         AnaloguePowerable analoguePowerable = (AnaloguePowerable) block.getBlockData();
         analoguePowerable.setPower(signalPower);
         block.setBlockData(analoguePowerable);
     }
 
+    //Redstone Repeater
+    //Redstone Comparator
     private static void powerPowerable(Block block, int signalPower){
         Powerable powerable = (Powerable) block.getBlockData();
         powerable.setPowered((signalPower > 0));
         block.setBlockData(powerable);
     }
 
+    //Piston
+    //Sticky Piston
     private static void powerPiston(R_Device device, Block block){
         if(!U_Piston.canBePowered(device, block))
             return;
@@ -120,12 +149,92 @@ public class U_Signal {
             U_Piston.extend(block);
     }
 
-    private static void powerLightable(Block block, int signalPower){
+    //Dispenser
+    private static void powerDispenser(R_Device device, Block block){
+        if(block.getBlockPower() != 0)
+            return;
+
+        if(device.getSignalPower() > 0) {
+            for(R_Device d : Objects.requireNonNull(getSurroundingDevicesExcept(block, device))){
+                if(d.isReceiver() && d.getSignalPower() > 0)
+                    return;
+            }
+            Dispenser dispenser = (Dispenser) block.getState();
+            dispenser.dispense();
+        }
+    }
+
+    //Dropper
+    private static void powerDropper(R_Device device, Block block){
+        if(block.getBlockPower() != 0)
+            return;
+
+        if(device.getSignalPower() > 0) {
+            for(R_Device d : Objects.requireNonNull(getSurroundingDevicesExcept(block, device))){
+                if(d.isReceiver() && d.getSignalPower() > 0)
+                    return;
+            }
+
+            Dropper dropper = (Dropper) block.getState();
+            if(dropper.getBlock().getBlockPower() == 0)
+                dropper.drop();
+        }
+    }
+
+    //Hopper
+    private static void powerHopper(R_Device device, Block block){
+        if(block.getBlockPower() != 0)
+            return;
+
+        for(R_Device d : Objects.requireNonNull(getSurroundingDevicesExcept(block, device))){
+            if(d.isReceiver() && d.getSignalPower() > 0)
+                return;
+        }
+
+        org.bukkit.block.data.type.Hopper hopper = (org.bukkit.block.data.type.Hopper) block.getBlockData();
+        hopper.setEnabled((device.getSignalPower() == 0));
+        block.setBlockData(hopper);
+    }
+
+    //DOOR
+    //IRON DOOR
+    //FENCE GATE
+    //TRAPDOOR
+    //IRON TRAPDOOR
+    private static void powerOpenable(R_Device device, Block block){
+        if(block.getBlockData() instanceof Door) {
+            Door door = (Door) block.getBlockData();
+            if (door.getHalf().name().equals("TOP")) {
+                if (block.getRelative(BlockFace.DOWN).getBlockPower() != 0)
+                    return;
+            } else if (door.getHalf().name().equals("BOTTOM")) {
+                if (block.getRelative(BlockFace.UP).getBlockPower() != 0)
+                    return;
+            }
+        }
+
+        for(R_Device d : Objects.requireNonNull(getSurroundingDevicesExcept(block, device))){
+            if(d.isReceiver() && d.getSignalPower() > 0)
+                return;
+        }
+
+        Openable openable = (Openable) block.getBlockData();
+        openable.setOpen((device.getSignalPower() > 0));
+        block.setBlockData(openable);
+    }
+
+    //Redstone Torch
+    private static void powerLightable(R_Device device, Block block, int signalPower){
+        Block base = getTorchBlock(block);
+        if(!base.equals(device.getBlock()))
+            return;
         Lightable lightable = (Lightable) block.getBlockData();
-        lightable.setLit((signalPower > 0));
+        lightable.setLit((signalPower == 0));
         block.setBlockData(lightable);
     }
 
+    //Redstone Sender
+    //Redstone Receiver
     private static void powerDevices(R_Device device, Block block){
         R_Device sender = R_Devices.get(block.getLocation());
         if (sender != null && sender.isSender()) {
@@ -133,4 +242,5 @@ public class U_Signal {
                 sender.updateSignalPower();
         }
     }
+
 }
