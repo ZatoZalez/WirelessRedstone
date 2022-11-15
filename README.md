@@ -5,7 +5,7 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 <br>
 <br>
 
-<b><span style="font-size: 22px"><span style="color: #ff4d4d">#Showcase</span></span></b><br>
+<b><span style="font-size: 22px"><span style="color: #ff4d4d">Showcase</span></span></b><br>
 [![Showcase](https://img.youtube.com/vi/I6f77D2jJmU/0.jpg)](https://www.youtube.com/watch?v=I6f77D2jJmU)
 
 <br>
@@ -19,7 +19,7 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 </ul>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">
-# How to use WirelessRedstone</span></span></b><br>
+How to use WirelessRedstone</span></span></b><br>
 
 This concept is easy to use by anyone with any redstone expertise. Using this plugin will allow you to obtain 2 custom items. The Redstone Sender and the Redstone Receiver. You can edit the block type, item name and item lore in the configurations to fit your server.
 
@@ -54,21 +54,21 @@ A Redstone Receiver can also power another Redstone Sender, allowing for more co
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">How do you craft Redstone Devices</span></span></b><br>
 In order to support survival gameplay, there are recipes for each device. However they are not custom but require a default recipe to craft. You can unlock the recipe when you unlock any redstone recipe.
 
-**Crafting recipe for a Redstone Sender**<br>
+Crafting recipe for a Redstone Sender<br>
 ![image](https://cdn.discordapp.com/attachments/972457153979875330/1040093579906928660/crafting-grid.png)
 
-**Crafting recipe for a Redstone Receiver**<br>
+Crafting recipe for a Redstone Receiver<br>
 ![image](https://cdn.discordapp.com/attachments/972457153979875330/1040093541013143602/crafting-grid_1.png)
 
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Permissions</span></span></b><br>
 Permissions are by default disabled in the configuration. Once enabled, those with the correct permissions can overwrite certain configuration settings.
 <br>
-**Permission for everything:**<div style="padding-left: 30px"><i>
+Permission for everything:<div style="padding-left: 30px"><i>
 wirelessredstone.*
 </i>&ZeroWidthSpace;</div>
 
-**Permission for using commands:<br>**
+Permission for using commands:<br>
 <div style="padding-left: 30px"><i>
 wirelessredstone.commands.*<br>
 wirelessredstone.commands.wirelessredstone.*<br>
@@ -83,7 +83,7 @@ wirelessredstone.commands.device.link.breakfirst<br>
 wirelessredstone.commands.device.link.breaklast<br>
 </i>&ZeroWidthSpace;</div>
 
-**Permission for using devices:<br>**
+Permission for using devices:<br>
 <div style="padding-left: 30px"><i>
 _wirelessredstone.device.*<br>
 wirelessredstone.device.place<br>
@@ -92,7 +92,7 @@ wirelessredstone.device.noplacelimit<br>
 wirelessredstone.device.nolinklimit<br>
 </i>&ZeroWidthSpace;</div>
 
-**Permission for linking devices:<br>**
+Permission for linking devices:<br>
 <div style="padding-left: 30px"><i>
 wirelessredstone.link.*<br>
 wirelessredstone.link.create<br>
