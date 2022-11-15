@@ -5,7 +5,7 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 <br>
 <br>
 
-<b><span style="font-size: 22px"><span style="color: #ff4d4d">Showcase</span></span></b><br>
+<b><span style="font-size: 22px"><span style="color: #ff4d4d"># Showcase</span></span></b><br>
 [![Showcase](https://img.youtube.com/vi/I6f77D2jJmU/0.jpg)](https://www.youtube.com/watch?v=I6f77D2jJmU)
 
 <br>
@@ -19,7 +19,7 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 </ul>
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">
-How to use WirelessRedstone</span></span></b><br>
+# How to use WirelessRedstone</span></span></b><br>
 
 This concept is easy to use by anyone with any redstone expertise. Using this plugin will allow you to obtain 2 custom items. The Redstone Sender and the Redstone Receiver. You can edit the block type, item name and item lore in the configurations to fit your server.
 
@@ -54,16 +54,16 @@ A Redstone Receiver can also power another Redstone Sender, allowing for more co
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">How do you craft Redstone Devices</span></span></b><br>
 In order to support survival gameplay, there are recipes for each device. However they are not custom but require a default recipe to craft. You can unlock the recipe when you unlock any redstone recipe.
 
-**Crafting recipe for a Redstone Sender**
+**Crafting recipe for a Redstone Sender**<br>
 ![image](https://cdn.discordapp.com/attachments/972457153979875330/1040093579906928660/crafting-grid.png)
 
-**Crafting recipe for a Redstone Receiver**
+**Crafting recipe for a Redstone Receiver**<br>
 ![image](https://cdn.discordapp.com/attachments/972457153979875330/1040093541013143602/crafting-grid_1.png)
 
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Permissions</span></span></b><br>
 Permissions are by default disabled in the configuration. Once enabled, those with the correct permissions can overwrite certain configuration settings.
-
+<br>
 **Permission for everything:**<div style="padding-left: 30px"><i>
 wirelessredstone.*
 </i>&ZeroWidthSpace;</div>
@@ -134,7 +134,7 @@ OverloadCooldown: 10<br>
 Download preset messages.yml and config.yml files which are translate by contributors into other language at
 https://www.spigotmc.org/resources/wirelessredstone.101871/
 
-<br><br>
+<br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">API Support</span></span></b><br>
 The API can be accessed by anyone in anyway. This plugin supports a small number of API functions for other plugin developers to integrate and control WirelessRedstone.<br>
 <br>
