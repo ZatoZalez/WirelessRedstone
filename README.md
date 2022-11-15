@@ -5,7 +5,7 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 <br>
 <br>
 
-<b><span style="font-size: 22px"><span style="color: #ff4d4d"># Showcase</span></span></b><br>
+<b><span style="font-size: 22px"><span style="color: #ff4d4d">#Showcase</span></span></b><br>
 [![Showcase](https://img.youtube.com/vi/I6f77D2jJmU/0.jpg)](https://www.youtube.com/watch?v=I6f77D2jJmU)
 
 <br>
