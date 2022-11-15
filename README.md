@@ -23,17 +23,17 @@ How to use WirelessRedstone</span></span></b><br>
 
 This concept is easy to use by anyone with any redstone expertise. Using this plugin will allow you to obtain 2 custom items. The Redstone Sender and the Redstone Receiver. You can edit the block type, item name and item lore in the configurations to fit your server.
 
-Use /device give <player> <device> <amount>
+Use **/device give <player> <device> <amount>**
 
-You can replace <player> with * so this command will apply to all online players. You can also replace <device> with * to give both devices at once.
+You can replace _<player>_ with * so this command will apply to all online players. You can also replace _<device>_ with * to give both devices at once.
 
-The <device> is set to how ever you named the items in the configuration file. This is Redstone Sender and Redstone Receiver by default.
+The _<device>_ is set to how ever you named the items in the configuration file. This is Redstone Sender and Redstone Receiver by default.
 
 Upon placing down the devices anywhere in the world, you can right click either one to start the linking process. If you have clicked on a Redstone Sender, you will be asked to click any Redstone Receiver to establish a link between these two devices.
 
-You can cancel a linking progress by using /device link cancel. A link will break if either devices break or get destroyed. You can have up to infinite links per device, depending on your settings.
+You can cancel a linking progress by using **/device link cancel**. A link will break if either devices break or get destroyed. You can have up to infinite links per device, depending on your settings.
 
-In order to break a link without breaking a device, you can use the /device link <breakall/breakfirst/breaklast> command.
+In order to break a link without breaking a device, you can use the **/device link <breakall/breakfirst/breaklast>** command.
 <br>
 <br>
 
@@ -41,55 +41,79 @@ In order to break a link without breaking a device, you can use the /device link
 
 <br>
 <br>
-
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">How do Redstone Devices work</span></span></b><br>
-As the name suggests, the <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, sends a redstone power signal towards any linked <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span>. The initial power signal is the highest redstone power the <span style="color: #ff4d4d"><b>RedstoneSender</b></span> is powered with.
-<br>
-This means that if you were to power a <span style="color: #ff4d4d"><b>RedstoneSender</b></span> with a redstone wire with a power of 8, that this value will be transmitted to any linked <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span>.
-<br>
-<br>
-Without any delay, the <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span>, which received the power signal from its linked <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, will emit its power to any block surrounding it. This will result in powering redstone wire, repeaters, lamps, pistons and more.
-<br>
-A <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span> can also power another <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, allowing for more compact redstone machines.
+As the name suggests, the Redstone Sender, sends a redstone power signal towards any linked Redstone Receiver. The initial power signal is the highest redstone power the Redstone Sender is powered with.
+This means that if you were to power a Redstone Sender with a redstone wire with a power of 8, that this value will be transmitted to any linked Redstone Receiver.
+
+Without any delay, the Redstone Receiver, which received the power signal from its linked Redstone Sender, will emit its power to any block surrounding it. This will result in powering redstone wire, repeaters, lamps, pistons and more.
+
+A Redstone Receiver can also power another Redstone Sender, allowing for more compact redstone machines.
 <br>
 <br>
+
+<b><span style="font-size: 18px"><span style="color: #ff4d4d">How do you craft Redstone Devices</span></span></b><br>
+In order to support survival gameplay, there are recipes for each device. However they are not custom but require a default recipe to craft. You can unlock the recipe when you unlock any redstone recipe.
+
+**Crafting recipe for a Redstone Sender**
+![image](https://cdn.discordapp.com/attachments/972457153979875330/1040093579906928660/crafting-grid.png)
+
+**Crafting recipe for a Redstone Receiver**
+![image](https://cdn.discordapp.com/attachments/972457153979875330/1040093541013143602/crafting-grid_1.png)
+
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Permissions</span></span></b><br>
-Permissions are by default <b>disabled</b> in the configuration. Once enabled, those with the correct permissions can overwrite certain configuration settings.<br>
-<br>
-Permission for using commands:<br>
-<div style="padding-left: 30px"><i> 
-wirelessredstone.commands.cancellink<br>
-wirelessredstone.commands.givedevice.redstonesender<br>
-wirelessredstone.commands.givedevice.redstonereceiver
+Permissions are by default disabled in the configuration. Once enabled, those with the correct permissions can overwrite certain configuration settings.
+
+**Permission for everything:**<div style="padding-left: 30px"><i>
+wirelessredstone.*
 </i>&ZeroWidthSpace;</div>
-<br>
-Permission for using devices:<br>
+
+**Permission for using commands:<br>**
 <div style="padding-left: 30px"><i>
+wirelessredstone.commands.*<br>
+wirelessredstone.commands.wirelessredstone.*<br>
+wirelessredstone.commands.wirelessredstone.reload<br>
+wirelessredstone.commands.wirelessredstone.disable<br>
+wirelessredstone.commands.device.*<br>
+wirelessredstone.commands.device.give<br>
+wirelessredstone.commands.device.info<br>
+wirelessredstone.commands.device.link.cancel<br>
+wirelessredstone.commands.device.link.breakall<br>
+wirelessredstone.commands.device.link.breakfirst<br>
+wirelessredstone.commands.device.link.breaklast<br>
+</i>&ZeroWidthSpace;</div>
+
+**Permission for using devices:<br>**
+<div style="padding-left: 30px"><i>
+_wirelessredstone.device.*<br>
 wirelessredstone.device.place<br>
 wirelessredstone.device.break<br>
 wirelessredstone.device.noplacelimit<br>
 wirelessredstone.device.nolinklimit<br>
 </i>&ZeroWidthSpace;</div>
-<br>
-Permission for linking devices:<br>
-<div style="padding-left: 30px"><i> 
+
+**Permission for linking devices:<br>**
+<div style="padding-left: 30px"><i>
+wirelessredstone.link.*<br>
 wirelessredstone.link.create<br>
 wirelessredstone.link.break<br>
 wirelessredstone.link.nolimit<br>
 wirelessredstone.link.infinitedistance<br>
-wirelessredstone.link.crossworld
-</i>&ZeroWidthSpace;</div><br>
-<br>
+wirelessredstone.link.crossworld<br>
+</i>&ZeroWidthSpace;</div>
+
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Configuration</span></span></b><br>
-Modify your experience by changing the configurations to your need. You can find a more elaborated list of config settings in the config.yml file of the plugin.<br>
-A value of 0 represents infinity.<br>
+Modify your experience by changing the configurations to your need. You can find a more elaborated list of config settings in the config.yml file of the plugin.
+A value of **0** represents infinity.
 <br>
 <div style="padding-left: 30px"><i>
-
+SenderItemName: Redstone Sender<br>
+SenderItemLore: Sends wireless Redstone signals<br>
+ReceiverItemName: Redstone Sender<br>
+ReceiverItemLore: Receives wireless Redstone signals<br>
 SenderBlockType: red_terracotta<br>
 ReceiverBlockType: green_terracotta<br>
-Permissions: true<br>
+Permissions: false<br>
 Messages: true<br>
 MaxDeviceInServer: 0<br>
 MaxDevicesPerPlayer: 0<br>
@@ -105,6 +129,12 @@ OverloadTrigger: 8<br>
 OverloadCooldown: 10<br>
 </i>&ZeroWidthSpace;</div>
 <br>
+
+<b><span style="font-size: 18px"><span style="color: #ff4d4d">Languages Support</span></span></b><br>
+Download preset messages.yml and config.yml files which are translate by contributors into other language at
+https://www.spigotmc.org/resources/wirelessredstone.101871/
+
+<br><br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">API Support</span></span></b><br>
 The API can be accessed by anyone in anyway. This plugin supports a small number of API functions for other plugin developers to integrate and control WirelessRedstone.<br>
 <br>
@@ -122,10 +152,9 @@ U_Api api = new U_Api();
 <br>
 
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Community Support</span></span></b><br>
-If you have any further questions don't forget to contact me through discord or github.<br>
-Satisfied? Please leave a review!<br>
-<br>
-Check out my Discord for suggestions, tips, questions and support.<br>
-<a href="https://discord.gg/TsRTa7BUWm" target="_blank" class="externalLink" rel="nofollow">https://discord.gg/TsRTa7BUWm</a>
-</blockquote>
+If you have any further questions don't forget to contact me through discord or spigot.
+Satisfied? Please leave a review!
+
+Check out my Discord for suggestions, tips, questions and support.
+https://discord.gg/TsRTa7BUWm
 
