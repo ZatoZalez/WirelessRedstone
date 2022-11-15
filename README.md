@@ -1,4 +1,4 @@
-# <span style="color: #ff4d4d"><b><span style="font-size: 26px">WirelessRedstone </span></b><span style="font-size: 15px">v0.4</span></span><br>
+# <span style="color: #ff4d4d"><b><span style="font-size: 26px">WirelessRedstone </span></b><span style="font-size: 15px">v0.4.1</span></span><br>
 A simple redstone plugin that allows for wireless redstone signals to be sent over infinite distances and through worlds. This plugin is almost out of early development, any support, suggestions and help is appreciated. Join my discord at <a href="https://discord.gg/TsRTa7BUWm" target="_blank" class="externalLink" rel="nofollow">https://discord.gg/TsRTa7BUWm
 </a><br>
 
@@ -21,16 +21,19 @@ A simple redstone plugin that allows for wireless redstone signals to be sent ov
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">
 How to use WirelessRedstone</span></span></b><br>
 
-This concept is easy to use by anyone with any redstone expertise. Using this plugin will allow you to obtain 2 custom items. 
-The <span style="color: #ff4d4d"><b>RedstoneSender</b></span> and the <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span>. 
-You can edit the block type in the configurations to fit your server.
+This concept is easy to use by anyone with any redstone expertise. Using this plugin will allow you to obtain 2 custom items. The Redstone Sender and the Redstone Receiver. You can edit the block type, item name and item lore in the configurations to fit your server.
 
-<br>
-Use <b>/givedevice &lt;player&gt; &lt;devicetype&gt; &lt;amount&gt;</b> to give yourself or others a 'redstonesender' or a 'redstonereceiver'.<br>
-<br>
-Upon placing down the devices anywhere in the world, you can <b>right </b>click either one to start the linking process. If you have clicked on a <span style="color: #ff4d4d"><b>RedstoneSender</b></span>, you will be asked to click any <span style="color: #ff4d4d"><b>RedstoneReceiver</b></span> to establish a link between these two devices.
-<br>
-You can cancel a linking progress by using <b>/cancellink</b>. A link will break if either devices break or get removed. You can have up to <b>infinite</b> links per device.
+Use /device give <player> <device> <amount>
+
+You can replace <player> with * so this command will apply to all online players. You can also replace <device> with * to give both devices at once.
+
+The <device> is set to how ever you named the items in the configuration file. This is Redstone Sender and Redstone Receiver by default.
+
+Upon placing down the devices anywhere in the world, you can right click either one to start the linking process. If you have clicked on a Redstone Sender, you will be asked to click any Redstone Receiver to establish a link between these two devices.
+
+You can cancel a linking progress by using /device link cancel. A link will break if either devices break or get destroyed. You can have up to infinite links per device, depending on your settings.
+
+In order to break a link without breaking a device, you can use the /device link <breakall/breakfirst/breaklast> command.
 <br>
 <br>
 
