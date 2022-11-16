@@ -1,6 +1,7 @@
 package me.zatozalez.wirelessredstone.Redstone;
 
 import me.zatozalez.wirelessredstone.Config.C_Value;
+import me.zatozalez.wirelessredstone.Utils.U_Log;
 import me.zatozalez.wirelessredstone.Utils.U_Signal;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.*;
@@ -148,6 +149,7 @@ public class R_Device {
                 if(signalPower < link.getSender().getSignalPower())
                     return;
         }
+
         U_Signal.emit(this, signalPower);
     }
 
@@ -171,7 +173,7 @@ public class R_Device {
             public void run() {
                 isOverloaded = false;
             }
-        }.runTaskLater(WirelessRedstone.getPlugin(), C_Value.getOverloadCooldown() * 20);
+        }.runTaskLater(WirelessRedstone.getPlugin(), C_Value.getOverloadCooldown() * 20L);
     }
 
     private void spawnOverloadParticle(Color color){

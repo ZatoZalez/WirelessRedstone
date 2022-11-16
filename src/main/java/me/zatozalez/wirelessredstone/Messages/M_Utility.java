@@ -11,8 +11,12 @@ import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class M_Utility {
     private static LinkedHashMap<String, String> defaultMessages = new LinkedHashMap<>();
@@ -24,11 +28,13 @@ public class M_Utility {
         File file = new File(messagesPath + "/" + messagesFile);
         WirelessRedstone.Log(new U_Log(U_Log.LogType.INFORMATION, ChatColor.GRAY + "Default language is set as "+ ChatColor.RED + C_Value.getLanguage() + ChatColor.GRAY + "."));
         String languageFile = "messages_" + C_Value.getLanguage() + ".yml";
+
         defaultMessages = readAndLoad(WirelessRedstone.getPlugin().getClass().getResourceAsStream("/" + languageFile));
         if (!file.exists()) {
             create();
             messages = defaultMessages;
         }
+
         try {
             messages = readAndLoad(new FileInputStream(file));
             update();
@@ -52,14 +58,26 @@ public class M_Utility {
     }
 
     private static LinkedHashMap<String, String> readAndLoad(InputStream inputStream){
-        Yaml yaml = new Yaml();
         try {
-            @SuppressWarnings("unchecked")
-            LinkedHashMap<String, String> values = yaml.load(inputStream);
+            LinkedHashMap<String, String> values = new LinkedHashMap<>();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            while(reader.ready()) {
+                String line = reader.readLine();
+                if(line.contains(":")) {
+                    String[] l = line.split(":", 2);
+                    String key = l[0].trim();
+                    String value = l[1].trim();
+                    if(value.endsWith("\"") && value.startsWith("\"")) {
+                        value = value.substring(1, value.length() - 1);
+                    }
+                    values.put(key, value);
+                }
+            }
+            reader.close();
             inputStream.close();
             return values;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         return null;
     }
@@ -126,6 +144,7 @@ public class M_Utility {
             return false;
         if(value.startsWith("!!"))
             return false;
+
         player.sendMessage(value);
         return true;
     }

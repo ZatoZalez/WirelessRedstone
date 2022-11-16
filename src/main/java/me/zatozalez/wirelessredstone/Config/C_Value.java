@@ -134,6 +134,24 @@ public class C_Value {
         return true;
     }
 
+    public static boolean customItemsEnabled(){
+        C_Data data = C_Utility.getData("CustomItems");
+        if(data != null) return data.getBoolean();
+        return true;
+    }
+
+    public static int getCustomModelDataSender(){
+        C_Data data = C_Utility.getData("CustomModelDataSender");
+        if(data != null) return data.getInt();
+        return 0;
+    }
+
+    public static int getCustomModelDataReceiver(){
+        C_Data data = C_Utility.getData("CustomModelDataReceiver");
+        if(data != null) return data.getInt();
+        return 0;
+    }
+
     public static boolean allowBreakThirdDevices(){
         C_Data data = C_Utility.getData("BreakThirdDevices");
         if(data != null) return data.getBoolean();

@@ -1,7 +1,9 @@
 package me.zatozalez.wirelessredstone.Utils;
 
 import me.zatozalez.wirelessredstone.Config.C_Value;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 
 //REWORKED
 public class U_Permissions {
@@ -38,6 +40,13 @@ public class U_Permissions {
         WIRELESSREDSTONE_DEVICE_NOPLACELIMIT,
         WIRELESSREDSTONE_DEVICE_NOLINKLIMIT,
         WIRELESSREDSTONE_DEVICE_BREAKTHIRDDEVICES,
+    }
+
+    public static void register(){
+        for(Permissions perm : Permissions.values()){
+            Permission p = new Permission(getNode(perm));
+            Bukkit.getPluginManager().addPermission(p);
+        }
     }
 
     public static boolean isEnabled(){

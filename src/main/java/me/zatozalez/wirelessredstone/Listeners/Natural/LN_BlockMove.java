@@ -41,6 +41,10 @@ public class LN_BlockMove implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEvent3(BlockPhysicsEvent e){
+        if(e.isCancelled()){
+            return;
+        }
+
         Block pistonBlock = e.getBlock();
         if(pistonBlock.getType().equals(Material.PISTON_HEAD)){
             if(parentTouchesDevice(pistonBlock)){

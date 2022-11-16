@@ -6,11 +6,9 @@ import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.*;
 import me.zatozalez.wirelessredstone.Utils.U_Permissions;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
 
 import static me.zatozalez.wirelessredstone.Commands.Device.CD_Push.*;
 import static me.zatozalez.wirelessredstone.Commands.Device.CD_Utility.*;

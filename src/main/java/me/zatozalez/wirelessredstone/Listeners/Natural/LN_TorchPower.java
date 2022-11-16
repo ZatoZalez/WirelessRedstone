@@ -3,6 +3,7 @@ package me.zatozalez.wirelessredstone.Listeners.Natural;
 import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Utils.U_Environment;
+import me.zatozalez.wirelessredstone.Versions.V_Manager;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -50,13 +51,14 @@ public class LN_TorchPower implements Listener {
         if(device.isReceiver()) {
             if(device.getSignalPower() > 0)
             {
-                if(e == null){
+                if(e == null || V_Manager.minecraftVersion.equals("1.19")){
                     Lightable lightable = (Lightable) torch.getBlockData();
                     lightable.setLit(false);
                     torch.setBlockData(lightable);
                 }
-                else
-                e.setCancelled(true);
+                if(e != null) {
+                    e.setCancelled(true);
+                }
             }
         }
     }

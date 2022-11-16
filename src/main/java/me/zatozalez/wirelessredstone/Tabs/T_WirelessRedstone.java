@@ -12,6 +12,7 @@ public class T_WirelessRedstone implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
             List<String> arguments = new ArrayList<>();
+            arguments.add("info");
             arguments.add("disable");
             arguments.add("reload");
             return arguments;

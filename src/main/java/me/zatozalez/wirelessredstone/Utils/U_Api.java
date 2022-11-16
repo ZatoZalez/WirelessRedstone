@@ -1,6 +1,9 @@
 package me.zatozalez.wirelessredstone.Utils;
 
 import me.zatozalez.wirelessredstone.Redstone.*;
+import me.zatozalez.wirelessredstone.Versions.V_Manager;
+import me.zatozalez.wirelessredstone.WirelessRedstone;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -27,4 +30,36 @@ public class U_Api {
     public int getPlayerRedstoneDeviceCount(UUID playerId) { return R_Devices.getList(playerId).size(); }
 
     public int getTotalLinkCount() { return R_Links.getList().size(); }
+
+    public boolean isRedstoneSender(Block block){
+        R_Device device = R_Devices.get(block.getLocation());
+        if(device == null)
+        {
+            return false;
+        }
+
+        return (device.isSender());
+    }
+
+    public boolean isRedstoneSender(ItemStack itemStack){
+        return R_Items.isRedstoneSender(itemStack);
+    }
+
+    public boolean isRedstoneReceiver(Block block){
+        R_Device device = R_Devices.get(block.getLocation());
+        if(device == null)
+        {
+            return false;
+        }
+
+        return (device.isReceiver());
+    }
+
+    public boolean isRedstoneReceiver(ItemStack itemStack){
+        return R_Items.isRedstoneReceiver(itemStack);
+    }
+
+    public boolean isRedstoneDevice(ItemStack itemStack){
+        return R_Items.isRedstoneDevice(itemStack);
+    }
 }

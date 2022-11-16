@@ -6,7 +6,7 @@
 
     <groupId>me.zatozalez</groupId>
     <artifactId>WirelessRedstone</artifactId>
-    <version>0.4.4.1</version>
+    <version>0.4.4.3</version>
     <packaging>jar</packaging>
 
     <name>WirelessRedstone</name>
@@ -49,7 +49,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <outputDirectory>C:\Users\rober\Desktop\Games\Minecraft\Servers\1.17.1 Spigot\plugins</outputDirectory>
+                    <outputDirectory>C:\Users\rober\Desktop\Games\Minecraft\Servers\1.19.2 Spigot\plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

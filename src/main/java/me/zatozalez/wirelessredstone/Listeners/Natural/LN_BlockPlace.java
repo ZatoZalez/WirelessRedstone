@@ -35,8 +35,14 @@ public class LN_BlockPlace implements Listener {
             return DeviceType.RedstoneSender;
         return DeviceType.RedstoneReceiver;
     }
+
     @EventHandler
     public void onEvent(BlockPlaceEvent e) {
+
+        if(e.isCancelled()){
+            return;
+        }
+
         Player player = e.getPlayer();
         if(!itemCheck(e)) return;
 

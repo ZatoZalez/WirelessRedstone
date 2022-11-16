@@ -12,5 +12,5 @@ commands:
     description: "View, give or manage Redstone Devices."
   wirelessredstone:
     aliases: "wr"
-    usage: "/wirelessredstone <reload/disable>"
+    usage: "/wirelessredstone <info/reload/disable>"
     description: "Manage the WirelessRedstone plugin."

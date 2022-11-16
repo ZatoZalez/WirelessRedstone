@@ -26,6 +26,10 @@ public class LN_BlockClick implements Listener {
         Action action = e.getAction();
         Player player = e.getPlayer();
 
+        if(e.isCancelled()){
+            return;
+        }
+
         if (!action.equals(Action.RIGHT_CLICK_BLOCK) || player.isSneaking() || e.getHand() == EquipmentSlot.HAND)
             return;
 

@@ -31,6 +31,10 @@ public class LN_BlockBreak implements Listener {
         if(device == null)
             return;
 
+        if(e.isCancelled()){
+            return;
+        }
+
         if(!C_Value.allowBreakThirdDevices()) {
             if (!device.getPlayerId().equals(player.getUniqueId())) {
                 if (U_Permissions.isEnabled()) {
@@ -79,6 +83,10 @@ public class LN_BlockBreak implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent2(EntityExplodeEvent e) {
+        if(e.isCancelled()){
+            return;
+        }
+
         for(Block block : e.blockList())
         {
             Location location = block.getLocation();

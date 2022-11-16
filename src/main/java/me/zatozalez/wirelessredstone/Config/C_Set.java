@@ -117,6 +117,18 @@ public class C_Set {
         addDescription("The cooldown is the time (in seconds) it takes for a device to switch back on after being overloaded.");
         addKeyAndValue("OverloadCooldown", 10);
         addNewLine();
+
+        addDescription("======== CustomModelData ========");
+        addDescription("This feature allows you to set custom model data to both redstone devices.");
+        addDescription("It is recommended to keep this option disabled unless you are working with custom item model data.");
+        addDescription("Make sure the Block types for both devices correspondent with your custom item.");
+        addKeyAndValue("CustomItems", false);
+        addNewLine();
+
+        addDescription("The Custom model data is the same value as written in your custom item files.");
+        addKeyAndValue("CustomModelDataSender", 0);
+        addKeyAndValue("CustomModelDataReceiver", 0);
+        addNewLine();
         //--
 
         return fileLines;

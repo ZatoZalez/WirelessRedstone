@@ -21,8 +21,8 @@ public class CD_CommandExecutor implements CommandExecutor {
         if(!hasValidArguments(player, args, 1, 4, new String[] {
                 "- /device info",
                 "- /device give",
-                "- /device link",
-                "- /device deleteall" }))
+                "- /device link"
+        }))
             return true;
 
         switch(args[0]){
@@ -38,8 +38,8 @@ public class CD_CommandExecutor implements CommandExecutor {
                 return pushInvalidArguments(player, new String[] {
                         "- /device info",
                         "- /device give",
-                        "- /device link",
-                        "- /device deleteall" });
+                        "- /device link"
+                });
         }
     }
 }

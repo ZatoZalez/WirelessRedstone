@@ -25,6 +25,7 @@ public class R_Item {
     public List<String> lore = new ArrayList<>();;
     public DeviceType itemType;
     public ShapedRecipe recipe;
+    public int customModelData;
     public String secretCode;
     public boolean valid = false;
 
@@ -103,7 +104,17 @@ public class R_Item {
         ItemMeta meta = itemStack.getItemMeta();
         material = itemStack.getType();
 
-        assert meta != null;
+        if(meta == null)
+            return;
+
+        if(C_Value.customItemsEnabled()){
+            if(itemType.equals(DeviceType.RedstoneSender)){
+                meta.setCustomModelData(C_Value.getCustomModelDataSender());
+            }
+            else{
+                meta.setCustomModelData(C_Value.getCustomModelDataReceiver());
+            }
+        }
         if(itemType.equals(DeviceType.RedstoneSender)) {
             secretCode = " &0&k &8&o &7&l &r ";
             displayname = ChatColor.WHITE + "" + U_Device.getDeviceNameWithColor(itemType);

@@ -18,18 +18,23 @@ public class CW_CommandExecutor implements CommandExecutor {
         Player player = ((Player) sender).getPlayer();
 
         if(!hasValidArguments(player, args, 1, 3, new String[] {
+                "- /wirelessredstone info",
                 "- /wirelessredstone reload",
                 "- /wirelessredstone disable"
         }))
             return true;
 
         switch(args[0]){
+            case "help":
+            case "info":
+                return handleInfo(player, args);
             case "reload":
                 return handleReload(player, args);
             case "disable":
                 return handleDisable(player, args);
             default:
                 return pushInvalidArguments(player, new String[] {
+                        "- /wirelessredstone info",
                         "- /wirelessredstone reload",
                         "- /wirelessredstone disable"
                 });

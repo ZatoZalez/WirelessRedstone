@@ -6,12 +6,18 @@ import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Redstone.R_Link;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.*;
 import org.bukkit.block.Hopper;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.Door;
+import org.bukkit.block.data.type.Observer;
 import org.bukkit.block.data.type.Piston;
+import org.bukkit.block.data.type.TNT;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.material.PoweredRail;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -56,12 +62,16 @@ public class U_Signal {
                 powerOpenable(device, block);
                 continue;
             }
+            if(data instanceof Observer){
+                powerObserver(device, block);
+                continue;
+            }
             //if(block.getType().equals(Material.POWERED_RAIL)){
             //    powerRail(device, block, signalPower);
             //    continue;
             //}
             if (data instanceof Powerable) {
-                powerPowerable(block, signalPower);
+                powerPowerable(device, block, signalPower);
                 continue;
             }
             if(data instanceof Piston){
@@ -84,6 +94,10 @@ public class U_Signal {
             }
             if(data instanceof Lightable){
                 powerLightable(device, block, signalPower);
+                continue;
+            }
+            if(data instanceof TNT){
+                powerTnt(block, signalPower);
                 continue;
             }
             if(C_Value.allowContactSignals()) {
@@ -155,13 +169,39 @@ public class U_Signal {
     //Redstone Repeater
     //Redstone Comparator
     //Redstone PoweredRail
-    //Lever
-    //Button
-    //Pressure Plate
-    private static void powerPowerable(Block block, int signalPower){
+    private static void powerPowerable(R_Device device, Block block, int signalPower){
+        if(block.getBlockData() instanceof Directional){
+            Directional directional = (Directional) block.getBlockData();
+            BlockFace blockFace = block.getFace(device.getBlock());
+            if(blockFace == null || !blockFace.equals(directional.getFacing()))
+            {
+                return;
+            }
+        }
         Powerable powerable = (Powerable) block.getBlockData();
         powerable.setPowered((signalPower > 0));
         block.setBlockData(powerable);
+    }
+
+    //Observer
+    private static void powerObserver(R_Device device, Block block){
+        Observer observer = (Observer) block.getBlockData();
+        BlockFace blockFace = block.getFace(device.getBlock());
+        if(blockFace == null || !blockFace.equals(observer.getFacing()))
+        {
+            return;
+        }
+
+        observer.setPowered(true);
+        block.setBlockData(observer);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                observer.setPowered(false);
+                block.setBlockData(observer);
+            }
+        }.runTaskLater(WirelessRedstone.getPlugin(), 2);
     }
 
     //Powered Rail
@@ -269,9 +309,75 @@ public class U_Signal {
                 return;
         }
 
+        Sound sound = Sound.BLOCK_WOODEN_DOOR_OPEN;
+        boolean opening = (device.getSignalPower() > 0);
+        switch(block.getType()){
+            case DARK_OAK_DOOR:
+            case ACACIA_DOOR:
+            case BIRCH_DOOR:
+            case CRIMSON_DOOR:
+            case JUNGLE_DOOR:
+            case OAK_DOOR:
+            case SPRUCE_DOOR:
+            case WARPED_DOOR:
+            {
+                if(!opening){
+                    sound = Sound.BLOCK_WOODEN_DOOR_CLOSE;
+                }
+                break;
+            }
+            case IRON_DOOR:
+            {
+                sound = Sound.BLOCK_IRON_DOOR_OPEN;
+                if(!opening){
+                    sound = Sound.BLOCK_IRON_DOOR_CLOSE;
+                }
+                break;
+            }
+            case ACACIA_TRAPDOOR:
+            case DARK_OAK_TRAPDOOR:
+            case BIRCH_TRAPDOOR:
+            case CRIMSON_TRAPDOOR:
+            case JUNGLE_TRAPDOOR:
+            case OAK_TRAPDOOR:
+            case SPRUCE_TRAPDOOR:
+            case WARPED_TRAPDOOR:
+            {
+                sound = Sound.BLOCK_WOODEN_TRAPDOOR_OPEN;
+                if(!opening){
+                    sound = Sound.BLOCK_WOODEN_TRAPDOOR_CLOSE;
+                }
+                break;
+            }
+            case IRON_TRAPDOOR:
+            {
+                sound = Sound.BLOCK_IRON_TRAPDOOR_OPEN;
+                if(!opening){
+                    sound = Sound.BLOCK_IRON_TRAPDOOR_CLOSE;
+                }
+                break;
+            }
+            case OAK_FENCE_GATE:
+            {
+                sound = Sound.BLOCK_FENCE_GATE_OPEN;
+                if(!opening){
+                    sound = Sound.BLOCK_FENCE_GATE_CLOSE;
+                }
+                break;
+            }
+        }
+
         Openable openable = (Openable) block.getBlockData();
-        openable.setOpen((device.getSignalPower() > 0));
+        if(opening == openable.isOpen()){
+            return;
+        }
+
+        openable.setOpen(opening);
         block.setBlockData(openable);
+
+        for(Player p : Bukkit.getOnlinePlayers()){
+            p.playSound(block.getLocation(), sound, 1f, 1f);
+        }
     }
 
     //Redstone Torch
@@ -288,6 +394,17 @@ public class U_Signal {
         lightable.setLit(bool);
         block.setBlockData(lightable);
     }
+
+    //Tnt
+    private static void powerTnt(Block block, int signalPower){
+        if(signalPower == 0) {
+            return;
+        }
+        block.setType(Material.AIR);
+        Location loc = new Location(block.getWorld(), block.getX() + 0.5, block.getY(), block.getZ() + 0.5);
+        loc.getWorld().spawn(loc, TNTPrimed.class);
+    }
+
 
     //Redstone Sender
     //Redstone Receiver

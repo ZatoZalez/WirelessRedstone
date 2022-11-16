@@ -6,8 +6,10 @@ import me.zatozalez.wirelessredstone.Listeners.Modified.*;
 import me.zatozalez.wirelessredstone.Listeners.Natural.*;
 import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.*;
+import me.zatozalez.wirelessredstone.Utils.U_Api;
 import me.zatozalez.wirelessredstone.Utils.U_Metrics;
 import me.zatozalez.wirelessredstone.Utils.U_Log;
+import me.zatozalez.wirelessredstone.Utils.U_Permissions;
 import me.zatozalez.wirelessredstone.Versions.V_Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,13 +38,13 @@ public final class WirelessRedstone extends JavaPlugin {
         U_Metrics metrics = new U_Metrics(plugin, pluginId);
 
         String latest = V_Manager.getLatestVersion();
-        if(latest != null && !latest.equals(getDescription().getVersion())){
+        if(latest != null && !latest.equals(V_Manager.pluginVersion)){
             WirelessRedstone.Log(new U_Log(U_Log.LogType.WARNING, "New update available [" + latest + "]! Visit " + "https://www.spigotmc.org/resources/101871/" + " to download the latest version."));
         }
         V_Manager.setVersion();
         Bukkit.getConsoleSender().sendMessage(getDescription().getFullName() + " by " + ChatColor.RED + getDescription().getAuthors().toString().replace("[", "").replace("]", ""));
         if(!V_Manager.isCompatible()){
-            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Unsupported version [" + V_Manager.version + "]. Disabling WirelessRedstone."));
+            WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Unsupported version [" + V_Manager.minecraftVersion + "]. Disabling WirelessRedstone."));
             Bukkit.getPluginManager().disablePlugin(WirelessRedstone.getPlugin());
             return;
         }
@@ -57,6 +59,7 @@ public final class WirelessRedstone extends JavaPlugin {
         R_LinkUtility.initialize();
         M_Utility.initialize();
         commandCenter.initialize();
+        U_Permissions.register();
 
         if(!reload)
             for(R_Link link : R_Links.getList().values())

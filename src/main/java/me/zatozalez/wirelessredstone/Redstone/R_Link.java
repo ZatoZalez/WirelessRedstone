@@ -2,6 +2,7 @@ package me.zatozalez.wirelessredstone.Redstone;
 
 import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Messages.M_Utility;
+import me.zatozalez.wirelessredstone.Utils.U_Log;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -139,13 +140,15 @@ public class R_Link {
     }
 
     public void destroy(){
-        if(!isLinked())
-            return;
-
         isValid = false;
-        receiver.emitSignal(0);
-        sender.removeLink(getId());
-        receiver.removeLink(getId());
+
+        if(receiver != null){
+            receiver.emitSignal(0);
+            receiver.removeLink(getId());
+        }
+        if(sender != null){
+            sender.removeLink(getId());
+        }
         R_Links.remove(this);
     }
 

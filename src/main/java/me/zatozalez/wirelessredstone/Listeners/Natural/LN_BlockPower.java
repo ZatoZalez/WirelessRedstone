@@ -98,7 +98,7 @@ public class LN_BlockPower implements Listener {
     }
 
     private void handlePermanentWire(R_Device device, BlockRedstoneEvent e){
-        if(device.getSignalPower() != 0 && device.getSignalPower() > e.getNewCurrent()){
+        if(!e.getBlock().getType().toString().toLowerCase().contains("sculk") && device.getSignalPower() != 0 && device.getSignalPower() > e.getNewCurrent()){
             e.setNewCurrent(device.getSignalPower());
         }
     }

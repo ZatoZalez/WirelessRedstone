@@ -16,20 +16,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class V_Manager {
-    public static String version = "0.0.0";
-    public static String latestVersion = "0.0.0";
+    public static String minecraftVersion = "0.0.0";
+    public static String pluginVersion = "0.0.0";
+    public static String latestPluginVersion = "0.0.0";
     private static String api = "https://api.github.com/repos/ZatoZalez/WirelessRedstone/releases/latest";
     public static void setVersion(){
         String v = Bukkit.getVersion();
         v = v.substring(v.indexOf("(") + 1);
         v = v.substring(0, v.indexOf(")"));
         v = v.substring(4);
-        version = (v.split("[.]")[0] + "." +  v.split("[.]")[1]);
-        latestVersion = version;
+        minecraftVersion = (v.split("[.]")[0] + "." +  v.split("[.]")[1]);
+        latestPluginVersion = minecraftVersion;
     }
 
     public static boolean isCompatible(){
-        switch(version) {
+        switch(minecraftVersion) {
             case "1.16":
             case "1.17":
             case "1.18":
@@ -41,7 +42,7 @@ public class V_Manager {
     }
 
     public static ItemStack[] getItemStack(){
-        switch(version) {
+        switch(minecraftVersion) {
             case "1.16":
                 return V_1_16.getItemStack();
             case "1.17":
@@ -55,7 +56,7 @@ public class V_Manager {
     }
 
     public static boolean cancelPistonEvent(BlockPhysicsEvent e, Block pistonBlock, Piston piston){
-        switch(version) {
+        switch(minecraftVersion) {
             case "1.16":
                 return V_1_16.cancelPistonEvent(e, pistonBlock, piston);
             case "1.17":
@@ -70,6 +71,7 @@ public class V_Manager {
     }
 
     public static String getLatestVersion() {
+        pluginVersion = WirelessRedstone.getPlugin().getDescription().getVersion();
         try {
             String data = stream(new URL(api));
             if(data == null){
@@ -84,8 +86,8 @@ public class V_Manager {
             for(String entry : entries){
                 if(entry.contains("tag_name")){
                     if(entry.contains(":")){
-                        latestVersion = entry.split(":")[1].replace("\"", "").trim();
-                        return latestVersion;
+                        latestPluginVersion = entry.split(":")[1].replace("\"", "").trim();
+                        return latestPluginVersion;
                     }
                 }
             }
