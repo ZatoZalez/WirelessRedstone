@@ -67,9 +67,6 @@ public final class WirelessRedstone extends JavaPlugin {
 
         if(!reload)
             registerEvents();
-
-        int pluginId = 16969;
-        U_Metrics metrics = new U_Metrics(this, pluginId);
     }
 
     private void registerEvents(){

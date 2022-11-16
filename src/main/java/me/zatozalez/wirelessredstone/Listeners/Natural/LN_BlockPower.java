@@ -49,15 +49,17 @@ public class LN_BlockPower implements Listener {
             if(block.getBlockData() instanceof Directional){
                 Directional data = (Directional) block.getBlockData();
                 BlockFace blockFace = (BlockFace) data.getFacing().getOppositeFace();
-                Switch switchBlock = (Switch)block.getBlockData();
-                switch(switchBlock.getFace()){
-                    case FLOOR:{
-                        blockFace = BlockFace.DOWN;
-                        break;
-                    }
-                    case CEILING:{
-                        blockFace = BlockFace.UP;
-                        break;
+                if(block.getBlockData() instanceof Switch) {
+                    Switch switchBlock = (Switch) block.getBlockData();
+                    switch (switchBlock.getFace()) {
+                        case FLOOR: {
+                            blockFace = BlockFace.DOWN;
+                            break;
+                        }
+                        case CEILING: {
+                            blockFace = BlockFace.UP;
+                            break;
+                        }
                     }
                 }
                 relativeBlock = block.getRelative(blockFace, 1);
