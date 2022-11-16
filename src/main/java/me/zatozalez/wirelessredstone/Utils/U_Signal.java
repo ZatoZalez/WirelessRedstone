@@ -134,7 +134,6 @@ public class U_Signal {
                 }
                 if(newCurrent == device.getSignalPower())
                     return;
-
                 device.setSignalPower(newCurrent);
                 device.sendSignal();
             }
@@ -150,6 +149,7 @@ public class U_Signal {
 
     //Redstone Repeater
     //Redstone Comparator
+    //Redstone PoweredRail
     private static void powerPowerable(Block block, int signalPower){
         Powerable powerable = (Powerable) block.getBlockData();
         powerable.setPowered((signalPower > 0));

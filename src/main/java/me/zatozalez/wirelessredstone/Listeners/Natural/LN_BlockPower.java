@@ -32,8 +32,10 @@ public class LN_BlockPower implements Listener {
         if(device == null)
             return;
 
-        if(device.isSender() && device.getSignalPower() != device.getBlock().getBlockPower())
+        if(device.isSender() && device.getSignalPower() != device.getBlock().getBlockPower()){
+
             Bukkit.getServer().getPluginManager().callEvent(new E_DevicePower(device));
+        }
     }
 
     @EventHandler
@@ -67,7 +69,8 @@ public class LN_BlockPower implements Listener {
     }
 
     private void handlePermanentWire(R_Device device, BlockRedstoneEvent e){
-        if(device.getSignalPower() != 0 && device.getSignalPower() > e.getNewCurrent())
+        if(device.getSignalPower() != 0 && device.getSignalPower() > e.getNewCurrent()){
             e.setNewCurrent(device.getSignalPower());
+        }
     }
 }

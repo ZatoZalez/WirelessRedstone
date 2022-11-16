@@ -6,6 +6,7 @@ import me.zatozalez.wirelessredstone.Listeners.Modified.*;
 import me.zatozalez.wirelessredstone.Listeners.Natural.*;
 import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.*;
+import me.zatozalez.wirelessredstone.Utils.U_Metrics;
 import me.zatozalez.wirelessredstone.Utils.U_Log;
 import me.zatozalez.wirelessredstone.Versions.V_Manager;
 import org.bukkit.Bukkit;
@@ -63,6 +64,9 @@ public final class WirelessRedstone extends JavaPlugin {
 
         if(!reload)
             registerEvents();
+
+        int pluginId = 16969;
+        U_Metrics metrics = new U_Metrics(this, pluginId);
     }
 
     private void registerEvents(){

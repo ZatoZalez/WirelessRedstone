@@ -78,14 +78,13 @@ public class LN_BlockPlace implements Listener {
     @EventHandler
     public void onEvent2(BlockPlaceEvent e){
         Block block = e.getBlock();
-        if(!(block.getBlockData() instanceof AnaloguePowerable) && !(block.getBlockData() instanceof Powerable)) return;
         for(R_Device device : U_Environment.getSurroundingDevices(block))
         {
             if(device == null)
                 continue;
 
             if(device.isReceiver()) {
-                device.updateSignalPower();
+                //device.getSignalPower();
                 device.emitSignal(device.getSignalPower());
             }
         }

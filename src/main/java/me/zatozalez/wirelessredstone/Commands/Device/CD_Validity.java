@@ -52,7 +52,13 @@ public class CD_Validity {
     }
 
     public static boolean isValidTargetBlock(Player player, R_Device device, String[] args){
-        if(device == null || args != null && args.length > 2 && !args[1].equalsIgnoreCase("cancel"))
+        if(args == null)
+            return false;
+        if(args.length == 1 && device == null)
+            return pushInvalidTargetBlock(player);
+        if(args.length == 2 && args[1].equalsIgnoreCase("cancel"))
+            return true;
+        else if(args.length == 2 && device == null)
             return pushInvalidTargetBlock(player);
         return true;
     }

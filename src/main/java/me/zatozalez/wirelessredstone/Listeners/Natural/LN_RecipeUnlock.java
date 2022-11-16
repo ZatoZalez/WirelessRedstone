@@ -15,8 +15,14 @@ public class LN_RecipeUnlock implements Listener {
 
     @EventHandler
     public void onEvent(PlayerRecipeDiscoverEvent e) {
-        if(e.getRecipe().getKey().toLowerCase().contains("redstone"))
+        String recipe = e.getRecipe().getKey().toLowerCase();
+        if(recipe.contains("redstone"))
         {
+            if(recipe.contains("sender") || recipe.contains("receiver"))
+            {
+                return;
+            }
+
             if(C_Value.allowRecipes()) {
                 if (R_Items.RedstoneReceiver != null && R_Items.RedstoneReceiver.recipe != null)
                     e.getPlayer().discoverRecipe(R_Items.RedstoneReceiver.recipe.getKey());

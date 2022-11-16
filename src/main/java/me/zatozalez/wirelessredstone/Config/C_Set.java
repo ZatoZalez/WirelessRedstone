@@ -15,7 +15,7 @@ public class C_Set {
         addNewLine();
         addNewLine();
         addDescription("Modify the default language for this plugin. In order to change the language, delete the messages.yml file and restart the server.");
-        addDescription("Supported languages: EN (English), NL (Dutch).");
+        addDescription("Supported languages: EN (English), DE (German), NL (Dutch).");
         addKeyAndValue("Language", "EN");
         addNewLine();
 
