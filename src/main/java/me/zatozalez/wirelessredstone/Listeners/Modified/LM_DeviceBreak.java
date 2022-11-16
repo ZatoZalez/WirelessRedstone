@@ -51,7 +51,7 @@ public class LM_DeviceBreak implements Listener {
             str = str + getLinks(device);
             if(!str.endsWith("."))
                 str += ".";
-            player.sendMessage(str);
+            M_Utility.sendMessage(player, str);
         }
     }
 }

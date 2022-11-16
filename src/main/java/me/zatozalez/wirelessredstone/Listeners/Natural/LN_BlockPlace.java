@@ -44,14 +44,14 @@ public class LN_BlockPlace implements Listener {
 
         if(C_Value.getMaxDevicesInServer() > 0)
             if (R_Devices.getList().size() >= C_Value.getMaxDevicesInServer()) {
-                player.sendMessage(M_Utility.getMessage("device_limit"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("device_limit"));
                 e.setCancelled(true);
                 return;
             }
 
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_PLACE)){
-                player.sendMessage(M_Utility.getMessage("device_no_permission_place"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_place"));
                 e.setCancelled(true);
                 return;
             }
@@ -60,13 +60,13 @@ public class LN_BlockPlace implements Listener {
             if(R_Devices.getList(e.getPlayer().getUniqueId()).size() >= C_Value.getMaxDevicesPerPlayer()){
                 if(U_Permissions.isEnabled()){
                     if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_NOPLACELIMIT)){
-                        player.sendMessage(M_Utility.getMessage("device_no_permission_max_device", M_Utility.placeHolder("${maxdevicesperplayer}", C_Value.getMaxDevicesPerPlayer())));
+                        M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_max_device", M_Utility.placeHolder("${maxdevicesperplayer}", C_Value.getMaxDevicesPerPlayer())));
                         e.setCancelled(true);
                         return;
                     }
                 }
                 else {
-                    player.sendMessage(M_Utility.getMessage("device_max_device", M_Utility.placeHolder("${maxdevicesperplayer}", C_Value.getMaxDevicesPerPlayer())));
+                    M_Utility.sendMessage(player, M_Utility.getMessage("device_max_device", M_Utility.placeHolder("${maxdevicesperplayer}", C_Value.getMaxDevicesPerPlayer())));
                     e.setCancelled(true);
                     return;
                 }

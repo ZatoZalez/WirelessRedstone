@@ -5,6 +5,8 @@ import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Redstone.R_Items;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,8 +23,9 @@ public class C_Debug implements CommandExecutor {
 
         if(block != null) {
             R_Device device = R_Devices.get(block.getLocation());
-            if (device != null)
-                Bukkit.broadcastMessage("power: " + device.getSignalPower());
+            if (device != null){
+                Bukkit.broadcastMessage("power: " + block.isBlockPowered());
+            }
         }
         return true;
     }

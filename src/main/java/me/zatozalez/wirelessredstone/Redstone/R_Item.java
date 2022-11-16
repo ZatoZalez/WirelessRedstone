@@ -125,14 +125,16 @@ public class R_Item {
     public void createRecipe(){
         NamespacedKey key = new NamespacedKey(WirelessRedstone.getPlugin(), itemType.toString().toLowerCase().replace("redstone", "redstone_"));
         ShapedRecipe recipe = new ShapedRecipe(key, itemStack);
-        recipe.shape("RRR", "RXR", "RBR");
+        if(C_Value.allowRecipes()) {
+            recipe.shape("RRR", "RXR", "RBR");
 
-        recipe.setIngredient('R', Material.REDSTONE);
-        if(itemType.equals(DeviceType.RedstoneSender))
-            recipe.setIngredient('X', Material.REDSTONE_TORCH);
-        else
-            recipe.setIngredient('X', Material.OBSERVER);
-        recipe.setIngredient('B', Material.REDSTONE_BLOCK);
+            recipe.setIngredient('R', Material.REDSTONE);
+            if (itemType.equals(DeviceType.RedstoneSender))
+                recipe.setIngredient('X', Material.REDSTONE_TORCH);
+            else
+                recipe.setIngredient('X', Material.OBSERVER);
+            recipe.setIngredient('B', Material.REDSTONE_BLOCK);
+        }
         this.recipe = recipe;
     }
 

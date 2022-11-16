@@ -1,5 +1,6 @@
 package me.zatozalez.wirelessredstone.Messages;
 
+import me.zatozalez.wirelessredstone.Config.C_Set;
 import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Redstone.DeviceType;
 import me.zatozalez.wirelessredstone.Utils.U_Device;
@@ -7,15 +8,18 @@ import me.zatozalez.wirelessredstone.Utils.U_Log;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class M_Utility {
-    private static Map<String, String> defaultMessages = new HashMap<>();
-    private static Map<String, String> messages = new HashMap<>();
+    private static LinkedHashMap<String, String> defaultMessages = new LinkedHashMap<>();
+    private static LinkedHashMap<String, String> messages = new LinkedHashMap<>();
     private static final String messagesPath = WirelessRedstone.getPlugin().getDataFolder().getAbsolutePath();
     private static final String messagesFile = "messages.yml";
 
@@ -28,9 +32,11 @@ public class M_Utility {
         }
         try {
             messages = readAndLoad(new FileInputStream(file));
+            update();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         return;
     }
 
@@ -47,17 +53,55 @@ public class M_Utility {
         }
     }
 
-    private static Map<String, String> readAndLoad(InputStream inputStream){
+    private static LinkedHashMap<String, String> readAndLoad(InputStream inputStream){
         Yaml yaml = new Yaml();
         try {
             @SuppressWarnings("unchecked")
-            Map<String, String> values = yaml.load(inputStream);
+            LinkedHashMap<String, String> values = yaml.load(inputStream);
             inputStream.close();
             return values;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void update(){
+        boolean update = false;
+        if(messages != null) {
+            for (String string : defaultMessages.keySet()) {
+                if (!messages.containsKey(string)) {
+                    update = true;
+                    WirelessRedstone.Log(new U_Log(U_Log.LogType.WARNING, "adding: " + string));
+                    messages.put(string, defaultMessages.get(string));
+                }
+            }
+        }
+        else{
+            create();
+            return;
+        }
+
+        if(update){
+            try {
+                StringBuilder data = new StringBuilder();
+                File file = new File(messagesPath + "/" + messagesFile);
+                file.getParentFile().mkdir();
+                for (String s : messages.keySet()) {
+                    if (data.toString().equalsIgnoreCase(""))
+                        data.append(s).append(": ").append("\"").append(messages.get(s)).append("\"");
+                    else
+                        data.append("\n").append(s).append(": ").append("\"").append(messages.get(s)).append("\"");
+                }
+                file.createNewFile();
+                Writer writer = new FileWriter(file, false);
+                writer.write(data.toString());
+                writer.flush();
+                writer.close();
+            } catch (Exception e) {
+                WirelessRedstone.Log(new U_Log(U_Log.LogType.ERROR, "Could not update " + messagesFile + ".\n" + e.getMessage()));
+            }
+        }
     }
 
     public static String getMessage(String key){
@@ -76,6 +120,17 @@ public class M_Utility {
             if(str.contains(k))
                 str = str.replace(k, parameters.get(k).toString());
         return str;
+    }
+
+    public static boolean sendMessage(Player player, String value){
+        if(!C_Value.allowMessages())
+            return false;
+        if(player == null)
+            return false;
+        if(value.startsWith("!!"))
+            return false;
+        player.sendMessage(value);
+        return true;
     }
 
     public static HashMap placeHolder(Object ... parameters){

@@ -1,5 +1,6 @@
 package me.zatozalez.wirelessredstone.Listeners.Natural;
 
+import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Events.E_DeviceBreak;
 import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.R_Device;
@@ -30,17 +31,31 @@ public class LN_BlockBreak implements Listener {
         if(device == null)
             return;
 
+        if(!C_Value.allowBreakThirdDevices()) {
+            if (!device.getPlayerId().equals(player.getUniqueId())) {
+                if (U_Permissions.isEnabled()) {
+                    if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_BREAKTHIRDDEVICES)) {
+                        M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_break_third_devices"));
+                        return;
+                    }
+                } else {
+                    M_Utility.sendMessage(player, M_Utility.getMessage("device_break_third_devices"));
+                    return;
+                }
+            }
+        }
+
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_BREAK)){
                 e.setCancelled(true);
-                player.sendMessage(M_Utility.getMessage("device_no_permission_break"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_break"));
                 return;
             }
 
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_BREAK) && device.isLinked()){
                 e.setCancelled(true);
-                player.sendMessage(M_Utility.getMessage("device_no_permission_break_link"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_break_link"));
                 return;
             }
 

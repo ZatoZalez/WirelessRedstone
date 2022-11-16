@@ -1,5 +1,6 @@
 package me.zatozalez.wirelessredstone.Commands.Device;
 
+import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.*;
 import me.zatozalez.wirelessredstone.Utils.U_Permissions;
@@ -17,6 +18,7 @@ public class CD_Handle {
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_COMMANDS_DEVICE_INFO))
                 return pushInvalidPermission(player);
+
         R_Device device = getDeviceByTarget(player);
         if(!isValidTargetBlock(player, device, args))
             return true;
@@ -32,7 +34,7 @@ public class CD_Handle {
             str += "Owner: " + device.getPlayerId();
         str += "\nLinks: " + device.getLinkCount();
         str += "\nPower: " + device.getSignalPower();
-        player.sendMessage(M_Utility.getMessage("device_info", M_Utility.placeHolder("${devicetype}", device.getDeviceType(), "${info}", str)));
+        M_Utility.sendMessage(player, M_Utility.getMessage("device_info", M_Utility.placeHolder("${devicetype}", device.getDeviceType(), "${info}", str)));
         return true;
     }
 
@@ -97,8 +99,23 @@ public class CD_Handle {
             return true;
         if(!isLinkedWithDevice(player, device, args))
             return true;
+        String arg = args[1].toLowerCase();
 
-        switch(args[1]){
+        if(!C_Value.allowDestroyThirdLinks() && !arg.equalsIgnoreCase("cancel")) {
+            if (!device.getPlayerId().equals(player.getUniqueId())) {
+                if (U_Permissions.isEnabled()) {
+                    if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_DESTROYTHIRDLINKS)) {
+                        M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_destroy_third_links"));
+                        return true;
+                    }
+                } else {
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_destroy_third_links"));
+                    return true;
+                }
+            }
+        }
+
+        switch(arg){
             case "cancel": {
                 if(U_Permissions.isEnabled())
                     if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_COMMANDS_DEVICE_LINK_CANCEL))
@@ -174,7 +191,7 @@ public class CD_Handle {
         if(!hasValidArguments(player, args, 1, new String[] { "/device deleteall" }))
             return true;
 
-        player.sendMessage("I'm sorry, this command is not reliable enough to use. Please keep your eyes open for a future update.");
+        M_Utility.sendMessage(player, "I'm sorry, this command is not reliable enough to use. Please keep your eyes open for a future update.");
         return true;
     }
 }

@@ -140,7 +140,6 @@ public class U_Piston {
         piston.setExtended(false);
         pistonBlock.setBlockData(piston);
         pull(pistonBlock, piston.getFacing());
-
         for(Player p : Bukkit.getOnlinePlayers())
             p.playSound(pistonBlock.getLocation(), Sound.BLOCK_PISTON_CONTRACT, 1f, 1f);
         return true;

@@ -13,7 +13,6 @@ import org.bukkit.block.data.AnaloguePowerable;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
@@ -33,7 +32,7 @@ public class LN_BlockPower implements Listener {
         if(device == null)
             return;
 
-        if(device.getSignalPower() != device.getBlock().getBlockPower() && device.isSender())
+        if(device.isSender() && device.getSignalPower() != device.getBlock().getBlockPower())
             Bukkit.getServer().getPluginManager().callEvent(new E_DevicePower(device));
     }
 

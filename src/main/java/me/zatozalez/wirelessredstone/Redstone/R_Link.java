@@ -29,11 +29,11 @@ public class R_Link {
 
             Player player = Bukkit.getPlayer(getSender().getPlayerId());
             if(player != null && C_Value.allowMessages()) {
-                player.sendMessage(M_Utility.getMessage("device_overload"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("device_overload"));
                 if (!getSender().getPlayerId().equals(getReceiver().getPlayerId())) {
                     player = Bukkit.getPlayer(getReceiver().getPlayerId());
                     if (player != null)
-                        player.sendMessage(M_Utility.getMessage("device_overload"));
+                        M_Utility.sendMessage(player, M_Utility.getMessage("device_overload"));
                 }
             }
             return;

@@ -121,4 +121,28 @@ public class C_Value {
         if(data != null) return data.getString();
         return null;
     }
+
+    public static boolean allowRecipes(){
+        C_Data data = C_Utility.getData("Recipes");
+        if(data != null) return data.getBoolean();
+        return true;
+    }
+
+    public static boolean allowBreakThirdDevices(){
+        C_Data data = C_Utility.getData("BreakThirdDevices");
+        if(data != null) return data.getBoolean();
+        return true;
+    }
+
+    public static boolean allowDestroyThirdLinks(){
+        C_Data data = C_Utility.getData("DestroyThirdLinks");
+        if(data != null) return data.getBoolean();
+        return true;
+    }
+
+    public static boolean allowCreateThirdLinks(){
+        C_Data data = C_Utility.getData("CreateThirdLinks");
+        if(data != null) return data.getBoolean();
+        return true;
+    }
 }

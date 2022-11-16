@@ -53,6 +53,14 @@ public class C_Set {
         addKeyAndValue("MaxDevicesPerPlayer", 0);
         addNewLine();
 
+        addDescription("Allow players to break redstone devices placed by other players.");
+        addKeyAndValue("BreakThirdDevices", true);
+        addNewLine();
+
+        addDescription("Enable or disable the default craft recipe for the redstone devices.");
+        addKeyAndValue("Recipes", true);
+        addNewLine();
+
         addDescription("======== Link Restrictions ========");
         addDescription("Links are the invisible connection between two devices. You can create multiple links between multiple devices and they can become as advanced as you allow them to be with these settings.");
         addNewLine();
@@ -83,6 +91,11 @@ public class C_Set {
 
         addDescription("Set up a delay (in ticks) for the signal to travel from the RedstoneSender to the RedstoneReceiver (0 is instantly). Every 20 ticks is 1 second.");
         addKeyAndValue("SignalDelay", 0);
+        addNewLine();
+
+        addDescription("Allow players to create and destroy links on devices from other players.");
+        addKeyAndValue("CreateThirdLinks", true);
+        addKeyAndValue("DestroyThirdLinks", true);
         addNewLine();
 
         addDescription("======== Overload ========");

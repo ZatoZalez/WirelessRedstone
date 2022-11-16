@@ -13,6 +13,7 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Piston;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
 import java.util.Objects;
 
 import static me.zatozalez.wirelessredstone.Utils.U_Environment.*;
@@ -26,7 +27,24 @@ public class U_Signal {
             return;
 
         device.setSignalPower(signalPower);
-        for(Block block : U_Environment.getSurroundingBlocks(device.getBlock())){
+        List<Block> blocks = U_Environment.getSurroundingBlocks(device.getBlock());
+
+        //REDSTONE WIRE ONLY
+        for(Block block : blocks){
+            if(!block.getType().equals(Material.REDSTONE_WIRE))
+                continue;
+
+            BlockData data = block.getBlockData();
+            if (data instanceof AnaloguePowerable) {
+                powerAnaloguePowerable(block, signalPower);
+            }
+        }
+
+        //REST
+        for(Block block : blocks){
+            if(block.getType().equals(Material.REDSTONE_WIRE))
+                continue;
+
             BlockData data = block.getBlockData();
             if (data instanceof AnaloguePowerable) {
                 powerAnaloguePowerable(block, signalPower);
@@ -143,10 +161,12 @@ public class U_Signal {
         if(!U_Piston.canBePowered(device, block))
             return;
 
-        if(device.getSignalPower() == 0)
+        if(device.getSignalPower() == 0){
             U_Piston.retract(block);
-        else
+        }
+        else{
             U_Piston.extend(block);
+        }
     }
 
     //Dispenser

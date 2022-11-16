@@ -24,20 +24,35 @@ public class LM_DeviceClick implements Listener {
 
     @EventHandler
     public void onEvent(E_DeviceClick e) {
+        //spaghetti code
         R_Device device = e.getDevice();
         Player player = e.getPlayer();
         List<String> links = new ArrayList<>(R_Links.getList().keySet());
 
+        if(!C_Value.allowCreateThirdLinks()) {
+            if (!device.getPlayerId().equals(player.getUniqueId())) {
+                if (U_Permissions.isEnabled()) {
+                    if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_CREATETHIRDLINKS)) {
+                        M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_create_third_links"));
+                        return;
+                    }
+                } else {
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_create_third_links"));
+                    return;
+                }
+            }
+        }
+
         if(C_Value.getMaxLinksInServer() > 0) {
             if (R_Links.getList().size() >= C_Value.getMaxLinksInServer()) {
-                player.sendMessage(M_Utility.getMessage("link_limit"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("link_limit"));
                 return;
             }
         }
 
         if(U_Permissions.isEnabled())
             if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_CREATE)){
-                player.sendMessage(M_Utility.getMessage("link_no_permission_create"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_create"));
                 return;
             }
 
@@ -50,7 +65,7 @@ public class LM_DeviceClick implements Listener {
 
                 if(U_Permissions.isEnabled())
                     if(!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_CREATE)){
-                        player.sendMessage(M_Utility.getMessage("link_no_permission_create"));
+                        M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_create"));
                         R_Links.remove(link);
                         return;
                     }
@@ -59,52 +74,38 @@ public class LM_DeviceClick implements Listener {
                     if(R_Links.getList(e.getPlayer().getUniqueId()).size() >= C_Value.getMaxLinksPerPlayer()) {
                         if(U_Permissions.isEnabled()) {
                             if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_NOLIMIT)) {
-                                player.sendMessage(M_Utility.getMessage("link_no_permission_max_links", M_Utility.placeHolder("${maxlinksperplayer}", C_Value.getMaxLinksPerPlayer())));
+                                M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_max_links", M_Utility.placeHolder("${maxlinksperplayer}", C_Value.getMaxLinksPerPlayer())));
                                 R_Links.remove(link);
                                 return;
                             }
                         }
                         else {
-                            player.sendMessage(M_Utility.getMessage("link_max_links", M_Utility.placeHolder("${maxlinksperplayer}", C_Value.getMaxLinksPerPlayer())));
+                            M_Utility.sendMessage(player, M_Utility.getMessage("link_max_links", M_Utility.placeHolder("${maxlinksperplayer}", C_Value.getMaxLinksPerPlayer())));
                             R_Links.remove(link);
                             return;
                         }
                     }
 
                 if(device.equals(loneDevice)){
-                    player.sendMessage(M_Utility.getMessage("link_self", M_Utility.placeHolder("${command}", "/device link cancel")));
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_self", M_Utility.placeHolder("${command}", "/device link cancel")));
                     return;
                 }
 
                 if(device.getDeviceType().equals(loneDevice.getDeviceType())){
-                    player.sendMessage(M_Utility.getMessage("link_same_type", M_Utility.placeHolder("${devicetype1}", device.getDeviceType(), "${devicetype2}", loneDevice.getDeviceType(), "${command}", "/device link cancel")));
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_same_type", M_Utility.placeHolder("${devicetype1}", device.getDeviceType(), "${devicetype2}", loneDevice.getDeviceType(), "${command}", "/device link cancel")));
                     return;
                 }
 
                 if(device.isLinkedWith(loneDevice)){
-                    player.sendMessage(M_Utility.getMessage("link_double_link", M_Utility.placeHolder("${command}", "/device link cancel")));
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_double_link", M_Utility.placeHolder("${command}", "/device link cancel")));
                     return;
                 }
 
                 if(!loneDevice.exists()){
-                    player.sendMessage(M_Utility.getMessage("link_destroyed"));
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_destroyed"));
                     R_Links.remove(link);
                     return;
                 }
-
-                //if(C_Value.getMaxLinksPerDevice() > 0) {
-                //    R_Device d = null;
-                //    if (loneDevice.getLinkCount() >= C_Value.getMaxLinksPerDevice()) {
-                //        d = loneDevice;
-                //    } else if (device.getLinkCount() >= C_Value.getMaxLinksPerDevice()) {
-                //        d = device;
-                //    }
-                //    if(d != null){
-                //        player.sendMessage(M_Utility.getMessage("device_max_links", M_Utility.placeHolder("${maxlinksperdevice}", C_Value.getMaxLinksPerDevice(), "${devicetype}", d.getDeviceType())));
-                //        R_Links.remove(link);
-                //        return;
-                //    }
-                //}
 
                 if(C_Value.getMaxLinksPerDevice() > 0){
                     R_Device d = null;
@@ -116,12 +117,12 @@ public class LM_DeviceClick implements Listener {
                     if(d != null) {
                         if (U_Permissions.isEnabled()) {
                             if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_NOLINKLIMIT)) {
-                                player.sendMessage(M_Utility.getMessage("device_no_permission_max_links", M_Utility.placeHolder("${maxlinksperdevice}", C_Value.getMaxLinksPerDevice(), "${devicetype}", d.getDeviceType())));
+                                M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_max_links", M_Utility.placeHolder("${maxlinksperdevice}", C_Value.getMaxLinksPerDevice(), "${devicetype}", d.getDeviceType())));
                                 R_Links.remove(link);
                                 return;
                             }
                         } else {
-                            player.sendMessage(M_Utility.getMessage("device_max_links", M_Utility.placeHolder("${maxlinksperdevice}", C_Value.getMaxLinksPerDevice(), "${devicetype}", d.getDeviceType())));
+                            M_Utility.sendMessage(player, M_Utility.getMessage("device_max_links", M_Utility.placeHolder("${maxlinksperdevice}", C_Value.getMaxLinksPerDevice(), "${devicetype}", d.getDeviceType())));
                             R_Links.remove(link);
                             return;
                         }
@@ -132,13 +133,13 @@ public class LM_DeviceClick implements Listener {
                     if(Objects.equals(device.getLocation().getWorld(), loneDevice.getLocation().getWorld()) && device.getLocation().distanceSquared(loneDevice.getLocation()) > C_Value.getMaxLinkDistance()){
                         if(U_Permissions.isEnabled()) {
                             if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_INFINITEDISTANCE)) {
-                                player.sendMessage(M_Utility.getMessage("link_no_permission_max_distance", M_Utility.placeHolder("${maxlinkdistance}", C_Value.getMaxLinkDistance())));
+                                M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_max_distance", M_Utility.placeHolder("${maxlinkdistance}", C_Value.getMaxLinkDistance())));
                                 R_Links.remove(link);
                                 return;
                             }
                         }
                         else {
-                            player.sendMessage(M_Utility.getMessage("link_max_distance", M_Utility.placeHolder("${maxlinkdistance}", C_Value.getMaxLinkDistance())));
+                            M_Utility.sendMessage(player, M_Utility.getMessage("link_max_distance", M_Utility.placeHolder("${maxlinkdistance}", C_Value.getMaxLinkDistance())));
                             R_Links.remove(link);
                             return;
                         }
@@ -150,13 +151,13 @@ public class LM_DeviceClick implements Listener {
                     {
                         if(U_Permissions.isEnabled()) {
                             if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_CROSSWORLD)) {
-                                player.sendMessage(M_Utility.getMessage("link_no_permission_cross_world"));
+                                M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_cross_world"));
                                 R_Links.remove(link);
                                 return;
                             }
                         }
                         else{
-                            player.sendMessage(M_Utility.getMessage("link_cross_world"));
+                            M_Utility.sendMessage(player, M_Utility.getMessage("link_cross_world"));
                             R_Links.remove(link);
                             return;
                         }
@@ -164,7 +165,7 @@ public class LM_DeviceClick implements Listener {
                 }
 
                 link.create(device, loneDevice);
-                player.sendMessage(M_Utility.getMessage("link_created"));
+                M_Utility.sendMessage(player, M_Utility.getMessage("link_created"));
                 return;
 
             }
@@ -173,7 +174,7 @@ public class LM_DeviceClick implements Listener {
         R_Link link = new R_Link(device);
         if(e.getPlayer() != null){
             link.setPlayerId(e.getPlayer().getUniqueId());
-            player.sendMessage(M_Utility.getMessage("link_create", M_Utility.placeHolder("{devicetype1}", device.getDeviceType(), "{devicetype2}", device.getOppositeDeviceType(), "${command}", "/device link cancel")));
+            M_Utility.sendMessage(player, M_Utility.getMessage("link_create", M_Utility.placeHolder("{devicetype1}", device.getDeviceType(), "{devicetype2}", device.getOppositeDeviceType(), "${command}", "/device link cancel")));
         }
 
         R_Links.add(link);
