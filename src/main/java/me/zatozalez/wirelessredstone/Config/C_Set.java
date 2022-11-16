@@ -14,6 +14,10 @@ public class C_Set {
         addDescription("Configuration for " + WirelessRedstone.getPlugin().getDescription().getName() + " " + WirelessRedstone.getPlugin().getDescription().getVersion() + " by ZatoZalez.");
         addNewLine();
         addNewLine();
+        addDescription("Modify the default language for this plugin. In order to change the language, delete the messages.yml file and restart the server.");
+        addDescription("Supported languages: EN (English), NL (Dutch).");
+        addKeyAndValue("Language", "EN");
+        addNewLine();
 
         addDescription("Modify the default item names and lore.");
         addDescription("TIP: Use the in-game reload command or restart the server to update these values in-game.");

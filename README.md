@@ -1,4 +1,4 @@
-# <span style="color: #ff4d4d"><b><span style="font-size: 26px">WirelessRedstone </span></b><span style="font-size: 15px">v0.4.2</span></span><br>
+# <span style="color: #ff4d4d"><b><span style="font-size: 26px">WirelessRedstone </span></b><span style="font-size: 15px">v0.4.3</span></span><br>
 A simple redstone plugin that allows for wireless redstone signals to be sent over infinite distances and through worlds. This plugin is almost out of early development, any support, suggestions and help is appreciated. Join my discord at <a href="https://discord.gg/TsRTa7BUWm" target="_blank" class="externalLink" rel="nofollow">https://discord.gg/TsRTa7BUWm
 </a><br>
 
@@ -90,6 +90,7 @@ wirelessredstone.device.place<br>
 wirelessredstone.device.break<br>
 wirelessredstone.device.noplacelimit<br>
 wirelessredstone.device.nolinklimit<br>
+wirelessredstone.device.destroythirddevices<br>
 </i>&ZeroWidthSpace;</div>
 
 Permission for linking devices:<br>
@@ -100,6 +101,8 @@ wirelessredstone.link.break<br>
 wirelessredstone.link.nolimit<br>
 wirelessredstone.link.infinitedistance<br>
 wirelessredstone.link.crossworld<br>
+wirelessredstone.link.breakthirdlinks<br>
+wirelessredstone.link.createthirdlinks<br>
 </i>&ZeroWidthSpace;</div>
 
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">Configuration</span></span></b><br>
@@ -107,6 +110,7 @@ Modify your experience by changing the configurations to your need. You can find
 A value of **0** represents infinity.
 <br>
 <div style="padding-left: 30px"><i>
+Language: EN<br>
 SenderItemName: Redstone Sender<br>
 SenderItemLore: Sends wireless Redstone signals<br>
 ReceiverItemName: Redstone Sender<br>
@@ -117,6 +121,8 @@ Permissions: false<br>
 Messages: true<br>
 MaxDeviceInServer: 0<br>
 MaxDevicesPerPlayer: 0<br>
+BreakThirdDevices: true
+Recipes: true
 MaxLinksInServer: 0<br>
 MaxLinksPerPlayer: 0<br>
 MaxLinksPerDevice: 0<br>
@@ -124,15 +130,18 @@ MaxLinkDistance: 0<br>
 CrossWorldSignals: true<br>
 ContactSignals: true<br>
 SignalDelay: 0<br>
+CreateThirdLinks: true<br>
+DestroyThirdLinks: true<br>
 Overload: true<br>
 OverloadTrigger: 8<br>
 OverloadCooldown: 10<br>
 </i>&ZeroWidthSpace;</div>
 <br>
 
-<b><span style="font-size: 18px"><span style="color: #ff4d4d">Languages Support</span></span></b><br>
-Download preset messages.yml and config.yml files which are translate by contributors into other language at
+<b><span style="font-size: 18px"><span style="color: #ff4d4d">Languages Support & Messages</span></span></b><br>
+Check
 https://www.spigotmc.org/resources/wirelessredstone.101871/
+for more information on messages and languages.
 
 <br>
 <b><span style="font-size: 18px"><span style="color: #ff4d4d">API Support</span></span></b><br>

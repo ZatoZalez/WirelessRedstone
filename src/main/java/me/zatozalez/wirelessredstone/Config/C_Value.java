@@ -2,6 +2,12 @@ package me.zatozalez.wirelessredstone.Config;
 
 //REWORKED
 public class C_Value {
+    public static String getLanguage(){
+        C_Data data = C_Utility.getData("Language");
+        if(data != null) return data.getString().toUpperCase();
+        return "EN";
+    }
+
     public static int getMaxLinksInServer(){
         C_Data data = C_Utility.getData("MaxLinksInServer");
         if(data != null) return data.getInt();

@@ -5,6 +5,7 @@ import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Redstone.R_Link;
 import me.zatozalez.wirelessredstone.WirelessRedstone;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.*;
 import org.bukkit.block.Hopper;
@@ -244,12 +245,17 @@ public class U_Signal {
     }
 
     //Redstone Torch
+    //Redstone Lamp
     private static void powerLightable(R_Device device, Block block, int signalPower){
-        Block base = getTorchBlock(block);
-        if(!base.equals(device.getBlock()))
-            return;
+        boolean bool = (signalPower != 0);
+        if(block.getType().equals(Material.REDSTONE_WALL_TORCH)) {
+            bool = !bool;
+            Block base = getTorchBlock(block);
+            if (!base.equals(device.getBlock()))
+                return;
+        }
         Lightable lightable = (Lightable) block.getBlockData();
-        lightable.setLit((signalPower == 0));
+        lightable.setLit(bool);
         block.setBlockData(lightable);
     }
 

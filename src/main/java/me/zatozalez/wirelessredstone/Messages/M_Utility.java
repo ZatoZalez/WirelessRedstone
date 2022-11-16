@@ -1,6 +1,5 @@
 package me.zatozalez.wirelessredstone.Messages;
 
-import me.zatozalez.wirelessredstone.Config.C_Set;
 import me.zatozalez.wirelessredstone.Config.C_Value;
 import me.zatozalez.wirelessredstone.Redstone.DeviceType;
 import me.zatozalez.wirelessredstone.Utils.U_Device;
@@ -12,10 +11,8 @@ import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class M_Utility {
     private static LinkedHashMap<String, String> defaultMessages = new LinkedHashMap<>();
@@ -25,7 +22,9 @@ public class M_Utility {
 
     public static void initialize(){
         File file = new File(messagesPath + "/" + messagesFile);
-        defaultMessages = readAndLoad(WirelessRedstone.getPlugin().getClass().getResourceAsStream("/" + messagesFile));
+        WirelessRedstone.Log(new U_Log(U_Log.LogType.INFORMATION, ChatColor.GRAY + "Default language is set as "+ ChatColor.RED + C_Value.getLanguage() + ChatColor.GRAY + "."));
+        String languageFile = "messages_" + C_Value.getLanguage() + ".yml";
+        defaultMessages = readAndLoad(WirelessRedstone.getPlugin().getClass().getResourceAsStream("/" + languageFile));
         if (!file.exists()) {
             create();
             messages = defaultMessages;
@@ -36,13 +35,12 @@ public class M_Utility {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        return;
     }
 
     private static void create() {
         try {
-            byte[] buffer = WirelessRedstone.getPlugin().getClass().getResourceAsStream("/" + messagesFile).readAllBytes();
+            String languageFile = "messages_" + C_Value.getLanguage() + ".yml";
+            byte[] buffer = WirelessRedstone.getPlugin().getClass().getResourceAsStream("/" + languageFile).readAllBytes();
 
             File targetFile = new File(messagesPath + "/" + messagesFile);
             OutputStream outStream = new FileOutputStream(targetFile);
@@ -72,7 +70,6 @@ public class M_Utility {
             for (String string : defaultMessages.keySet()) {
                 if (!messages.containsKey(string)) {
                     update = true;
-                    WirelessRedstone.Log(new U_Log(U_Log.LogType.WARNING, "adding: " + string));
                     messages.put(string, defaultMessages.get(string));
                 }
             }

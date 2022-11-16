@@ -56,6 +56,20 @@ public class LM_DeviceClick implements Listener {
                 return;
             }
 
+        if(!C_Value.allowCreateThirdLinks()) {
+            if (!device.getPlayerId().equals(player.getUniqueId())) {
+                if (U_Permissions.isEnabled()) {
+                    if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_LINK_CREATETHIRDLINKS)) {
+                        M_Utility.sendMessage(player, M_Utility.getMessage("link_no_permission_create_third_links"));
+                        return;
+                    }
+                } else {
+                    M_Utility.sendMessage(player, M_Utility.getMessage("link_create_third_links"));
+                    return;
+                }
+            }
+        }
+
 
         for(String linkid : links){
             R_Link link = R_Links.get(linkid);

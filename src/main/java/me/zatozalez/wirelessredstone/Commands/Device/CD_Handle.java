@@ -1,12 +1,16 @@
 package me.zatozalez.wirelessredstone.Commands.Device;
 
 import me.zatozalez.wirelessredstone.Config.C_Value;
+import me.zatozalez.wirelessredstone.Events.E_DeviceClick;
 import me.zatozalez.wirelessredstone.Messages.M_Utility;
 import me.zatozalez.wirelessredstone.Redstone.*;
 import me.zatozalez.wirelessredstone.Utils.U_Permissions;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 import static me.zatozalez.wirelessredstone.Commands.Device.CD_Push.*;
 import static me.zatozalez.wirelessredstone.Commands.Device.CD_Utility.*;
@@ -91,16 +95,23 @@ public class CD_Handle {
         R_Device device = getDeviceByTarget(player);
         if(!isValidTargetBlock(player, device, args))
             return true;
-        if(!hasValidArguments(player, args, 2, new String[] {
+        if(!hasValidArguments(player, args, 1, 2, new String[] {
+                "- /device link",
                 "- /device link cancel",
                 "- /device link breakall",
                 "- /device link breakfirst",
                 "- /device link breaklast" }))
             return true;
+
+        if(args.length == 1) {
+            Bukkit.getServer().getPluginManager().callEvent(new E_DeviceClick(device, player, null));
+            return true;
+        }
+
         if(!isLinkedWithDevice(player, device, args))
             return true;
-        String arg = args[1].toLowerCase();
 
+        String arg = args[1].toLowerCase();
         if(!C_Value.allowDestroyThirdLinks() && !arg.equalsIgnoreCase("cancel")) {
             if (!device.getPlayerId().equals(player.getUniqueId())) {
                 if (U_Permissions.isEnabled()) {

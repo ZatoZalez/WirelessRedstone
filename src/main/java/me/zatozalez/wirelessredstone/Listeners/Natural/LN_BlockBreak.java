@@ -35,10 +35,12 @@ public class LN_BlockBreak implements Listener {
             if (!device.getPlayerId().equals(player.getUniqueId())) {
                 if (U_Permissions.isEnabled()) {
                     if (!U_Permissions.check(player, U_Permissions.Permissions.WIRELESSREDSTONE_DEVICE_BREAKTHIRDDEVICES)) {
+                        e.setCancelled(true);
                         M_Utility.sendMessage(player, M_Utility.getMessage("device_no_permission_break_third_devices"));
                         return;
                     }
                 } else {
+                    e.setCancelled(true);
                     M_Utility.sendMessage(player, M_Utility.getMessage("device_break_third_devices"));
                     return;
                 }
