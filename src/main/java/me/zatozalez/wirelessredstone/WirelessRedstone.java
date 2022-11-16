@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WirelessRedstone extends JavaPlugin {
 
+    private static int pluginId = 16969;
     private static WirelessRedstone plugin;
     private static C_Center commandCenter = new C_Center();
 
@@ -32,6 +33,8 @@ public final class WirelessRedstone extends JavaPlugin {
 
     private void initializePlugin(boolean reload) {
         plugin = this;
+        U_Metrics metrics = new U_Metrics(plugin, pluginId);
+
         String latest = V_Manager.getLatestVersion();
         if(latest != null && !latest.equals(getDescription().getVersion())){
             WirelessRedstone.Log(new U_Log(U_Log.LogType.WARNING, "New update available [" + latest + "]! Visit " + "https://www.spigotmc.org/resources/101871/" + " to download the latest version."));

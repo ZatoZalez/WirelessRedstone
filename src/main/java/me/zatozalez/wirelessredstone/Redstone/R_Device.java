@@ -144,10 +144,10 @@ public class R_Device {
             return;
 
         for(R_Link link : getLinks()){
-            if(signalPower < link.getSender().getSignalPower())
-                return;
+            if(link.isValid())
+                if(signalPower < link.getSender().getSignalPower())
+                    return;
         }
-
         U_Signal.emit(this, signalPower);
     }
 

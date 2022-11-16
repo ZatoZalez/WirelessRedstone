@@ -17,6 +17,7 @@ public class R_Link {
     private R_Device sender;
     private R_Device receiver;
     private int overload = 0;
+    private boolean isValid = false;
 
     public void onSignal(){
         if(!C_Value.overloadEnabled() || getSender().isOverloaded() || getReceiver().isOverloaded())
@@ -60,6 +61,7 @@ public class R_Link {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
+        isValid = true;
     }
 
     public String getId() {
@@ -132,12 +134,15 @@ public class R_Link {
         if(sender.getSignalPower() > 0){
             receiver.emitSignal(sender.getSignalPower());
         }
+
+        isValid = true;
     }
 
     public void destroy(){
         if(!isLinked())
             return;
 
+        isValid = false;
         receiver.emitSignal(0);
         sender.removeLink(getId());
         receiver.removeLink(getId());
@@ -146,6 +151,10 @@ public class R_Link {
 
     public boolean isLinked(){
         return sender != null && receiver != null;
+    }
+
+    public boolean isValid() {
+        return isValid;
     }
 
     public boolean exists(){

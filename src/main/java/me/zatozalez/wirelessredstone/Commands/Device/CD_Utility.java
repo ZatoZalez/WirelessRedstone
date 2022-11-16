@@ -5,6 +5,7 @@ import me.zatozalez.wirelessredstone.Redstone.R_Device;
 import me.zatozalez.wirelessredstone.Redstone.R_Devices;
 import me.zatozalez.wirelessredstone.Redstone.R_Items;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,8 +28,9 @@ public class CD_Utility {
     }
 
     public static void giveDeviceItemStack(Player player, int amount, ItemStack[] itemStacks){
-        for(ItemStack itemStack : itemStacks)
-            giveItemStack(player, amount, itemStack);
+        for(ItemStack itemStack : itemStacks){
+            giveItemStack(player, amount, itemStack.clone());
+        }
     }
 
     public static void giveItemStack(Player player, int amount, ItemStack itemStack){
@@ -54,12 +56,17 @@ public class CD_Utility {
     }
 
     public static ItemStack[] getItemStacks(DeviceType deviceType, boolean bothDevices){
-        ItemStack[] itemStack = new ItemStack[] { R_Items.RedstoneSender.itemStack, R_Items.RedstoneReceiver.itemStack };
-        if(!bothDevices)
+        ItemStack[] itemStack = new ItemStack[] { R_Items.RedstoneReceiver.itemStack, R_Items.RedstoneSender.itemStack };
+        if(!bothDevices){
             if(deviceType.equals(DeviceType.RedstoneSender))
+            {
                 return new ItemStack[] { R_Items.RedstoneSender.itemStack };
+            }
             else
+            {
                 return new ItemStack[] { R_Items.RedstoneReceiver.itemStack };
+            }
+        }
         return itemStack;
     }
 }

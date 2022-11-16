@@ -82,8 +82,9 @@ public class CD_Handle {
 
         itemStack = getItemStacks(deviceType, bothDevices);
         if(allPlayers)
-            for(Player p : Bukkit.getOnlinePlayers())
+            for(Player p : Bukkit.getOnlinePlayers()){
                 giveDeviceItemStack(p, amount, itemStack);
+            }
         else
             giveDeviceItemStack(target, amount, itemStack);
         pushResult(player, target, deviceType, amount, allPlayers, bothDevices);

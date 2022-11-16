@@ -45,7 +45,7 @@ public class C_Value {
     }
 
     public static boolean allowCrossWorldSignal(){
-        C_Data data = C_Utility.getData("CrossWorldSignal");
+        C_Data data = C_Utility.getData("CrossWorldSignals");
         if(data != null) return data.getBoolean();
         return false;
     }

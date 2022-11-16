@@ -12,6 +12,7 @@ import org.bukkit.block.Hopper;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Piston;
+import org.bukkit.material.PoweredRail;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
@@ -55,6 +56,10 @@ public class U_Signal {
                 powerOpenable(device, block);
                 continue;
             }
+            //if(block.getType().equals(Material.POWERED_RAIL)){
+            //    powerRail(device, block, signalPower);
+            //    continue;
+            //}
             if (data instanceof Powerable) {
                 powerPowerable(block, signalPower);
                 continue;
@@ -150,10 +155,35 @@ public class U_Signal {
     //Redstone Repeater
     //Redstone Comparator
     //Redstone PoweredRail
+    //Lever
+    //Button
+    //Pressure Plate
     private static void powerPowerable(Block block, int signalPower){
         Powerable powerable = (Powerable) block.getBlockData();
         powerable.setPowered((signalPower > 0));
         block.setBlockData(powerable);
+    }
+
+    //Powered Rail
+    private static void powerRail(R_Device device, Block block, int signalPower){
+        Rail rail = (Rail) block.getBlockData();
+
+        Powerable powerable = (Powerable) block.getBlockData();
+        powerable.setPowered((signalPower > 0));
+        block.setBlockData(powerable);
+
+        PoweredRail poweredRail = (PoweredRail)block.getState().getData();
+        BlockFace blockFace = block.getFace(device.getBlock()).getOppositeFace();
+
+        for(int i = 1; i < 8; i++){
+            block = block.getRelative(blockFace);
+            if(!block.getType().equals(Material.POWERED_RAIL))
+                break;
+
+            powerable = (Powerable) block.getBlockData();
+            powerable.setPowered((signalPower > 0));
+            block.setBlockData(powerable);
+        }
     }
 
     //Piston
